@@ -71,6 +71,6 @@ A window with Rviz will appear, On the first run the auto differentiation librar
 
 ## Acknowledgements
 
-This work was developed by the company [1X Technologies](https://www.1x.tech/). I would like to thank everyone that contributed in code, discussion or suggestions to the success of this project. 
+This work was developed at the company [1X Technologies](https://www.1x.tech/) and is mainly authored and maintaned by Manuel Yves Galliker (@manumerous). 
 
-In particular I would like to acknowledge the support from Michael Purcell, Jesper Smith, Simon Zimmermann, Joel Filho, Varit (Ohm) Vichathorn, Armin Nurkanovic, Charles Khazoom, Farbod Farshidian, Eric Jang, Bernt Børnich and everyone at 1X Technologies.
+Further acknoledgment for their contributions, insights, discussion and support goes to Michael Purcell, Jesper Smith, Simon Zimmermann, Joel Filho, Varit (Ohm) Vichathorn, Armin Nurkanovic, Charles Khazoom, Farbod Farshidian, Eric Jang, Bernt Børnich and everyone at 1X Technologies.
