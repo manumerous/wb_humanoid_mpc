@@ -1,0 +1,28 @@
+module humanoid_mpc_msgs {
+  module msg {
+    @TypeCode(type = "humanoid_mpc_msgs::msg::dds_::WalkingVelocityCommand_") struct WalkingVelocityCommand {
+      /**
+       * Desired linear velocity x in pelvis frame
+       * Between [-1, 1] for no to max velocity
+       */
+      double linear_velocity_x;
+
+      /**
+       * Desired linear velocity y in pelvis frame
+       * Between [-1, 1] for no to max velocity
+       */
+      double linear_velocity_y;
+
+      /**
+       * Desired pelvis height above ground in [m]
+       */
+      double desired_pelvis_height;
+
+      /**
+       * Desired angular velocity around z in pelvis
+       * Between [-1, 1] for no to max velocity
+       */
+      double angular_velocity_z;
+    };
+  };
+};

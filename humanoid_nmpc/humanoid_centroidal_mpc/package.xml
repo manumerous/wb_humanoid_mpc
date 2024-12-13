@@ -1,0 +1,37 @@
+<?xml version="1.0"?>
+<package format="3">
+  <name>humanoid_centroidal_mpc</name>
+  <version>0.0.0</version>
+  <description>Humanoid motion planner package</description>
+
+  <maintainer email="manuel.galliker@gmx.ch">Manuel Yves Galliker</maintainer>
+
+  <license>BSD</license>
+
+  <buildtool_depend>ament_cmake</buildtool_depend>
+
+  <depend>rclcpp</depend>
+  <depend>ocs2_core</depend>
+  <depend>ocs2_centroidal_model</depend>
+  <depend>ocs2_mpc</depend>
+  <depend>ocs2_robotic_tools</depend>
+  <depend>ocs2_ddp</depend>
+  <depend>ocs2_sqp</depend>
+  <depend>ocs2_pinocchio_interface</depend>
+  <depend>ocs2_ros2_interfaces</depend>
+  <depend>pinocchio</depend>
+
+  <depend>humanoid_common_mpc</depend>
+
+  <test_depend>ament_cmake_gtest</test_depend>
+  <test_depend>ament_cmake_clang_format</test_depend>
+  <test_depend>ament_cmake_clang_tidy</test_depend>
+  <test_depend>ament_cmake_cppcheck</test_depend>
+
+
+  <export>
+    <build_type>ament_cmake</build_type>
+  </export>
+
+
+</package>

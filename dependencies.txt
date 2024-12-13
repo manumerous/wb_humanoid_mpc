@@ -1,0 +1,13 @@
+clang-format
+make
+build-essential
+locales
+libeigen3-dev
+libglpk-dev
+libboost-all-dev
+libboost-filesystem-dev
+libboost-log-dev
+libglfw3-dev
+ninja-build
+ccache
+python3-pygame

@@ -1,0 +1,397 @@
+Panels:
+  - Class: rviz_common/Displays
+    Help Height: 138
+    Name: Displays
+    Property Tree Widget:
+      Expanded:
+        - /Global Options1
+        - /Status1
+        - /Grid1
+        - /RobotModel1
+        - /RobotModel1/Description Topic1
+        - /TF1/Frames1
+        - /Cartesian Markers1
+        - /Cartesian Markers1/Namespaces1
+        - /OptimizedStateTrajectory1
+        - /Terminal Target RobotModel1
+        - /CollisionMarkerArray1
+      Splitter Ratio: 0.5
+    Tree Height: 365
+  - Class: rviz_common/Views
+    Expanded:
+      - /Current View1
+    Name: Views
+    Splitter Ratio: 0.5
+Visualization Manager:
+  Class: ""
+  Displays:
+    - Alpha: 0.8999999761581421
+      Cell Size: 1
+      Class: rviz_default_plugins/Grid
+      Color: 160; 160; 164
+      Enabled: true
+      Line Style:
+        Line Width: 0.029999999329447746
+        Value: Lines
+      Name: Grid
+      Normal Cell Count: 0
+      Offset:
+        X: 0
+        Y: 0
+        Z: 0
+      Plane: XY
+      Plane Cell Count: 10
+      Reference Frame: <Fixed Frame>
+      Value: true
+    - Alpha: 0.800000011920929
+      Class: rviz_default_plugins/RobotModel
+      Collision Enabled: false
+      Description File: ""
+      Description Source: Topic
+      Description Topic:
+        Depth: 5
+        Durability Policy: Volatile
+        History Policy: Keep Last
+        Reliability Policy: Reliable
+        Value: /robot_description
+      Enabled: true
+      Links:
+        All Links Enabled: true
+        Expand Joint Details: false
+        Expand Link Details: false
+        Expand Tree: false
+        Link Tree Style: Links in Alphabetic Order
+        link_abdomen:
+          Alpha: 1
+          Show Axes: false
+          Show Trail: false
+        link_head:
+          Alpha: 1
+          Show Axes: false
+          Show Trail: false
+          Value: true
+        link_l_ankle:
+          Alpha: 1
+          Show Axes: false
+          Show Trail: false
+          Value: true
+        link_l_elbow:
+          Alpha: 1
+          Show Axes: false
+          Show Trail: false
+          Value: true
+        link_l_foot:
+          Alpha: 1
+          Show Axes: false
+          Show Trail: false
+          Value: true
+        link_l_hand:
+          Alpha: 1
+          Show Axes: false
+          Show Trail: false
+          Value: true
+        link_l_lower_arm:
+          Alpha: 1
+          Show Axes: false
+          Show Trail: false
+          Value: true
+        link_l_lower_hip:
+          Alpha: 1
+          Show Axes: false
+          Show Trail: false
+        link_l_patella:
+          Alpha: 1
+          Show Axes: false
+          Show Trail: false
+          Value: true
+        link_l_scapula:
+          Alpha: 1
+          Show Axes: false
+          Show Trail: false
+          Value: true
+        link_l_shin:
+          Alpha: 1
+          Show Axes: false
+          Show Trail: false
+          Value: true
+        link_l_shoulder:
+          Alpha: 1
+          Show Axes: false
+          Show Trail: false
+          Value: true
+        link_l_thigh:
+          Alpha: 1
+          Show Axes: false
+          Show Trail: false
+          Value: true
+        link_l_upper_arm:
+          Alpha: 1
+          Show Axes: false
+          Show Trail: false
+          Value: true
+        link_l_upper_hip:
+          Alpha: 1
+          Show Axes: false
+          Show Trail: false
+          Value: true
+        link_l_wrist:
+          Alpha: 1
+          Show Axes: false
+          Show Trail: false
+          Value: true
+        link_neck_xy:
+          Alpha: 1
+          Show Axes: false
+          Show Trail: false
+        link_neck_z:
+          Alpha: 1
+          Show Axes: false
+          Show Trail: false
+          Value: true
+        link_pelvis:
+          Alpha: 1
+          Show Axes: false
+          Show Trail: false
+          Value: true
+        link_r_ankle:
+          Alpha: 1
+          Show Axes: false
+          Show Trail: false
+          Value: true
+        link_r_elbow:
+          Alpha: 1
+          Show Axes: false
+          Show Trail: false
+          Value: true
+        link_r_foot:
+          Alpha: 1
+          Show Axes: false
+          Show Trail: false
+          Value: true
+        link_r_hand:
+          Alpha: 1
+          Show Axes: false
+          Show Trail: false
+          Value: true
+        link_r_lower_arm:
+          Alpha: 1
+          Show Axes: false
+          Show Trail: false
+          Value: true
+        link_r_lower_hip:
+          Alpha: 1
+          Show Axes: false
+          Show Trail: false
+        link_r_patella:
+          Alpha: 1
+          Show Axes: false
+          Show Trail: false
+          Value: true
+        link_r_scapula:
+          Alpha: 1
+          Show Axes: false
+          Show Trail: false
+          Value: true
+        link_r_shin:
+          Alpha: 1
+          Show Axes: false
+          Show Trail: false
+          Value: true
+        link_r_shoulder:
+          Alpha: 1
+          Show Axes: false
+          Show Trail: false
+          Value: true
+        link_r_thigh:
+          Alpha: 1
+          Show Axes: false
+          Show Trail: false
+          Value: true
+        link_r_upper_arm:
+          Alpha: 1
+          Show Axes: false
+          Show Trail: false
+          Value: true
+        link_r_upper_hip:
+          Alpha: 1
+          Show Axes: false
+          Show Trail: false
+          Value: true
+        link_r_wrist:
+          Alpha: 1
+          Show Axes: false
+          Show Trail: false
+          Value: true
+        link_torso:
+          Alpha: 1
+          Show Axes: false
+          Show Trail: false
+          Value: true
+      Mass Properties:
+        Inertia: false
+        Mass: false
+      Name: RobotModel
+      TF Prefix: ""
+      Update Interval: 0
+      Value: true
+      Visual Enabled: true
+    - Class: rviz_default_plugins/TF
+      Enabled: false
+      Frame Timeout: 15
+      Frames:
+        All Enabled: true
+      Marker Scale: 0.30000001192092896
+      Name: TF
+      Show Arrows: true
+      Show Axes: true
+      Show Names: true
+      Tree:
+        {}
+      Update Interval: 0
+      Value: false
+    - Class: rviz_default_plugins/MarkerArray
+      Enabled: true
+      Name: Cartesian Markers
+      Namespaces:
+        Center of Pressure: true
+        EE Forces: true
+        equivalentContactCornerForces: true
+      Topic:
+        Depth: 5
+        Durability Policy: Volatile
+        History Policy: Keep Last
+        Reliability Policy: Reliable
+        Value: /cartesian_markers
+      Value: true
+    - Class: rviz_default_plugins/MarkerArray
+      Enabled: true
+      Name: OptimizedStateTrajectory
+      Namespaces:
+        Base Trajectory: true
+        COM Trajectory: true
+        Frame EE Trajectories: true
+        Future footholds: true
+      Topic:
+        Depth: 5
+        Durability Policy: Volatile
+        History Policy: Keep Last
+        Reliability Policy: Reliable
+        Value: /optimized_state_markers
+      Value: true
+    - Alpha: 0.4000000059604645
+      Class: rviz_default_plugins/RobotModel
+      Collision Enabled: false
+      Description File: ""
+      Description Source: Topic
+      Description Topic:
+        Depth: 5
+        Durability Policy: Volatile
+        History Policy: Keep Last
+        Reliability Policy: Reliable
+        Value: /robot_description
+      Enabled: false
+      Links:
+        All Links Enabled: true
+        Expand Joint Details: false
+        Expand Link Details: false
+        Expand Tree: false
+        Link Tree Style: Links in Alphabetic Order
+      Mass Properties:
+        Inertia: false
+        Mass: false
+      Name: Terminal State RobotModel
+      TF Prefix: terminal_state
+      Update Interval: 0
+      Value: false
+      Visual Enabled: true
+    - Alpha: 0.30000001192092896
+      Class: rviz_default_plugins/RobotModel
+      Collision Enabled: false
+      Description File: ""
+      Description Source: Topic
+      Description Topic:
+        Depth: 5
+        Durability Policy: Volatile
+        History Policy: Keep Last
+        Reliability Policy: Reliable
+        Value: /robot_description
+      Enabled: false
+      Links:
+        All Links Enabled: true
+        Expand Joint Details: false
+        Expand Link Details: false
+        Expand Tree: false
+        Link Tree Style: Links in Alphabetic Order
+      Mass Properties:
+        Inertia: false
+        Mass: false
+      Name: Terminal Target RobotModel
+      TF Prefix: terminal_target
+      Update Interval: 0
+      Value: false
+      Visual Enabled: true
+    - Class: rviz_default_plugins/MarkerArray
+      Enabled: false
+      Name: CollisionMarkerArray
+      Namespaces:
+        {}
+      Topic:
+        Depth: 5
+        Durability Policy: Volatile
+        History Policy: Keep Last
+        Reliability Policy: Reliable
+        Value: /collision_markers
+      Value: false
+  Enabled: true
+  Global Options:
+    Background Color: 238; 238; 236
+    Fixed Frame: world
+    Frame Rate: 30
+  Name: root
+  Tools:
+    - Class: rviz_default_plugins/Interact
+      Hide Inactive Objects: true
+    - Class: rviz_default_plugins/MoveCamera
+    - Class: rviz_default_plugins/Select
+    - Class: rviz_default_plugins/FocusCamera
+    - Class: rviz_default_plugins/Measure
+      Line color: 128; 128; 0
+  Transformation:
+    Current:
+      Class: rviz_default_plugins/TF
+  Value: true
+  Views:
+    Current:
+      Class: rviz_default_plugins/Orbit
+      Distance: 3.516336441040039
+      Enable Stereo Rendering:
+        Stereo Eye Separation: 0.05999999865889549
+        Stereo Focal Distance: 1
+        Swap Stereo Eyes: false
+        Value: false
+      Focal Point:
+        X: -0.1811673939228058
+        Y: 0.17239540815353394
+        Z: -0.18302027881145477
+      Focal Shape Fixed Size: true
+      Focal Shape Size: 0.05000000074505806
+      Invert Z Axis: false
+      Name: Current View
+      Near Clip Distance: 0.009999999776482582
+      Pitch: 0.24879810214042664
+      Target Frame: link_pelvis
+      Value: Orbit (rviz)
+      Yaw: 0.7544890642166138
+    Saved: ~
+Window Geometry:
+  Displays:
+    collapsed: false
+  Height: 1052
+  Hide Left Dock: false
+  Hide Right Dock: false
+  QMainWindow State: 000000ff00000000fd00000001000000000000029d000003bffc0200000003fb000000100044006900730070006c006100790073010000003e0000023b000000da00fffffffb0000000c00430061006d0065007200610100000725000000e90000000000000000fb0000000a00560069006500770073010000027f0000017e000000b100ffffff00000c35000003bf00000004000000040000000800000008fc0000000100000002000000010000000a0054006f006f006c00730100000000ffffffff0000000000000000
+  Views:
+    collapsed: false
+  Width: 3800
+  X: 40
+  Y: 0
