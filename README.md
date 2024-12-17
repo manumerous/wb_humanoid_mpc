@@ -70,9 +70,9 @@ On the top level folder run:
 
 ```make launch-g1-dummy-sim```
 
-A window with Rviz will appear, On the first run the auto differentiation libraries will be generated. This might take up to 5-10 min depending on your system. Once done the robot appears and you can control it via the gamepad. 
+A window with Rviz will appear, On the first run the auto differentiation libraries will be generated. This might take up to 5-10 min depending on your system. Once done the robot appears and you can control it via an xbox gamepad or the controls in the terminal. 
 
 ## Acknowledgements
-This project was developed at [1X Technologies](https://www.1x.tech/) and is primarily authored and maintained by Manuel Yves Galliker (@manumerous).
+This project was developed at [1X Technologies](https://www.1x.tech/) and is primarily authored and maintained by [Manuel Yves Galliker](https://github.com/manumerous).
 
 Further acknoledgment for their contributions, insights, discussion and support goes to Michael Purcell, Jesper Smith, Simon Zimmermann, Joel Filho, Varit (Ohm) Vichathorn, Armin Nurkanovic, Charles Khazoom, Farbod Farshidian, Eric Jang, Bernt Børnich and everyone at 1X Technologies.
