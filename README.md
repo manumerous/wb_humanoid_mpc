@@ -3,7 +3,11 @@
 This repository contains a Nonlinear Model Predictove Controller (NMPC) for humanoid loco-manipulation control. It contains a library of 
 functionality and extends OCS2 to enable motion planning for humanoids. 
 
-It contains off the shelf functionality to runt he following MPC configurations.
+
+https://github.com/user-attachments/assets/93ee2fdb-68c1-4fca-a8b8-01a3d4a1daf6
+
+
+It contains functionality to allow the following MPC fromulations to be easily used for any humanoid robot. 
 
 ### Centroidal MPC
 The centroidal MPC optimizes over the whole-body kinematics and the center off mass dynamics, with a choice to either use a single rigid 
