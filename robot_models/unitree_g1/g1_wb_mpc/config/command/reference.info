@@ -1,7 +1,7 @@
 targetDisplacementVelocity          0.5;
 targetRotationVelocity              0.5;
 
-maxDisplacementVelocityX            1.5;
+maxDisplacementVelocityX            1.2;
 maxDisplacementVelocityY            0.8;
 maxDeltaPelvisHeight                0.4;
 maxRotationVelocity                 1.0;

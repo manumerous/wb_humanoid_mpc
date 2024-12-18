@@ -1,0 +1,64 @@
+# clang
+.clang-*
+
+# Remove accidental build stuff put in here
+build/
+log/
+install/
+
+# Prerequisites
+*.d
+
+# Compiled Object files
+*.slo
+*.lo
+*.o
+
+# Precompiled Headers
+*.gch
+*.pch
+
+# Compiled Dynamic libraries
+*.so
+*.dylib
+*.dll
+
+# Compiled Static libraries
+*.lai
+*.la
+*.a
+*.lib
+
+# Executables
+*.exe
+*.out
+*.app
+
+# vscode
+.vscode/*
+*/.vscode/*
+*.code-workspace
+
+# vim
+**/.cache
+
+# idea
+**/.idea/
+**/cmake-build-*/
+
+# Local History for Visual Studio Code
+.history/
+
+**/__pycache__/**
+
+# MuJoCo log 
+*/MUJOCO_LOG.TXT
+*mjData.bin
+
+# python
+.venv/*
+**/.venv/*
+**/*.egg-info/
+
+**/.gdb_history
+

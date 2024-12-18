@@ -119,8 +119,8 @@ void HumanoidVisualizer::createVisualizationPublishers() {
 
 void HumanoidVisualizer::publishObservation(const SystemObservation& observation) const {
   vector_t state(observation.state);
-  publishJointTransforms(mpcRobotModelPtr_->getJointAngles(state), jointPublisherPtr_);
   publishBaseTransform(mpcRobotModelPtr_->getBasePose(state));
+  publishJointTransforms(mpcRobotModelPtr_->getJointAngles(state), jointPublisherPtr_);
 }
 
 /******************************************************************************************************/

@@ -61,168 +61,198 @@ Visualization Manager:
         Expand Link Details: false
         Expand Tree: false
         Link Tree Style: Links in Alphabetic Order
-        link_abdomen:
+        d435_link:
           Alpha: 1
           Show Axes: false
           Show Trail: false
-        link_head:
-          Alpha: 1
-          Show Axes: false
-          Show Trail: false
-          Value: true
-        link_l_ankle:
+        head_link:
           Alpha: 1
           Show Axes: false
           Show Trail: false
           Value: true
-        link_l_elbow:
+        imu_in_pelvis:
+          Alpha: 1
+          Show Axes: false
+          Show Trail: false
+        imu_in_torso:
+          Alpha: 1
+          Show Axes: false
+          Show Trail: false
+        left_ankle_pitch_link:
           Alpha: 1
           Show Axes: false
           Show Trail: false
           Value: true
-        link_l_foot:
+        left_ankle_roll_link:
           Alpha: 1
           Show Axes: false
           Show Trail: false
           Value: true
-        link_l_hand:
+        left_elbow_link:
           Alpha: 1
           Show Axes: false
           Show Trail: false
           Value: true
-        link_l_lower_arm:
+        left_hip_pitch_link:
           Alpha: 1
           Show Axes: false
           Show Trail: false
           Value: true
-        link_l_lower_hip:
-          Alpha: 1
-          Show Axes: false
-          Show Trail: false
-        link_l_patella:
+        left_hip_roll_link:
           Alpha: 1
           Show Axes: false
           Show Trail: false
           Value: true
-        link_l_scapula:
+        left_hip_yaw_link:
           Alpha: 1
           Show Axes: false
           Show Trail: false
           Value: true
-        link_l_shin:
+        left_knee_link:
           Alpha: 1
           Show Axes: false
           Show Trail: false
           Value: true
-        link_l_shoulder:
+        left_rubber_hand:
           Alpha: 1
           Show Axes: false
           Show Trail: false
           Value: true
-        link_l_thigh:
+        left_shoulder_pitch_link:
           Alpha: 1
           Show Axes: false
           Show Trail: false
           Value: true
-        link_l_upper_arm:
+        left_shoulder_roll_link:
           Alpha: 1
           Show Axes: false
           Show Trail: false
           Value: true
-        link_l_upper_hip:
+        left_shoulder_yaw_link:
           Alpha: 1
           Show Axes: false
           Show Trail: false
           Value: true
-        link_l_wrist:
+        left_wrist_pitch_link:
           Alpha: 1
           Show Axes: false
           Show Trail: false
           Value: true
-        link_neck_xy:
-          Alpha: 1
-          Show Axes: false
-          Show Trail: false
-        link_neck_z:
+        left_wrist_roll_link:
           Alpha: 1
           Show Axes: false
           Show Trail: false
           Value: true
-        link_pelvis:
+        left_wrist_yaw_link:
           Alpha: 1
           Show Axes: false
           Show Trail: false
           Value: true
-        link_r_ankle:
+        logo_link:
           Alpha: 1
           Show Axes: false
           Show Trail: false
           Value: true
-        link_r_elbow:
+        mid360_link:
+          Alpha: 1
+          Show Axes: false
+          Show Trail: false
+        pelvis:
           Alpha: 1
           Show Axes: false
           Show Trail: false
           Value: true
-        link_r_foot:
+        pelvis_contour_link:
           Alpha: 1
           Show Axes: false
           Show Trail: false
           Value: true
-        link_r_hand:
+        right_ankle_pitch_link:
           Alpha: 1
           Show Axes: false
           Show Trail: false
           Value: true
-        link_r_lower_arm:
+        right_ankle_roll_link:
           Alpha: 1
           Show Axes: false
           Show Trail: false
           Value: true
-        link_r_lower_hip:
-          Alpha: 1
-          Show Axes: false
-          Show Trail: false
-        link_r_patella:
+        right_elbow_link:
           Alpha: 1
           Show Axes: false
           Show Trail: false
           Value: true
-        link_r_scapula:
+        right_hip_pitch_link:
           Alpha: 1
           Show Axes: false
           Show Trail: false
           Value: true
-        link_r_shin:
+        right_hip_roll_link:
           Alpha: 1
           Show Axes: false
           Show Trail: false
           Value: true
-        link_r_shoulder:
+        right_hip_yaw_link:
           Alpha: 1
           Show Axes: false
           Show Trail: false
           Value: true
-        link_r_thigh:
+        right_knee_link:
           Alpha: 1
           Show Axes: false
           Show Trail: false
           Value: true
-        link_r_upper_arm:
+        right_rubber_hand:
           Alpha: 1
           Show Axes: false
           Show Trail: false
           Value: true
-        link_r_upper_hip:
+        right_shoulder_pitch_link:
           Alpha: 1
           Show Axes: false
           Show Trail: false
           Value: true
-        link_r_wrist:
+        right_shoulder_roll_link:
           Alpha: 1
           Show Axes: false
           Show Trail: false
           Value: true
-        link_torso:
+        right_shoulder_yaw_link:
+          Alpha: 1
+          Show Axes: false
+          Show Trail: false
+          Value: true
+        right_wrist_pitch_link:
+          Alpha: 1
+          Show Axes: false
+          Show Trail: false
+          Value: true
+        right_wrist_roll_link:
+          Alpha: 1
+          Show Axes: false
+          Show Trail: false
+          Value: true
+        right_wrist_yaw_link:
+          Alpha: 1
+          Show Axes: false
+          Show Trail: false
+          Value: true
+        torso_link:
+          Alpha: 1
+          Show Axes: false
+          Show Trail: false
+          Value: true
+        waist_roll_link:
+          Alpha: 1
+          Show Axes: false
+          Show Trail: false
+          Value: true
+        waist_support_link:
+          Alpha: 1
+          Show Axes: false
+          Show Trail: false
+          Value: true
+        waist_yaw_link:
           Alpha: 1
           Show Axes: false
           Show Trail: false
@@ -255,7 +285,7 @@ Visualization Manager:
       Namespaces:
         Center of Pressure: true
         EE Forces: true
-        equivalentContactCornerForces: true
+        equivalentContactCornerForces: false
       Topic:
         Depth: 5
         Durability Policy: Volatile
@@ -363,25 +393,25 @@ Visualization Manager:
   Views:
     Current:
       Class: rviz_default_plugins/Orbit
-      Distance: 3.516336441040039
+      Distance: 6.860949516296387
       Enable Stereo Rendering:
         Stereo Eye Separation: 0.05999999865889549
         Stereo Focal Distance: 1
         Swap Stereo Eyes: false
         Value: false
       Focal Point:
-        X: -0.1811673939228058
-        Y: 0.17239540815353394
-        Z: -0.18302027881145477
+        X: -0.4616997241973877
+        Y: -1.9889886379241943
+        Z: -0.5572901368141174
       Focal Shape Fixed Size: true
       Focal Shape Size: 0.05000000074505806
       Invert Z Axis: false
       Name: Current View
       Near Clip Distance: 0.009999999776482582
-      Pitch: 0.24879810214042664
-      Target Frame: link_pelvis
+      Pitch: 0.2087981253862381
+      Target Frame: pelvis
       Value: Orbit (rviz)
-      Yaw: 0.7544890642166138
+      Yaw: 1.2794888019561768
     Saved: ~
 Window Geometry:
   Displays:

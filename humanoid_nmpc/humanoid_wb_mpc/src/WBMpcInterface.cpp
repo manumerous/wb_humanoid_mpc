@@ -154,6 +154,11 @@ void WBMpcInterface::setupOptimalControlProblem() {
   EndEffectorDynamicsWeights footTrackingCostWeights =
       EndEffectorDynamicsWeights::getWeights(taskFile_, "task_space_foot_cost_weights.", verbose_);
 
+  // check for mimic joints
+  boost::property_tree::ptree pt;
+  boost::property_tree::read_info(taskFile_, pt);
+  bool hasMimicJoints = loadData::containsPtreeValueFind(pt, "mimicJoints");
+
   for (size_t i = 0; i < N_CONTACTS; i++) {
     const std::string& footName = modelSettings_.contactNames[i];
 
@@ -170,7 +175,10 @@ void WBMpcInterface::setupOptimalControlProblem() {
     problemPtr_->equalityConstraintPtr->add(footName + "_zeroWrench", factory.getZeroWrenchConstraint(i));
     problemPtr_->equalityConstraintPtr->add(footName + "_zeroVelocity", getStanceFootConstraint(*eeDynamicsPtr, i));
     problemPtr_->equalityConstraintPtr->add(footName + "_normalVelocity", getNormalVelocityConstraint(*eeDynamicsPtr, i));
-    problemPtr_->equalityConstraintPtr->add(footName + "_kneeJointMimic", getJointMimicConstraint(i));  // This leads to stability problems.
+
+    if (hasMimicJoints) {
+      problemPtr_->equalityConstraintPtr->add(footName + "_kneeJointMimic", getJointMimicConstraint(i));
+    }
 
     std::string footTrackingCostName = footName + "_TaskSpaceTrackingCost";
 

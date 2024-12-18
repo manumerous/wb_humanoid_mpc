@@ -39,7 +39,6 @@ model_settings
     [4] "right_wrist_pitch_joint"
     [5] "right_wrist_yaw_joint"
   }
-
   
   ; Pinocchio Frame names for the contact frames
   contactNames6DoF
@@ -89,47 +88,6 @@ multiple_shooting
   threadPriority                        50
 }
 
-; DDP settings
-ddp
-{
-  algorithm                       SLQ
-
-  nThreads                        5
-  threadPriority                  50
-
-  maxNumIterations                1
-  minRelCost                      1e-1
-  constraintTolerance             5e-3
-
-  displayInfo                     false
-  displayShortSummary             false
-  checkNumericalStability         false
-  debugPrintRollout               false
-  debugCaching                    false
-
-  AbsTolODE                       5e-5
-  RelTolODE                       5e-3
-  maxNumStepsPerSecond            10000
-  timeStep                        0.015
-  backwardPassIntegratorType      ODE45
-
-  constraintPenaltyInitialValue   20.0
-  constraintPenaltyIncreaseRate   2.0
-
-  preComputeRiccatiTerms          false
-
-  useFeedbackPolicy               false
-
-  strategy                        LINE_SEARCH
-  lineSearch
-  {
-    minStepLength                 1e-2
-    maxStepLength                 1.0
-    hessianCorrectionStrategy     DIAGONAL_SHIFT
-    hessianCorrectionMultiple     1e-5
-  }
-}
-
 ; Rollout settings
 rollout
 {
@@ -171,7 +129,7 @@ initialState
   (10,0) 0.0     ; theta_base_y
   (11,0) 0.0     ; theta_base_x
 
-  ;; Leg Joint Positions: [LF, LH, RF, RH] ;;
+  ;; Joint Positions: ;;
   (12,0)  -0.05     ; left_hip_pitch_joint
   (13,0)   0.0      ; left_hip_roll_joint
   (14,0)   0.0      ; left_hip_yaw_joint

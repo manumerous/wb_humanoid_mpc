@@ -183,6 +183,12 @@ launch-g1-dummy-sim:
 	source install/setup.bash && \
 	ros2 launch g1_centroidal_mpc dummy_sim.launch.py 
 
+launch-wb-g1-dummy-sim:
+	cd ${build_dir} && \
+	source ${ros_source_file} && \
+	source install/setup.bash && \
+	ros2 launch g1_wb_mpc wb_dummy_sim.launch.py 
+
 test-pinocchio-model:
 	cd ${build_dir} && \
 	source ${ros_source_file} && \

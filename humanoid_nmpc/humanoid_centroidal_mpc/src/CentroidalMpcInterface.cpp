@@ -188,6 +188,11 @@ void CentroidalMpcInterface::setupOptimalControlProblem() {
   EndEffectorKinematicsWeights footTrackingCostWeights =
       EndEffectorKinematicsWeights::getWeights(taskFile_, "task_space_foot_cost_weights.", verbose_);
 
+  // check for mimic joints
+  boost::property_tree::ptree pt;
+  boost::property_tree::read_info(taskFile_, pt);
+  bool hasMimicJoints = loadData::containsPtreeValueFind(pt, "mimicJoints");
+
   for (size_t i = 0; i < N_CONTACTS; i++) {
     const std::string& footName = modelSettings_.contactNames[i];
 
@@ -204,7 +209,9 @@ void CentroidalMpcInterface::setupOptimalControlProblem() {
     problemPtr_->equalityConstraintPtr->add(footName + "_zeroWrench", factory.getZeroWrenchConstraint(i));
     problemPtr_->equalityConstraintPtr->add(footName + "_zeroVelocity", getStanceFootConstraint(*eeKinematicsPtr, i));
     problemPtr_->equalityConstraintPtr->add(footName + "_normalVelocity", getNormalVelocityConstraint(*eeKinematicsPtr, i));
-    // problemPtr_->equalityConstraintPtr->add(footName + "_kneeJointMimic", getJointMimicConstraint(i));
+    if (hasMimicJoints) {
+      problemPtr_->equalityConstraintPtr->add(footName + "_kneeJointMimic", getJointMimicConstraint(i));
+    }
 
     std::string footTrackingCostName = footName + "_TaskSpaceKinematicsCost";
 

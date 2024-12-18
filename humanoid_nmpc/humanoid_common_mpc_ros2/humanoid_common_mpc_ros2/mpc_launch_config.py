@@ -153,7 +153,8 @@ class MPCLaunchConfig:
                 {
                     "robot_description": Command(
                         ["xacro ", LaunchConfiguration("description_name")]
-                    )
+                    ),
+                    "publish_frequency": 180.0,
                 }
             ],
         )
@@ -168,6 +169,7 @@ class MPCLaunchConfig:
                         ["xacro ", LaunchConfiguration("description_name")]
                     ),
                     "frame_prefix": "terminal_state/",
+                    "publish_frequency": 180.0,
                 }
             ],
             remappings=[
@@ -188,6 +190,7 @@ class MPCLaunchConfig:
                         ["xacro ", LaunchConfiguration("description_name")]
                     ),
                     "frame_prefix": "terminal_target/",
+                    "publish_frequency": 180.0,
                 }
             ],
             remappings=[
