@@ -51,6 +51,14 @@ model_settings
     [0] "left_ankle_roll_joint"
     [1] "right_ankle_roll_joint"
   }
+
+  ;; Used for arm swing reference
+  armJointNames {
+    left_shoulder_y       left_shoulder_pitch_joint
+    right_shoulder_y      right_shoulder_pitch_joint
+    left_elbow_y          left_elbow_joint
+    right_elbow_y         right_elbow_joint
+  }
 }
 
 swing_trajectory_config
@@ -141,7 +149,7 @@ initialState
   (25,0)  0.0       ; right_shoulder_pitch_joint
   (26,0)  0.0       ; right_shoulder_roll_joint
   (27,0)  0.0       ; right_shoulder_yaw_joint
-  (28,0)  0.0       ; right_elbow
+  (28,0)  0.0       ; right_elbow_joint
 
 ;; Base Velocity: [velocity, angular velocity] ;;
   (29,0)  0.0       ; v_base_x
@@ -174,7 +182,7 @@ initialState
   (54,0)  0.0       ; right_shoulder_pitch_joint
   (55,0)  0.0       ; right_shoulder_roll_joint
   (56,0)  0.0       ; right_shoulder_yaw_joint
-  (57,0)  0.0       ; right_elbow
+  (57,0)  0.0       ; right_elbow_joint
 }
 
 ; standard state weight matrix
@@ -213,7 +221,7 @@ Q
   (25,25)  0.4       ; right_shoulder_pitch_joint
   (26,26)  2.0       ; right_shoulder_roll_joint
   (27,27)  0.4       ; right_shoulder_yaw_joint
-  (28,28)  0.4       ; right_elbow
+  (28,28)  0.4       ; right_elbow_joint
 
 ;; Base Velocities: [linear, angular] ;;
   (29,29) 3.0 ; v_base_x
@@ -246,7 +254,7 @@ Q
   (54,54)  0.02       ; right_shoulder_pitch_joint
   (55,55)  0.02       ; right_shoulder_roll_joint
   (56,56)  0.02       ; right_shoulder_yaw_joint
-  (57,57)  0.02       ; right_elbow
+  (57,57)  0.02       ; right_elbow_joint
 
 }
 
@@ -292,7 +300,7 @@ R
   (31,31) 0.02      ;    right_shoulder_pitch_joint
   (32,32) 0.02      ;    right_shoulder_roll_joint
   (33,33) 0.02      ;    right_shoulder_yaw_joint
-  (34,34) 0.02      ;    right_elbow
+  (34,34) 0.02      ;    right_elbow_joint
 
 }
 
@@ -333,7 +341,7 @@ Q_final
   (25,25)  0.4       ; right_shoulder_pitch_joint
   (26,26)  2.0       ; right_shoulder_roll_joint
   (27,27)  0.4       ; right_shoulder_yaw_joint
-  (28,28)  0.4       ; right_elbow
+  (28,28)  0.4       ; right_elbow_joint
 
 ;; Base Velocities: [linear, angular] ;;
   (29,29) 3.0 ; v_base_x
@@ -366,7 +374,7 @@ Q_final
   (54,54)  0.02       ; right_shoulder_pitch_joint
   (55,55)  0.02       ; right_shoulder_roll_joint
   (56,56)  0.02       ; right_shoulder_yaw_joint
-  (57,57)  0.02       ; right_elbow
+  (57,57)  0.02       ; right_elbow_joint
 }
 
 

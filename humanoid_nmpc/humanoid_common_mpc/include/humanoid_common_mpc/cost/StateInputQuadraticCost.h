@@ -42,14 +42,10 @@ class StateInputQuadraticCost final : public QuadraticStateInputCost {
                           matrix_t R,
                           const SwitchedModelReferenceManager& referenceManager,
                           const PinocchioInterface& pinocchioInterface,
-                          const MpcRobotModelBase<scalar_t>& mpcRobotModel,
-                          bool armSwingReferenceActivated = false,
-                          scalar_t maxDisplacementVelocityX = 1.0);
+                          const MpcRobotModelBase<scalar_t>& mpcRobotModel);
 
   ~StateInputQuadraticCost() override = default;
   StateInputQuadraticCost* clone() const override { return new StateInputQuadraticCost(*this); };
-
-  void activateArmSwingReference(bool activateArmSwing) { armSwingReferenceActivated_ = activateArmSwing; }
 
  private:
   StateInputQuadraticCost(const StateInputQuadraticCost& rhs);
@@ -62,17 +58,6 @@ class StateInputQuadraticCost final : public QuadraticStateInputCost {
   const SwitchedModelReferenceManager* referenceManagerPtr_;
   const PinocchioInterface& pinInterface_;
   const MpcRobotModelBase<scalar_t>* mpcRobotModelPtr_;
-
-  // const size_t j_l_shoulder_y_index_;
-  // const size_t j_r_shoulder_y_index_;
-  // const size_t j_l_elbow_y_index_;
-  // const size_t j_r_elbow_y_index_;
-  // const size_t j_spine_y_index_;
-  // const size_t j_spine_z_index_;
-
-  bool armSwingReferenceActivated_;
-
-  const scalar_t maxDisplacementVelocityX_;
 };
 
 }  // namespace ocs2::humanoid

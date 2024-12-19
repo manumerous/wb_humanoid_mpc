@@ -130,6 +130,7 @@ CentroidalMpcInterface::CentroidalMpcInterface(
   referenceManagerPtr_ =
       std::make_shared<SwitchedModelReferenceManager>(GaitSchedule::loadGaitSchedule(referenceFile, modelSettings_, verbose_),
                                                       std::move(swingTrajectoryPlanner), *pinocchioInterfacePtr_, *mpcRobotModelPtr_);
+  referenceManagerPtr_->setArmSwingReferenceActive(false);
 
   // initial state
   initialState_.setZero(centroidalModelInfo_.stateDim);
@@ -160,7 +161,7 @@ void CentroidalMpcInterface::setupOptimalControlProblem() {
   problemPtr_->dynamicsPtr = std::move(dynamicsPtr);
 
   // Cost terms
-  problemPtr_->costPtr->add("stateInputQuadraticCost", factory.getStateInputQuadraticCost(true));
+  problemPtr_->costPtr->add("stateInputQuadraticCost", factory.getStateInputQuadraticCost());
   problemPtr_->finalCostPtr->add("terminalCost", factory.getTerminalCost());
 
   std::unique_ptr<EndEffectorKinematics<scalar_t>> eeKinematicsPtr;

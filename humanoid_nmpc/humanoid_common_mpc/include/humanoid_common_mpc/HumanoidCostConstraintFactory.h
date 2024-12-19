@@ -62,7 +62,7 @@ class HumanoidCostConstraintFactory {
   ~HumanoidCostConstraintFactory() = default;
   HumanoidCostConstraintFactory(const HumanoidCostConstraintFactory& other) = delete;
 
-  std::unique_ptr<StateInputCost> getStateInputQuadraticCost(bool activateArmSwing = false) const;
+  std::unique_ptr<StateInputCost> getStateInputQuadraticCost() const;
 
   std::unique_ptr<StateCost> getTerminalCost() const;
 

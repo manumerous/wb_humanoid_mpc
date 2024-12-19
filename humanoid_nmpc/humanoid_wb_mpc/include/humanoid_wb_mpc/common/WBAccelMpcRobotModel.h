@@ -84,8 +84,8 @@ class WBAccelMpcRobotModel : public MpcRobotModelBase<SCALAR_T> {
   size_t getBaseStartindex() const override { return 0; };
   size_t getJointStartindex() const override { return 6; };
   // Be careful, the joint Velocities are part of the state vector here.
-  size_t getJointVelocitiesStartindex() const override { return (6 + this->modelSettings.mpc_joint_dim); };
-  size_t getJointAccelerationsStartindex() const { return (2 * N_CONTACTS); };
+  size_t getJointVelocitiesStartindex() const override { return (12 + this->modelSettings.mpc_joint_dim); };
+  size_t getJointAccelerationsStartindex() const { return (6 * N_CONTACTS); };
 
   // Assumes contact wrench [f_x, f_y, f_z, M_x, M_y, M_z]^T
   size_t getContactWrenchStartIndices(size_t contactIndex) const override { return 6 * contactIndex; };

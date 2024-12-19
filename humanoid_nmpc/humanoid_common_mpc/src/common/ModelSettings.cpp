@@ -113,6 +113,11 @@ ModelSettings::ModelSettings(const std::string& configFile, const std::string& u
   loadData::loadPtreeValue(pt, this->verboseCppAd, prefix + "verboseCppAd", verbose);
   loadData::loadPtreeValue(pt, this->recompileLibrariesCppAd, prefix + "recompileLibrariesCppAd", verbose);
   loadData::loadPtreeValue(pt, this->phaseTransitionStanceTime, prefix + "phaseTransitionStanceTime", verbose);
+
+  loadData::loadPtreeValue(pt, this->j_l_shoulder_y_name, prefix + "armJointNames.left_shoulder_y", verbose);
+  loadData::loadPtreeValue(pt, this->j_r_shoulder_y_name, prefix + "armJointNames.right_shoulder_y", verbose);
+  loadData::loadPtreeValue(pt, this->j_l_elbow_y_name, prefix + "armJointNames.left_elbow_y", verbose);
+  loadData::loadPtreeValue(pt, this->j_r_elbow_y_name, prefix + "armJointNames.right_elbow_y", verbose);
   modelFolderCppAd = "cppad_code_gen/cppad_" + mpcName + robotName;
 
   loadData::loadStdVector(configFile, prefix + "fixedJointNames", fixedJointNames, verbose);
@@ -139,6 +144,11 @@ ModelSettings::ModelSettings(const std::string& configFile, const std::string& u
 
   this->mpc_joint_dim = this->mpcModelJointNames.size();
   this->full_joint_dim = this->fullJointNames.size();
+
+  j_l_shoulder_y_index = this->jointIndexMap.at(j_l_shoulder_y_name);
+  j_r_shoulder_y_index = this->jointIndexMap.at(j_r_shoulder_y_name);
+  j_l_elbow_y_index = this->jointIndexMap.at(j_l_elbow_y_name);
+  j_r_elbow_y_index = this->jointIndexMap.at(j_r_elbow_y_name);
 
   const std::string footConstraintPrefix = prefix + "foot_constraint.";
 

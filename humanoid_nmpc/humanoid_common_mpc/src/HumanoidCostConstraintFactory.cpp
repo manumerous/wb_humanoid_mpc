@@ -73,13 +73,11 @@ HumanoidCostConstraintFactory::HumanoidCostConstraintFactory(const std::string& 
 /******************************************************************************************************/
 /******************************************************************************************************/
 
-std::unique_ptr<StateInputCost> HumanoidCostConstraintFactory::getStateInputQuadraticCost(bool activateArmSwing) const {
+std::unique_ptr<StateInputCost> HumanoidCostConstraintFactory::getStateInputQuadraticCost() const {
   matrix_t Q(mpcRobotModelADPtr_->getStateDim(), mpcRobotModelADPtr_->getStateDim());
   loadData::loadEigenMatrix(taskFile_, "Q", Q);
   matrix_t R(mpcRobotModelADPtr_->getInputDim(), mpcRobotModelADPtr_->getInputDim());
   loadData::loadEigenMatrix(taskFile_, "R", R);
-  scalar_t maxDisplacementVelocityX = 1.0;
-  loadData::loadCppDataType(referenceFile_, "maxDisplacementVelocityX", maxDisplacementVelocityX);
 
   if (verbose_) {
     std::cerr << "\n #### Base Tracking Cost Coefficients: ";
@@ -87,12 +85,10 @@ std::unique_ptr<StateInputCost> HumanoidCostConstraintFactory::getStateInputQuad
     std::cerr << "Q:\n" << Q << "\n";
     std::cerr << "R:\n" << R << "\n";
     std::cerr << " #### =============================================================================\n";
-    std::cout << "Loaded max displacement velocity of: " << maxDisplacementVelocityX << std::endl;
   }
 
-  return std::unique_ptr<StateInputCost>(new StateInputQuadraticCost(std::move(Q), std::move(R), *referenceManagerPtr_,
-                                                                     *pinocchioInterfacePtr_, *mpcRobotModelPtr_, activateArmSwing,
-                                                                     maxDisplacementVelocityX));
+  return std::unique_ptr<StateInputCost>(
+      new StateInputQuadraticCost(std::move(Q), std::move(R), *referenceManagerPtr_, *pinocchioInterfacePtr_, *mpcRobotModelPtr_));
 }
 
 /******************************************************************************************************/

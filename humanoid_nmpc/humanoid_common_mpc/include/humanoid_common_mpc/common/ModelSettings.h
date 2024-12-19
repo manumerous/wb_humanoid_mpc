@@ -83,6 +83,16 @@ class ModelSettings {
   size_t mpc_joint_dim;
   size_t full_joint_dim;
 
+  std::string j_l_shoulder_y_name;
+  std::string j_r_shoulder_y_name;
+  std::string j_l_elbow_y_name;
+  std::string j_r_elbow_y_name;
+
+  size_t j_l_shoulder_y_index;
+  size_t j_r_shoulder_y_index;
+  size_t j_l_elbow_y_index;
+  size_t j_r_elbow_y_index;
+
   FootConstraintConfig footConstraintConfig;
 };
 

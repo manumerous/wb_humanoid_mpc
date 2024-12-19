@@ -64,11 +64,15 @@ class SwitchedModelReferenceManager : public ReferenceManager {
 
   bool isInContact(scalar_t time, size_t contactIndex) const { return getContactFlags(time)[contactIndex]; };
 
+  void setArmSwingReferenceActive(bool armSwingReferenceActive) { armSwingReferenceActive_ = armSwingReferenceActive; }
+
   const std::shared_ptr<GaitSchedule>& getGaitSchedule() const { return gaitSchedulePtr_; }
 
   const std::shared_ptr<SwingTrajectoryPlanner>& getSwingTrajectoryPlanner() const { return swingTrajectoryPtr_; }
 
   scalar_t getPhaseVariable(scalar_t time) const;
+
+  vector_t getDesiredState(const TargetTrajectories& targetTrajectories, const vector_t& state, scalar_t time) const;
 
  protected:
   virtual void modifyReferences(scalar_t initTime,
@@ -85,6 +89,8 @@ class SwitchedModelReferenceManager : public ReferenceManager {
   PinocchioInterface pinocchioInterface_;
   const MpcRobotModelBase<scalar_t>* mpcRobotModelPtr_;
   ModeSchedule modeSchedule_;
+
+  bool armSwingReferenceActive_{false};
 
   std::shared_ptr<GaitSchedule> gaitSchedulePtr_;
   std::shared_ptr<SwingTrajectoryPlanner> swingTrajectoryPtr_;

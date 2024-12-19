@@ -101,6 +101,38 @@ scalar_t SwitchedModelReferenceManager::adaptToCurrentGroundHeight(TargetTraject
   previousGroundHeightEstimate_ = terrainHeight;
   return terrainHeight;
 }
+
+/******************************************************************************************************/
+/******************************************************************************************************/
+/******************************************************************************************************/
+
+vector_t SwitchedModelReferenceManager::getDesiredState(const TargetTrajectories& targetTrajectories,
+                                                        const vector_t& state,
+                                                        scalar_t time) const {
+  vector_t xNominal = targetTrajectories.getDesiredState(time);
+
+  if (armSwingReferenceActive_) {
+    scalar_t phaseVariable = this->getPhaseVariable(time);
+    vector_t desiredJointAngles = mpcRobotModelPtr_->getJointAngles(xNominal);
+
+    vector3_t linVelCommand = mpcRobotModelPtr_->getBaseComLinearVelocity(xNominal);
+    scalar_t currentEulerZ = mpcRobotModelPtr_->getBasePose(state)[3];
+
+    const scalar_t localVelXCommand = (std::cos(currentEulerZ) * linVelCommand[0] + std::sin(currentEulerZ) * linVelCommand[1]);
+
+    const ModelSettings& modelSettings = mpcRobotModelPtr_->modelSettings;
+
+    scalar_t gaitCycleFactor = std::sin(2 * M_PI * (phaseVariable - 0.15)) * localVelXCommand;
+    desiredJointAngles[modelSettings.j_l_shoulder_y_index] += -0.3 * gaitCycleFactor;
+    desiredJointAngles[modelSettings.j_r_shoulder_y_index] += 0.3 * gaitCycleFactor;
+    desiredJointAngles[modelSettings.j_l_elbow_y_index] += -0.3 * gaitCycleFactor;
+    desiredJointAngles[modelSettings.j_r_elbow_y_index] += 0.3 * gaitCycleFactor;
+
+    mpcRobotModelPtr_->setJointAngles(xNominal, desiredJointAngles);
+  }
+  return xNominal;
+}
+
 /******************************************************************************************************/
 /******************************************************************************************************/
 /******************************************************************************************************/

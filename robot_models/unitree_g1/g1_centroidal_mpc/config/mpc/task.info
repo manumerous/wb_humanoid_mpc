@@ -54,6 +54,14 @@ model_settings
     [1] "right_ankle_roll_joint"
   }
 
+  ;; Used for arm swing reference
+  armJointNames {
+    left_shoulder_y       left_shoulder_pitch_joint
+    right_shoulder_y      right_shoulder_pitch_joint
+    left_elbow_y          left_elbow_joint
+    right_elbow_y         right_elbow_joint
+  }
+
 }
 
 swing_trajectory_config
@@ -152,7 +160,7 @@ initialState
   (31,0)  0.0       ; right_shoulder_pitch_joint
   (32,0)  0.0       ; right_shoulder_roll_joint
   (33,0)  0.0       ; right_shoulder_yaw_joint
-  (34,0)  0.0       ; right_elbow
+  (34,0)  0.0       ; right_elbow_joint
 }
 
 ; standard state weight matrix
@@ -200,7 +208,7 @@ Q
   (31,31) 2.0      ;    right_shoulder_pitch_joint
   (32,32) 20.0     ;    right_shoulder_roll_joint
   (33,33) 2.0      ;    right_shoulder_yaw_joint
-  (34,34) 2.0      ;    right_elbow
+  (34,34) 2.0      ;    right_elbow_joint
 
 }
 
@@ -246,7 +254,7 @@ R
   (31,31) 200.0      ;    right_shoulder_pitch_joint
   (32,32) 100.0      ;    right_shoulder_roll_joint
   (33,33) 100.0      ;    right_shoulder_yaw_joint
-  (34,34) 200.0      ;    right_elbow
+  (34,34) 200.0      ;    right_elbow_joint
 }
 
 terminalCostScaling       3.0
@@ -294,7 +302,7 @@ Q_final
   (31,31) 2.0      ;    right_shoulder_pitch_joint
   (32,32) 20.0     ;    right_shoulder_roll_joint
   (33,33) 2.0      ;    right_shoulder_yaw_joint
-  (34,34) 2.0      ;    right_elbow
+  (34,34) 2.0      ;    right_elbow_joint
 }
 
 icp_cost_weights
