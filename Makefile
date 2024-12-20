@@ -170,13 +170,6 @@ clean-cppad:
 	cd ${build_dir} && \
 	rm -rf cppad_code_gen
 
-format:
-	lib/halodi-ros2-code-quality/Tools/fix_code_style.sh robot_models humanoid_nmpc
-
-validate-format: 
-	lib/halodi-ros2-code-quality/Tools/check_code_style.sh robot_models humanoid_nmpc
-
-
 launch-g1-dummy-sim:
 	cd ${build_dir} && \
 	source ${ros_source_file} && \
