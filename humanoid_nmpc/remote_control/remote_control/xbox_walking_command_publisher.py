@@ -77,6 +77,7 @@ class XBoxWalkingCommandPublisher(Node):
         self.current_pelvis_height_target = 0.8
         self.min_pelvis_height = 0.2
         self.max_pelvis_height = 1.0
+        self.exp = 1.5
 
         self.bluetooth_connection = False
 
@@ -161,11 +162,17 @@ class XBoxWalkingCommandPublisher(Node):
             input.lt = (self.joystick.get_axis(2) + 1) / 2
             input.rt = (self.joystick.get_axis(5) + 1) / 2
 
+        # exponential scaling
+        raw_x_left = 0.2 * raw_x_left + 0.8 * raw_x_left**3
+        raw_y_left = 0.2 * raw_y_left + 0.8 * raw_y_left**3
+        raw_x_right = 0.2 * raw_x_right + 0.8 * raw_x_right**3
+        raw_y_right = 0.2 * raw_y_right + 0.8 * raw_y_right**3
+
         # Clip the values if they are below 0.1 in absolute value
-        input.x_left = raw_x_left if abs(raw_x_left) >= 0.1 else 0
-        input.y_left = raw_y_left if abs(raw_y_left) >= 0.1 else 0
-        input.x_right = raw_x_right if abs(raw_x_right) >= 0.1 else 0
-        input.y_right = raw_y_right if abs(raw_y_right) >= 0.1 else 0
+        input.x_left = raw_x_left if abs(raw_x_left) >= 0.02 else 0
+        input.y_left = raw_y_left if abs(raw_y_left) >= 0.02 else 0
+        input.x_right = raw_x_right if abs(raw_x_right) >= 0.02 else 0
+        input.y_right = raw_y_right if abs(raw_y_right) >= 0.02 else 0
 
         return input
 
