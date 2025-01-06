@@ -58,7 +58,6 @@ BUILD_TYPE ?= Release
 BUILD_TESTING ?= ON
 BUILD_WITH_NINJA ?= ON
 PARALLEL_JOBS ?= 6
-PARALLEL_COLCON_JOBS ?= 4
 CPP_VERSION ?= -std=c++17
 
 ############################################################
@@ -90,7 +89,7 @@ else
 endif
 
 COMMON_COLCON_BUILD_FLAGS ?= \
-	--parallel-workers=${PARALLEL_COLCON_JOBS} \
+	--parallel-workers=${PARALLEL_JOBS} \
 	${EVENT_HANDLERS} \
 	--symlink-install \
 	--build-base $(build_dir)/build \
@@ -127,7 +126,8 @@ endef
 .PHONY: build-all build-debug build-release build-relwithdebinfo build \
         test-all test $(addprefix build-,$(PACKAGES)) $(addprefix test-,$(PACKAGES))
 
-build-all: $(addprefix build-,$(PACKAGES))
+build-all:
+	$(call default-build-package,$(PACKAGES))
 
 $(addprefix build-,$(PACKAGES)):
 	$(call default-build-package,$(patsubst build-%,%,$@))
