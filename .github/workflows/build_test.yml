@@ -1,0 +1,58 @@
+name: Build Tests
+
+on:
+  push:
+    branches:
+      - master
+  pull_request:
+    branches:
+      - "*"
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    timeout-minutes: 180
+    strategy:
+      matrix:
+        container:
+          - "ros:jazzy"
+    container: ${{ matrix.container }}
+
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v3
+
+      - name: Cache APT packages
+        uses: actions/cache@v3
+        with:
+          path: /var/cache/apt
+          key: ${{ runner.os }}-apt-${{ hashFiles('dependencies.txt') }}
+          restore-keys: |
+            ${{ runner.os }}-apt-
+
+      - name: Install Dependencies
+        run: |
+          sudo apt-get update && sudo apt-get upgrade -y
+          # Install dependencies listed in dependencies.txt
+          # Make sure dependencies.txt is at the root of your repo or update the path accordingly
+          xargs -a dependencies.txt sudo apt-get install -y
+
+          # Install additional ROS packages
+          sudo apt-get install -y ros-jazzy-ament-cmake-clang-format ros-jazzy-joint-state-publisher-gui ros-jazzy-xacro ros-jazzy-mcap-vendor ros-jazzy-interactive-markers
+
+      - name: Initialize submodules
+        run: |
+          git config --global --add safe.directory $GITHUB_WORKSPACE
+          git submodule update --init --recursive
+
+      - name: Cache Build Artifacts
+        uses: actions/cache@v3
+        with:
+          path: build/
+          key: ${{ runner.os }}-build-${{ hashFiles('**/CMakeLists.txt') }}
+          restore-keys: |
+            ${{ runner.os }}-build-
+
+      - name: Build All
+        run: |
+          make build-all
