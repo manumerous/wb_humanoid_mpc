@@ -27,11 +27,11 @@ def generate_launch_description():
     # Add nodes
     cfg.ld.add_action(cfg.mpc_node)
     cfg.ld.add_action(cfg.dummy_sim_node)
-    cfg.ld.add_action(cfg.gait_command_node)
     cfg.ld.add_action(cfg.robot_state_publisher_node)
     cfg.ld.add_action(cfg.terminal_robot_state_publisher_node)
     cfg.ld.add_action(cfg.target_robot_state_publisher_node)
     cfg.ld.add_action(cfg.rviz_node)
     cfg.ld.add_action(cfg.target_velocity_gamepad_publisher_node)
+    cfg.ld.add_action(cfg.velocity_keyboard_command_node)
 
     return cfg.ld

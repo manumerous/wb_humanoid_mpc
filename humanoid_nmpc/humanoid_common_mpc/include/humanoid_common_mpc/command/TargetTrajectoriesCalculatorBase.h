@@ -99,7 +99,7 @@ class TargetTrajectoriesCalculatorBase {
   scalar_t maxDeltaPelvisHeight_ = 0.3;
   scalar_t maxRotationVelocity_ = 0.6;
 
-  scalar_t comHeight_;
+  scalar_t defaultBaseHeight_;
   vector_t targetJointState_;
   scalar_t mpcHorizon_;
 };
