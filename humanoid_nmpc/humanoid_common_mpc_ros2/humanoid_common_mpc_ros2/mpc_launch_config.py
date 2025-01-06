@@ -109,14 +109,29 @@ class MPCLaunchConfig:
             ],
         )
 
-        self.gait_command_node = launch_ros.actions.Node(
+        self.gait_keyboard_command_node = launch_ros.actions.Node(
             package="humanoid_common_mpc_ros2",
-            executable="gait_command_node",
+            executable="gait_keyboard_command_node",
             prefix=self.always_terminal_prefix,
-            name="gait_command_node",
+            name="gait_keyboard_command_node",
             output="screen",
             arguments=[
                 LaunchConfiguration("robot_name"),
+                LaunchConfiguration("target_gait_file"),
+            ],
+        )
+
+        self.velocity_keyboard_command_node = launch_ros.actions.Node(
+            package="humanoid_common_mpc_ros2",
+            executable="velocity_keyboard_command_node",
+            prefix=self.always_terminal_prefix,
+            name="velocity_keyboard_command_node",
+            output="screen",
+            arguments=[
+                LaunchConfiguration("robot_name"),
+                LaunchConfiguration("config_name"),
+                LaunchConfiguration("target_command_file"),
+                LaunchConfiguration("description_name"),
                 LaunchConfiguration("target_gait_file"),
             ],
         )

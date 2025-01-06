@@ -6,7 +6,7 @@ maxDisplacementVelocityY            0.8;
 maxDeltaPelvisHeight                0.4;
 maxRotationVelocity                 1.0;
 
-comHeight                           0.7925
+defaultBaseHeight                           0.7925
 
 defaultJointState
 {

@@ -44,7 +44,7 @@ using namespace ocs2;
 namespace {
 scalar_t targetDisplacementVelocity;
 scalar_t targetRotationVelocity;
-scalar_t comHeight;
+scalar_t defaultBaseHeight;
 vector_t defaultJointState;  // ToDo preallocate the correct size.
 }  // namespace
 
@@ -71,7 +71,7 @@ TargetTrajectories commandLineToTargetTrajectories(const vector_t& commadLineTar
     target(0) = currentPose(0) + commadLineTarget(0);
     target(1) = currentPose(1) + commadLineTarget(1);
     // base z relative to the default height
-    target(2) = comHeight + commadLineTarget(2);
+    target(2) = defaultBaseHeight + commadLineTarget(2);
     // theta_z relative to current
     target(3) = currentPose(3) + commadLineTarget(3) * M_PI / 180.0;
     // theta_y, theta_x
@@ -115,7 +115,7 @@ int main(int argc, char* argv[]) {
 
   std::cerr << "Loading reference file: " << referenceFile << std::endl;
 
-  loadData::loadCppDataType(referenceFile, "comHeight", comHeight);
+  loadData::loadCppDataType(referenceFile, "defaultBaseHeight", defaultBaseHeight);
   loadData::loadEigenMatrix(referenceFile, "defaultJointState", defaultJointState);
   loadData::loadCppDataType(referenceFile, "targetRotationVelocity", targetRotationVelocity);
   loadData::loadCppDataType(referenceFile, "targetDisplacementVelocity", targetDisplacementVelocity);
