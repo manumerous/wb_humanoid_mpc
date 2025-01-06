@@ -25,7 +25,8 @@ def generate_launch_description():
     cfg.ld.add_action(cfg.declare_rviz_config_path)
 
     # Add nodes
-    cfg.ld.add_action(cfg.gait_command_node)
+    cfg.ld.add_action(cfg.gait_keyboard_command_node)
+    cfg.ld.add_action(cfg.velocity_keyboard_command_node)
     cfg.ld.add_action(cfg.robot_state_publisher_node)
     cfg.ld.add_action(cfg.terminal_robot_state_publisher_node)
     cfg.ld.add_action(cfg.target_robot_state_publisher_node)

@@ -44,7 +44,7 @@ TargetTrajectoriesCalculatorBase::TargetTrajectoriesCalculatorBase(const std::st
     : mpcRobotModelPtr_(mpcRobotModel.clone()), mpcHorizon_(mpcHorizon) {
   std::cerr << "Loading reference file: " << referenceFile << std::endl;
   targetJointState_.resize(mpcRobotModel.getJointDim());
-  loadData::loadCppDataType(referenceFile, "comHeight", comHeight_);
+  loadData::loadCppDataType(referenceFile, "defaultBaseHeight", defaultBaseHeight_);
   loadData::loadEigenMatrix(referenceFile, "defaultJointState", targetJointState_);
   loadData::loadCppDataType(referenceFile, "targetRotationVelocity", targetRotationVelocity_);
   loadData::loadCppDataType(referenceFile, "targetDisplacementVelocity", targetDisplacementVelocity_);
@@ -84,7 +84,7 @@ vector6_t TargetTrajectoriesCalculatorBase::getDeltaBaseTarget(const vector4_t& 
   target(1) = currentPoseTarget(1) + globalFrameDeltaY;
   // base z relative to the default height
   scalar_t deltaPelvisHeight = std::clamp(commadLinePoseTarget(2), -maxDeltaPelvisHeight_, maxDeltaPelvisHeight_);
-  target(2) = comHeight_ + deltaPelvisHeight;
+  target(2) = defaultBaseHeight_ + deltaPelvisHeight;
   // theta_z relative to current
   target(3) = currentPoseTarget(3) + commadLinePoseTarget(3) * M_PI / 180.0;
   target(4) = 0.0;

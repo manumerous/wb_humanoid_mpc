@@ -88,6 +88,7 @@ add_library(${PROJECT_NAME}
     src/visualization/EquivalentContactCornerForcesVisualizer.cpp
     src/ros_comm/MRTPolicySubscriber.cpp
     src/ros_comm/Ros2ProceduralMpcMotionManager.cpp
+    src/ros_comm/VelocityCommandKeyboardPublisher.cpp
     src/benchmarks/SqpBenchmarksPublisher.cpp
     src/benchmarks/DdpBenchmarksPublisher.cpp
     src/visualization/COMVisualizer.cpp
@@ -102,16 +103,30 @@ target_compile_options(${PROJECT_NAME} PUBLIC ${FLAGS})
 ################
 
 # Gait Command Node
-add_executable(gait_command_node
+add_executable(gait_keyboard_command_node
     src/HumanoidGaitCommandNode.cpp
 )
-ament_target_dependencies(gait_command_node
+ament_target_dependencies(gait_keyboard_command_node
     ${dependencies}
 )
-target_link_libraries(gait_command_node
+target_link_libraries(gait_keyboard_command_node
     ${PROJECT_NAME}
 )
-target_compile_options(gait_command_node PUBLIC ${FLAGS})
+target_compile_options(gait_keyboard_command_node PUBLIC ${FLAGS})
+
+# Gait Command Node
+add_executable(velocity_keyboard_command_node
+    src/MpcKeyboardVelocityCommandNode.cpp
+)
+ament_target_dependencies(velocity_keyboard_command_node
+    ${dependencies}
+)
+target_link_libraries(velocity_keyboard_command_node
+    ${PROJECT_NAME}
+)
+target_compile_options(velocity_keyboard_command_node PUBLIC ${FLAGS})
+
+
 
 # COM Visualizer Node
 add_executable(COMVisualizer
@@ -144,7 +159,8 @@ install(DIRECTORY include/${PROJECT_NAME}
 ament_python_install_package(${PROJECT_NAME})
 
 install(TARGETS
-    gait_command_node
+    gait_keyboard_command_node
+    velocity_keyboard_command_node
     COMVisualizer
     DESTINATION lib/${PROJECT_NAME}
 )
