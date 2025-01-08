@@ -80,6 +80,17 @@ For the **Whole-Body MPC**
 ```
 make launch-wb-g1-dummy-sim
 ```
+## Citing OCS2 Humanoid MPC
+To cite the OCS2 Humanoid MPC in your academic research, please consider citing the following web BibTeX entry:
+
+```
+@misc{ocs2humanoidmpcweb,
+   author = {Manuel Yves Galliker},
+   title = {OCS2 Humanoid MPC: Whole-Body Nonlinear MPC for Realtime Humanoid Loco-Manipulation Planning and Control},
+   howpublished = {https://github.com/1x-technologies/ocs2_humanoid_mpc},
+   year = {2024}
+}
+```
 
 ## Acknowledgements
 This project was developed at [1X Technologies](https://www.1x.tech/) and is primarily authored and maintained by [Manuel Yves Galliker](https://github.com/manumerous).
