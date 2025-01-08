@@ -1,4 +1,4 @@
-# OCS2 Humanoid MPC
+# Whole-Body Humanoid MPC
 
 This repository contains a Nonlinear Model Predictove Controller (NMPC) for humanoid loco-manipulation control. It contains a library of 
 functionality and extends OCS2 to enable motion planning for humanoids. 
@@ -9,11 +9,11 @@ functionality and extends OCS2 to enable motion planning for humanoids.
 It contains functionality to allow the following MPC fromulations to be easily used for any humanoid robot. 
 
 ### Centroidal MPC
-The centroidal MPC optimizes over the whole-body kinematics and the center off mass dynamics, with a choice to either use a single rigid 
+The centroidal MPC optimizes over the **whole-body kinematics** and the center off mass dynamics, with a choice to either use a single rigid 
 body model or the full centroidal dynamics. It's functionality is contained in `humanoid_centroidal_mpc`.
 
 ### Whole-Body Dynamics MPC
-The whole-body dynamics MPC optimized over the contact forces and joint accelerations with the option to compute the joint torques for 
+The **whole-body dynamics** MPC optimized over the contact forces and joint accelerations with the option to compute the joint torques for 
 each step planned accross the horizon. It's functionality is contained in `humanoid_wb_mpc`.
 
 ### Robot Examples
@@ -80,13 +80,13 @@ For the **Whole-Body MPC**
 ```
 make launch-wb-g1-dummy-sim
 ```
-## Citing OCS2 Humanoid MPC
-To cite the OCS2 Humanoid MPC in your academic research, please consider citing the following web BibTeX entry:
+## Citing Whole-Body Humanoid MPC
+To cite the Whole-Body Humanoid MPC in your academic research, please consider citing the following web BibTeX entry:
 
 ```
-@misc{ocs2humanoidmpcweb,
+@misc{wholebodyhumanoidmpcweb,
    author = {Manuel Yves Galliker},
-   title = {OCS2 Humanoid MPC: Whole-Body Nonlinear MPC for Realtime Humanoid Loco-Manipulation Planning and Control},
+   title = {Whole-body Humanoid MPC: Realtime Physics-Based Procedural Loco-Manipulation Planning and Control},
    howpublished = {https://github.com/1x-technologies/ocs2_humanoid_mpc},
    year = {2024}
 }
