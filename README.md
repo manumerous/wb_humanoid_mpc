@@ -69,13 +69,17 @@ Once you run the NMPC a window with Rviz will appear for visualization. The firs
 
 On the top level folder run:
 
-For the centroidal MPC
+For the **Centroidal MPC**
 
-```make launch-g1-dummy-sim```
+```
+make launch-g1-dummy-sim
+```
 
-For the Whole-Body MPC
+For the **Whole-Body MPC**
 
-```make launch-wb-g1-dummy-sim```
+```
+make launch-wb-g1-dummy-sim
+```
 
 ## Acknowledgements
 This project was developed at [1X Technologies](https://www.1x.tech/) and is primarily authored and maintained by [Manuel Yves Galliker](https://github.com/manumerous).
