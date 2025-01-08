@@ -31,13 +31,13 @@ Create a colcon workspace and clone the repository into the src folder:
 
 ```bash
 mkdir -p humanoid_mpc_ws/src && cd humanoid_mpc_ws/src
-git clone https://github.com/manumerous/ocs2-humanoid-mpc.git
+git clone https://github.com/1x-technologies/wb_humanoid_mpc.git
 ```
 
 Then initialize all submodules using:
 
 ```bash
-cd ocs2-humanoid-mpc
+cd wb-humanoid-mpc
 git submodule update --init --recursive
 ```
 
@@ -87,7 +87,7 @@ To cite the Whole-Body Humanoid MPC in your academic research, please consider c
 @misc{wholebodyhumanoidmpcweb,
    author = {Manuel Yves Galliker},
    title = {Whole-body Humanoid MPC: Realtime Physics-Based Procedural Loco-Manipulation Planning and Control},
-   howpublished = {https://github.com/1x-technologies/ocs2_humanoid_mpc},
+   howpublished = {https://github.com/1x-technologies/wb_humanoid_mpc},
    year = {2024}
 }
 ```
