@@ -31,7 +31,7 @@ Create a colcon workspace and clone the repository into the src folder:
 
 ```bash
 mkdir -p humanoid_mpc_ws/src && cd humanoid_mpc_ws/src
-git clone https://github.com/1x-technologies/wb_humanoid_mpc.git
+git clone https://github.com/1x-technologies/wb-humanoid-mpc.git
 ```
 
 Then initialize all submodules using:
