@@ -1,6 +1,6 @@
 # Whole-Body Humanoid MPC
 
-This repository contains a Nonlinear Model Predictove Controller (NMPC) for humanoid loco-manipulation control. It contains a library of 
+This repository contains a Whole-Body Nonlinear Model Predictove Controller (NMPC) for humanoid loco-manipulation control. It contains a library of 
 functionality and extends OCS2 to enable motion planning for humanoids. 
 
 ![Screencast2024-12-16180254-ezgif com-video-to-gif-converter(1)(3)](https://github.com/user-attachments/assets/a032477b-2e70-41b0-90d3-9539e1a4b723)
@@ -8,7 +8,7 @@ functionality and extends OCS2 to enable motion planning for humanoids.
 
 It contains functionality to allow the following MPC fromulations to be easily used for any humanoid robot. 
 
-### Centroidal MPC
+### Centroidal Dynamics MPC
 The centroidal MPC optimizes over the **whole-body kinematics** and the center off mass dynamics, with a choice to either use a single rigid 
 body model or the full centroidal dynamics. It's functionality is contained in `humanoid_centroidal_mpc`.
 
@@ -69,13 +69,13 @@ Once you run the NMPC a window with Rviz will appear for visualization. The firs
 
 On the top level folder run:
 
-For the **Centroidal MPC**
+For the **Centroidal Dynamics MPC**
 
 ```
 make launch-g1-dummy-sim
 ```
 
-For the **Whole-Body MPC**
+For the **Whole-Body Dynamics MPC**
 
 ```
 make launch-wb-g1-dummy-sim
