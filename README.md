@@ -3,10 +3,10 @@
 This repository contains a Whole-Body Nonlinear Model Predictove Controller (NMPC) for humanoid loco-manipulation control. It contains a library of 
 functionality and extends OCS2 to enable motion planning for humanoids. 
 
+**Velocity and Base Height Control via Joystick:**
 ![Screencast2024-12-16180254-ezgif com-video-to-gif-converter(1)(3)](https://github.com/user-attachments/assets/a032477b-2e70-41b0-90d3-9539e1a4b723)
 
-
-It contains functionality to allow the following MPC fromulations to be easily used for any humanoid robot. 
+It contains the following MPC fromulations to be applied to any humanoid robot. 
 
 ### Centroidal Dynamics MPC
 The centroidal MPC optimizes over the **whole-body kinematics** and the center off mass dynamics, with a choice to either use a single rigid 
