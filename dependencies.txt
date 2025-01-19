@@ -11,3 +11,10 @@ libglfw3-dev
 ninja-build
 ccache
 python3-pygame
+python3-tk
+
+ros-${ROS_DISTRO}-ament-cmake-clang-format
+ros-${ROS_DISTRO}-joint-state-publisher-gui
+ros-${ROS_DISTRO}-xacro
+ros-${ROS_DISTRO}-mcap-vendor
+ros-${ROS_DISTRO}-interactive-markers

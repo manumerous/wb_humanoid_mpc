@@ -216,10 +216,10 @@ class MPCLaunchConfig:
             ],
         )
 
-        self.target_velocity_gamepad_publisher_node = launch_ros.actions.Node(
+        self.base_velocity_controller_gui_node = launch_ros.actions.Node(
             package="remote_control",
-            executable="xbox_velocity_publisher",
-            name="xbox_velocity_publisher",
+            executable="base_velocity_controller_gui",
+            name="base_velocity_controller_gui",
             output="screen",
         )
 

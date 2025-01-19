@@ -43,20 +43,15 @@ git submodule update --init --recursive
 
 ### Install Dependencies
 
-Install all aptitude dependencies using:
-
-```bash
-xargs -a dependencies.txt sudo apt install
-```
-
-Then install ros2 jazzy as specified in
+Make sure you have **ros2** installed on your system as e.g specified for jazzy in
 the [installation guide](https://docs.ros.org/en/jazzy/Installation/Ubuntu-Install-Debs.html).
 
-As a final step:
+Then install all dependencies using:
 
 ```bash
-sudo apt install ros-jazzy-ament-cmake-clang-format ros-jazzy-joint-state-publisher-gui ros-jazzy-xacro ros-jazzy-mcap-vendor ros-jazzy-interactive-markers
+envsubst < dependencies.txt | xargs sudo apt install -y
 ```
+
 
 ### Building the MPC 
 
@@ -80,6 +75,13 @@ For the **Whole-Body Dynamics MPC**
 ```
 make launch-wb-g1-dummy-sim
 ```
+
+#### Interactive Robot Control
+Control the desired Base Velocity and Root Link Height via **Robot Base Controller GUI** and **XBox Controller Joystick**. For the joystick it is easiest to directly connect via USB. Otherwise you need to install the required bluetooth Xbox controller drivers on your linux system. The GUI application automatically scanns for Joysticks and indicates whether one is connected. 
+
+![robot_remote_control](https://github.com/user-attachments/assets/779be1da-97a1-4d0c-8f9b-b9d2df88384f)
+
+
 ## Citing Whole-Body Humanoid MPC
 To cite the Whole-Body Humanoid MPC in your academic research, please consider citing the following web BibTeX entry:
 

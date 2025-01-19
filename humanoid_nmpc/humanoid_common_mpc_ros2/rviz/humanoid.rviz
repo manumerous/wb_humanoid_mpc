@@ -16,7 +16,7 @@ Panels:
         - /Terminal Target RobotModel1
         - /CollisionMarkerArray1
       Splitter Ratio: 0.5
-    Tree Height: 299
+    Tree Height: 304
   - Class: rviz_common/Views
     Expanded:
       - /Current View1
@@ -61,168 +61,198 @@ Visualization Manager:
         Expand Link Details: false
         Expand Tree: false
         Link Tree Style: Links in Alphabetic Order
-        link_abdomen:
+        d435_link:
           Alpha: 1
           Show Axes: false
           Show Trail: false
-        link_head:
-          Alpha: 1
-          Show Axes: false
-          Show Trail: false
-          Value: true
-        link_l_ankle:
+        head_link:
           Alpha: 1
           Show Axes: false
           Show Trail: false
           Value: true
-        link_l_elbow:
+        imu_in_pelvis:
+          Alpha: 1
+          Show Axes: false
+          Show Trail: false
+        imu_in_torso:
+          Alpha: 1
+          Show Axes: false
+          Show Trail: false
+        left_ankle_pitch_link:
           Alpha: 1
           Show Axes: false
           Show Trail: false
           Value: true
-        link_l_foot:
+        left_ankle_roll_link:
           Alpha: 1
           Show Axes: false
           Show Trail: false
           Value: true
-        link_l_hand:
+        left_elbow_link:
           Alpha: 1
           Show Axes: false
           Show Trail: false
           Value: true
-        link_l_lower_arm:
+        left_hip_pitch_link:
           Alpha: 1
           Show Axes: false
           Show Trail: false
           Value: true
-        link_l_lower_hip:
-          Alpha: 1
-          Show Axes: false
-          Show Trail: false
-        link_l_patella:
+        left_hip_roll_link:
           Alpha: 1
           Show Axes: false
           Show Trail: false
           Value: true
-        link_l_scapula:
+        left_hip_yaw_link:
           Alpha: 1
           Show Axes: false
           Show Trail: false
           Value: true
-        link_l_shin:
+        left_knee_link:
           Alpha: 1
           Show Axes: false
           Show Trail: false
           Value: true
-        link_l_shoulder:
+        left_rubber_hand:
           Alpha: 1
           Show Axes: false
           Show Trail: false
           Value: true
-        link_l_thigh:
+        left_shoulder_pitch_link:
           Alpha: 1
           Show Axes: false
           Show Trail: false
           Value: true
-        link_l_upper_arm:
+        left_shoulder_roll_link:
           Alpha: 1
           Show Axes: false
           Show Trail: false
           Value: true
-        link_l_upper_hip:
+        left_shoulder_yaw_link:
           Alpha: 1
           Show Axes: false
           Show Trail: false
           Value: true
-        link_l_wrist:
+        left_wrist_pitch_link:
           Alpha: 1
           Show Axes: false
           Show Trail: false
           Value: true
-        link_neck_xy:
-          Alpha: 1
-          Show Axes: false
-          Show Trail: false
-        link_neck_z:
+        left_wrist_roll_link:
           Alpha: 1
           Show Axes: false
           Show Trail: false
           Value: true
-        link_pelvis:
+        left_wrist_yaw_link:
           Alpha: 1
           Show Axes: false
           Show Trail: false
           Value: true
-        link_r_ankle:
+        logo_link:
           Alpha: 1
           Show Axes: false
           Show Trail: false
           Value: true
-        link_r_elbow:
+        mid360_link:
+          Alpha: 1
+          Show Axes: false
+          Show Trail: false
+        pelvis:
           Alpha: 1
           Show Axes: false
           Show Trail: false
           Value: true
-        link_r_foot:
+        pelvis_contour_link:
           Alpha: 1
           Show Axes: false
           Show Trail: false
           Value: true
-        link_r_hand:
+        right_ankle_pitch_link:
           Alpha: 1
           Show Axes: false
           Show Trail: false
           Value: true
-        link_r_lower_arm:
+        right_ankle_roll_link:
           Alpha: 1
           Show Axes: false
           Show Trail: false
           Value: true
-        link_r_lower_hip:
-          Alpha: 1
-          Show Axes: false
-          Show Trail: false
-        link_r_patella:
+        right_elbow_link:
           Alpha: 1
           Show Axes: false
           Show Trail: false
           Value: true
-        link_r_scapula:
+        right_hip_pitch_link:
           Alpha: 1
           Show Axes: false
           Show Trail: false
           Value: true
-        link_r_shin:
+        right_hip_roll_link:
           Alpha: 1
           Show Axes: false
           Show Trail: false
           Value: true
-        link_r_shoulder:
+        right_hip_yaw_link:
           Alpha: 1
           Show Axes: false
           Show Trail: false
           Value: true
-        link_r_thigh:
+        right_knee_link:
           Alpha: 1
           Show Axes: false
           Show Trail: false
           Value: true
-        link_r_upper_arm:
+        right_rubber_hand:
           Alpha: 1
           Show Axes: false
           Show Trail: false
           Value: true
-        link_r_upper_hip:
+        right_shoulder_pitch_link:
           Alpha: 1
           Show Axes: false
           Show Trail: false
           Value: true
-        link_r_wrist:
+        right_shoulder_roll_link:
           Alpha: 1
           Show Axes: false
           Show Trail: false
           Value: true
-        link_torso:
+        right_shoulder_yaw_link:
+          Alpha: 1
+          Show Axes: false
+          Show Trail: false
+          Value: true
+        right_wrist_pitch_link:
+          Alpha: 1
+          Show Axes: false
+          Show Trail: false
+          Value: true
+        right_wrist_roll_link:
+          Alpha: 1
+          Show Axes: false
+          Show Trail: false
+          Value: true
+        right_wrist_yaw_link:
+          Alpha: 1
+          Show Axes: false
+          Show Trail: false
+          Value: true
+        torso_link:
+          Alpha: 1
+          Show Axes: false
+          Show Trail: false
+          Value: true
+        waist_roll_link:
+          Alpha: 1
+          Show Axes: false
+          Show Trail: false
+          Value: true
+        waist_support_link:
+          Alpha: 1
+          Show Axes: false
+          Show Trail: false
+          Value: true
+        waist_yaw_link:
           Alpha: 1
           Show Axes: false
           Show Trail: false
@@ -237,6 +267,8 @@ Visualization Manager:
       Visual Enabled: true
     - Class: rviz_default_plugins/TF
       Enabled: false
+      Filter (blacklist): ""
+      Filter (whitelist): ""
       Frame Timeout: 15
       Frames:
         All Enabled: true
@@ -370,9 +402,9 @@ Visualization Manager:
         Swap Stereo Eyes: false
         Value: false
       Focal Point:
-        X: -0.31456196308135986
-        Y: -2.1987948417663574
-        Z: 0.1917441338300705
+        X: -0.2563599944114685
+        Y: -2.0235817432403564
+        Z: -0.6792173385620117
       Focal Shape Fixed Size: true
       Focal Shape Size: 0.05000000074505806
       Invert Z Axis: false
@@ -389,9 +421,9 @@ Window Geometry:
   Height: 1135
   Hide Left Dock: true
   Hide Right Dock: false
-  QMainWindow State: 000000ff00000000fd00000001000000000000029d0000040bfc0200000003fb000000100044006900730070006c006100790073000000004300000269000000da00fffffffb0000000c00430061006d0065007200610100000725000000e90000000000000000fb0000000a0056006900650077007300000002b20000019c000000b400ffffff000007800000040b00000004000000040000000800000008fc0000000100000002000000010000000a0054006f006f006c00730100000000ffffffff0000000000000000
+  QMainWindow State: 000000ff00000000fd00000001000000000000029d0000040bfc0200000003fb000000100044006900730070006c006100790073000000004300000269000000c800fffffffb0000000c00430061006d0065007200610100000725000000e90000000000000000fb0000000a0056006900650077007300000002b20000019c000000a200ffffff000007800000041700000004000000040000000800000008fc0000000100000002000000010000000a0054006f006f006c00730100000000ffffffff0000000000000000
   Views:
     collapsed: true
   Width: 1920
-  X: 0
-  Y: 0
+  X: 876
+  Y: 360
