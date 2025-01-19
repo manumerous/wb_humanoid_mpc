@@ -43,20 +43,15 @@ git submodule update --init --recursive
 
 ### Install Dependencies
 
-Install all aptitude dependencies using:
-
-```bash
-xargs -a dependencies.txt sudo apt install
-```
-
-Then install ros2 jazzy as specified in
+Make sure you have **ros2** installed on your system as e.g specified for jazzy in
 the [installation guide](https://docs.ros.org/en/jazzy/Installation/Ubuntu-Install-Debs.html).
 
-As a final step:
+Then install all dependencies using:
 
 ```bash
-sudo apt install ros-jazzy-ament-cmake-clang-format ros-jazzy-joint-state-publisher-gui ros-jazzy-xacro ros-jazzy-mcap-vendor ros-jazzy-interactive-markers
+envsubst < dependencies.txt | xargs sudo apt install -y
 ```
+
 
 ### Building the MPC 
 
