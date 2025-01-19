@@ -130,7 +130,7 @@ CentroidalMpcInterface::CentroidalMpcInterface(
   referenceManagerPtr_ =
       std::make_shared<SwitchedModelReferenceManager>(GaitSchedule::loadGaitSchedule(referenceFile, modelSettings_, verbose_),
                                                       std::move(swingTrajectoryPlanner), *pinocchioInterfacePtr_, *mpcRobotModelPtr_);
-  referenceManagerPtr_->setArmSwingReferenceActive(false);
+  referenceManagerPtr_->setArmSwingReferenceActive(true);
 
   // initial state
   initialState_.setZero(centroidalModelInfo_.stateDim);
