@@ -18,13 +18,12 @@ setup(
     maintainer="Manuel Yves Galliker",
     maintainer_email="manuel.galliker@gmx.ch",
     description="Ros2 remote control interfaces",
-    license="TODO: License declaration",
+    license="BSD-3",
     tests_require=["pytest"],
     entry_points={
         "console_scripts": [
-            "xbox_velocity_publisher_bridge_client = remote_control.xbox_walking_command_publisher_bridge_client:main",
+            "base_velocity_controller_gui = remote_control.base_velocity_controller_gui:main",
             "xbox_velocity_publisher = remote_control.xbox_walking_command_publisher:main",
-            "keyboard_velocity_publisher = remote_control.keyboard_walking_command_publisher:main",
         ],
     },
 )
