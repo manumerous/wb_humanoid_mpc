@@ -1,0 +1,1 @@
+# MuJoCo vendor package
