@@ -83,6 +83,9 @@ RUN python3 -m pip install --break-system-packages --no-deps --upgrade setuptool
 # Verify NumPy installation
 RUN python3 -c "import numpy; print(numpy.__version__)"
 
+# Increase Git buffer size
+RUN git config --global http.postBuffer 1048576000
+
 # Source ROS2 setup script and add it to the bashrc for convenience
 RUN echo "source /opt/ros/${ROS_DISTRO}/setup.bash" >> ~/.bashrc
 
@@ -98,6 +101,6 @@ SHELL ["/bin/bash", "-c"]
 ENV CMAKE_PREFIX_PATH="/opt/ros/${ROS_DISTRO}:${CMAKE_PREFIX_PATH}"
 
 # Source ROS2 setup script before running commands
-RUN source /opt/ros/${ROS_DISTRO}/setup.bash
+RUN source /opt/ros/${ROS_DISTRO}/setup.bash && MAKEFLAGS="-j 1" colcon build --executor sequential
 
 CMD ["bash"]
