@@ -1,58 +1,58 @@
 {
-    "name": "Whole Body MPC Dev Container",
-    "build": {
+  "name": "Whole Body MPC Dev Container",
+  "build": {
       "dockerfile": "${localWorkspaceFolder}/docker/Dockerfile",
       "target": "base",
       "args": {
+          "WB_HUMANOID_MPC_DIR": "/wb_humanoid_mpc_ws",
+          "PYTHON_VERSION": "3.12"
       }
-    },
-    "runArgs": [
+  },
+  "runArgs": [
       "--rm",
       "-it",
       "--net=host",
-      "-u",
-      "${localEnv:USER_ID}",
+      "--privileged",
       "-e",
-      "--privileged"
-    ],
-    "overrideCommand": true,
-    "workspaceFolder": "/wb_humanoid_mpc",
-    "customizations": {
+      "USER_ID=${localEnv:USER_ID}"
+  ],
+  "overrideCommand": true,
+  "workspaceFolder": "/wb_humanoid_mpc_ws",
+  "customizations": {
       "vscode": {
-        "settings": {
-          "terminal.integrated.shell.linux": "/bin/bash",
-          "editor.formatOnSave": true,
-          "files.trimTrailingWhitespace": true
-        },
-        "extensions": [
-          "ms-vscode.cpptools",
-          "ms-vscode.cmake-tools",
-          "ms-vscode.vscode-typescript-next",
-          "ms-vscode-remote.remote-containers",
-          "twxs.cmake",
-          "GitHub.copilot",
-          "GitHub.copilot-chat",
-          "ms-vscode.cpptools-extension-pack",
-          "xaver.clang-format",
-          "cheshirekow.cmake-format",
-          "ms-azuretools.vscode-docker",
-          "waderyan.gitblame",
-          "eamodio.gitlens",
-          "ms-python.vscode-pylance",
-          "ms-python.python",
-          "ms-python.debugpy",
-          "ms-vscode.cpptools-themes",
-          "ms-toolsai.jupyter-keymap",
-          "ms-vscode-remote.remote-ssh",
-          "ms-vscode-remote.remote-ssh-edit",
-          "ms-vscode.remote-explorer",
-          "sankethdev.vscode-proto"
-        ]
+          "settings": {
+              "terminal.integrated.shell.linux": "/bin/bash",
+              "editor.formatOnSave": true,
+              "files.trimTrailingWhitespace": true
+          },
+          "extensions": [
+              "ms-vscode.cpptools",
+              "ms-vscode.cmake-tools",
+              "ms-vscode.vscode-typescript-next",
+              "ms-vscode-remote.remote-containers",
+              "twxs.cmake",
+              "GitHub.copilot",
+              "GitHub.copilot-chat",
+              "ms-vscode.cpptools-extension-pack",
+              "xaver.clang-format",
+              "cheshirekow.cmake-format",
+              "ms-azuretools.vscode-docker",
+              "waderyan.gitblame",
+              "eamodio.gitlens",
+              "ms-python.vscode-pylance",
+              "ms-python.python",
+              "ms-python.debugpy",
+              "ms-vscode.cpptools-themes",
+              "ms-toolsai.jupyter-keymap",
+              "ms-vscode-remote.remote-ssh",
+              "ms-vscode-remote.remote-ssh-edit",
+              "ms-vscode.remote-explorer",
+              "sankethdev.vscode-proto"
+          ]
       }
-    },
-    "mounts": [
-      "source=${localWorkspaceFolder},target=/wb_humanoid_mpc,type=bind,consistency=cached"
-    ],
-    "postCreateCommand": "curl -o .git-completion.bash https://raw.githubusercontent.com/git/git/master/contrib/completion/git-completion.bash && echo 'source ./.git-completion.bash' >> ~/.bashrc"
-  }
-  
+  },
+  "mounts": [
+      "source=${localWorkspaceFolder},target=/wb_humanoid_mpc_ws/src/wb_humanoid_mpc,type=bind,consistency=cached"
+  ],
+  "postCreateCommand": "curl -o .git-completion.bash https://raw.githubusercontent.com/git/git/master/contrib/completion/git-completion.bash && echo 'source ./.git-completion.bash' >> ~/.bashrc"
+}
