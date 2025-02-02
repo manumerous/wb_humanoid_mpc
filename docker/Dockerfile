@@ -111,5 +111,3 @@ ENV CMAKE_PREFIX_PATH="/opt/ros/${ROS_DISTRO}:${CMAKE_PREFIX_PATH}"
 # Source ROS2 setup script before running commands
 RUN source /opt/ros/${ROS_DISTRO}/setup.bash
 # cd ${WB_HUMANOID_MPC_DIR}/src/wb_humanoid_mpc && make build-all
-
-CMD ["bash"]
