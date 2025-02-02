@@ -1,6 +1,10 @@
 ARG BASE_IMAGE=ubuntu:24.04
 FROM ${BASE_IMAGE} AS base
 
+ARG USER_ID=1000
+ARG GROUP_ID=1000
+USER ${USER_ID}:${GROUP_ID}
+
 ARG WB_HUMANOID_MPC_DIR="/wb_humanoid_mpc_ws"
 ARG PYTHON_VERSION=3.12
 
@@ -17,7 +21,7 @@ RUN apt-get update && apt-get install -y \
     build-essential \
     software-properties-common \
     git \
-    && rm -rf /var/lib/apt/lists/* 
+    && rm -rf /var/lib/apt/lists/*
 
 # Install Python 3.12 explicitly
 RUN add-apt-repository -y ppa:deadsnakes/ppa && apt-get update && apt-get install -y \
@@ -51,7 +55,7 @@ RUN apt-get update && apt-get install -y \
     ros-${ROS_DISTRO}-mcap-vendor \
     ros-${ROS_DISTRO}-interactive-markers \
     ros-${ROS_DISTRO}-std-msgs \
-    && rm -rf /var/lib/apt/lists/* 
+    && rm -rf /var/lib/apt/lists/*
 
 # Install additional development tools and libraries
 RUN apt-get update && apt-get install -y \
@@ -93,6 +97,8 @@ WORKDIR ${WB_HUMANOID_MPC_DIR}
 
 RUN mkdir -p ${WB_HUMANOID_MPC_DIR}/src/wb_humanoid_mpc
 
+RUN chown -R $USER_ID:$GROUP_ID .
+
 # Copy the Makefile and other necessary files to the working directory
 COPY . ${WB_HUMANOID_MPC_DIR}/src/wb_humanoid_mpc
 
@@ -103,7 +109,7 @@ SHELL ["/bin/bash", "-c"]
 ENV CMAKE_PREFIX_PATH="/opt/ros/${ROS_DISTRO}:${CMAKE_PREFIX_PATH}"
 
 # Source ROS2 setup script before running commands
-RUN source /opt/ros/${ROS_DISTRO}/setup.bash 
+RUN source /opt/ros/${ROS_DISTRO}/setup.bash
 # cd ${WB_HUMANOID_MPC_DIR}/src/wb_humanoid_mpc && make build-all
 
 CMD ["bash"]

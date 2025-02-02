@@ -5,7 +5,9 @@
       "target": "base",
       "args": {
           "WB_HUMANOID_MPC_DIR": "/wb_humanoid_mpc_ws",
-          "PYTHON_VERSION": "3.12"
+          "PYTHON_VERSION": "3.12",
+          "USER_ID": "${localEnv:USER_ID}",
+          "GROUP_ID": "${localEnv:GROUP_ID}"
       }
   },
   "runArgs": [
@@ -13,11 +15,12 @@
       "-it",
       "--net=host",
       "--privileged",
-      "-e",
-      "USER_ID=${localEnv:USER_ID}"
+      "-u",
+      "${localEnv:USER_ID}"
+
   ],
   "overrideCommand": true,
-  "workspaceFolder": "/wb_humanoid_mpc_ws",
+  "workspaceFolder": "/wb_humanoid_mpc_ws/src/wb_humanoid_mpc",
   "customizations": {
       "vscode": {
           "settings": {
@@ -52,7 +55,7 @@
       }
   },
   "mounts": [
-      "source=${localWorkspaceFolder},target=/wb_humanoid_mpc_ws/src/wb_humanoid_mpc,type=bind,consistency=cached"
+      "source=${localWorkspaceFolder}/../..,target=/wb_humanoid_mpc_ws,type=bind,consistency=cached"
   ],
-  "postCreateCommand": "curl -o .git-completion.bash https://raw.githubusercontent.com/git/git/master/contrib/completion/git-completion.bash && echo 'source ./.git-completion.bash' >> ~/.bashrc"
+  "postCreateCommand": "curl -o .git-completion.bash https://raw.githubusercontent.com/git/git/master/contrib/completion/git-completion.bash && echo 'source /opt/ros/jazzy/setup.bash' >> ~/.bashrc && echo 'source ./.git-completion.bash' >> ~/.bashrc"
 }
