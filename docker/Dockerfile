@@ -1,7 +1,7 @@
 ARG BASE_IMAGE=ubuntu:24.04
 FROM ${BASE_IMAGE} AS base
 
-ARG WB_HUMANOID_MPC_DIR="/wb_humanoid_mpc"
+ARG WB_HUMANOID_MPC_DIR="/wb_humanoid_mpc_ws"
 ARG PYTHON_VERSION=3.12
 
 # Set environment variables for non-interactive installation and ROS distribution
@@ -91,8 +91,10 @@ RUN echo "source /opt/ros/${ROS_DISTRO}/setup.bash" >> ~/.bashrc
 
 WORKDIR ${WB_HUMANOID_MPC_DIR}
 
+RUN mkdir -p ${WB_HUMANOID_MPC_DIR}/src/wb_humanoid_mpc
+
 # Copy the Makefile and other necessary files to the working directory
-COPY . ${WB_HUMANOID_MPC_DIR}
+COPY . ${WB_HUMANOID_MPC_DIR}/src/wb_humanoid_mpc
 
 # Set default shell to bash
 SHELL ["/bin/bash", "-c"]
@@ -101,6 +103,7 @@ SHELL ["/bin/bash", "-c"]
 ENV CMAKE_PREFIX_PATH="/opt/ros/${ROS_DISTRO}:${CMAKE_PREFIX_PATH}"
 
 # Source ROS2 setup script before running commands
-RUN source /opt/ros/${ROS_DISTRO}/setup.bash && MAKEFLAGS="-j 1" colcon build --executor sequential
+RUN source /opt/ros/${ROS_DISTRO}/setup.bash 
+# cd ${WB_HUMANOID_MPC_DIR}/src/wb_humanoid_mpc && make build-all
 
 CMD ["bash"]
