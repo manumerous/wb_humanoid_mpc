@@ -1,5 +1,6 @@
 {
   "name": "Whole Body MPC Dev Container",
+  "initializeCommand": "xhost +local:",
   "build": {
       "dockerfile": "${localWorkspaceFolder}/docker/Dockerfile",
       "target": "base",
@@ -16,8 +17,17 @@
       "--net=host",
       "--privileged",
       "-u",
-      "${localEnv:USER_ID}"
-
+      "${localEnv:USER_ID}",
+      "-e",
+      "DISPLAY",
+      "-v",
+      "/tmp/.X11-unix:/tmp/.X11-unix",
+      "-e",
+      "QT_X11_NO_MITSHM=1",
+      "-e",
+      "XDG_RUNTIME_DIR=${localEnv:XDG_RUNTIME_DIR}",
+      "-v",
+      "${localEnv:XDG_RUNTIME_DIR}:${localEnv:XDG_RUNTIME_DIR}"
   ],
   "overrideCommand": true,
   "workspaceFolder": "/wb_humanoid_mpc_ws/src/wb_humanoid_mpc",

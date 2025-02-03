@@ -3,7 +3,7 @@ FROM ${BASE_IMAGE} AS base
 
 ARG USER_ID=1000
 ARG GROUP_ID=1000
-USER ${USER_ID}:${GROUP_ID}
+USER root
 
 ARG WB_HUMANOID_MPC_DIR="/wb_humanoid_mpc_ws"
 ARG PYTHON_VERSION=3.12
@@ -111,4 +111,18 @@ ENV CMAKE_PREFIX_PATH="/opt/ros/${ROS_DISTRO}:${CMAKE_PREFIX_PATH}"
 
 # Source ROS2 setup script before running commands
 RUN source /opt/ros/${ROS_DISTRO}/setup.bash
+
+# Install X11 dependencies for GUI applications
+RUN apt-get update && apt-get install -y \
+    x11-apps \
+    mesa-utils \
+    && rm -rf /var/lib/apt/lists/*
+
+# Set environment variables for X11 forwarding
+ENV DISPLAY=${DISPLAY}
+ENV QT_X11_NO_MITSHM=1
+
+# Switch to the non-root user
+USER ${USER_ID}:${GROUP_ID}
+
 # cd ${WB_HUMANOID_MPC_DIR}/src/wb_humanoid_mpc && make build-all
