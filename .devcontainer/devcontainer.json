@@ -8,7 +8,9 @@
           "WB_HUMANOID_MPC_DIR": "/wb_humanoid_mpc_ws",
           "PYTHON_VERSION": "3.12",
           "USER_ID": "${localEnv:USER_ID}",
-          "GROUP_ID": "${localEnv:GROUP_ID}"
+          "GROUP_ID": "${localEnv:GROUP_ID}",
+          "GIT_USER_NAME": "${command:git config --global user.name}",
+          "GIT_USER_EMAIL": "${command:git config --global user.email}"
       }
   },
   "runArgs": [
@@ -17,9 +19,13 @@
       "--net=host",
       "--privileged",
       "-u",
-      "${localEnv:USER_ID}",
+      "${localEnv:USER_ID}:${localEnv:GROUP_ID}",
       "-e",
       "DISPLAY",
+      "-e",
+      "GIT_USER_NAME=$(git config --global user.name)",
+      "-e",
+      "GIT_USER_EMAIL=$(git config --global user.email)",
       "-v",
       "/tmp/.X11-unix:/tmp/.X11-unix",
       "-e",
@@ -65,7 +71,8 @@
       }
   },
   "mounts": [
-      "source=${localWorkspaceFolder}/../..,target=/wb_humanoid_mpc_ws,type=bind,consistency=cached"
+      "source=${localWorkspaceFolder}/../..,target=/wb_humanoid_mpc_ws,type=bind,consistency=cached",
+      "source=${localEnv:HOME}/.gitconfig,target=/home/vscode/.gitconfig,type=bind"
   ],
-  "postCreateCommand": "curl -o .git-completion.bash https://raw.githubusercontent.com/git/git/master/contrib/completion/git-completion.bash && echo 'source /opt/ros/jazzy/setup.bash' >> ~/.bashrc && echo 'source ./.git-completion.bash' >> ~/.bashrc"
+  "postCreateCommand": "git config --global user.name \"$GIT_USER_NAME\" && git config --global user.email \"$GIT_USER_EMAIL\" && git config --global --add safe.directory /wb_humanoid_mpc_ws/src/wb_humanoid_mpc && curl -o .git-completion.bash https://raw.githubusercontent.com/git/git/master/contrib/completion/git-completion.bash && echo 'source /opt/ros/jazzy/setup.bash' >> ~/.bashrc && echo 'source ./.git-completion.bash' >> ~/.bashrc"
 }

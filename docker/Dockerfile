@@ -3,10 +3,12 @@ FROM ${BASE_IMAGE} AS base
 
 ARG USER_ID=1000
 ARG GROUP_ID=1000
-USER root
 
 ARG WB_HUMANOID_MPC_DIR="/wb_humanoid_mpc_ws"
 ARG PYTHON_VERSION=3.12
+
+# Switch to non-root user
+USER $USER_ID:$GROUP_ID
 
 # Set environment variables for non-interactive installation and ROS distribution
 ENV DEBIAN_FRONTEND=noninteractive
@@ -98,7 +100,13 @@ WORKDIR ${WB_HUMANOID_MPC_DIR}
 
 RUN mkdir -p ${WB_HUMANOID_MPC_DIR}/src/wb_humanoid_mpc
 
-RUN chown -R $USER_ID:$GROUP_ID .
+# Ensure Git recognizes the repository as safe
+RUN git config --global --add safe.directory ${WB_HUMANOID_MPC_DIR}/src/wb_humanoid_mpc
+
+# Ensure correct UID/GID are set and valid
+RUN if ! getent group $GROUP_ID > /dev/null; then groupadd --gid $GROUP_ID devgroup; fi && \
+    if ! getent passwd $USER_ID > /dev/null; then useradd --uid $USER_ID --gid $GROUP_ID --create-home devuser; fi && \
+    chown -R $USER_ID:$GROUP_ID .
 
 # Copy the Makefile and other necessary files to the working directory
 COPY . ${WB_HUMANOID_MPC_DIR}/src/wb_humanoid_mpc
@@ -121,8 +129,5 @@ RUN apt-get update && apt-get install -y \
 # Set environment variables for X11 forwarding
 ENV DISPLAY=${DISPLAY}
 ENV QT_X11_NO_MITSHM=1
-
-# Switch to the non-root user
-USER ${USER_ID}:${GROUP_ID}
 
 # cd ${WB_HUMANOID_MPC_DIR}/src/wb_humanoid_mpc && make build-all
