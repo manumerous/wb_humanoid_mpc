@@ -129,5 +129,3 @@ RUN apt-get update && apt-get install -y \
 # Set environment variables for X11 forwarding
 ENV DISPLAY=${DISPLAY}
 ENV QT_X11_NO_MITSHM=1
-
-# cd ${WB_HUMANOID_MPC_DIR}/src/wb_humanoid_mpc && make build-all
