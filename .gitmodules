@@ -7,9 +7,6 @@
 [submodule "lib/cmake_modules"]
 	path = lib/cmake_modules
 	url = https://github.com/ros/cmake_modules.git
-[submodule "lib/pinocchio"]
-	path = lib/pinocchio
-	url = https://github.com/manumerous/pinocchio.git
 [submodule "lib/mujoco"]
 	path = lib/mujoco
 	url = https://github.com/google-deepmind/mujoco.git

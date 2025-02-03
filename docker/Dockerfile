@@ -55,6 +55,7 @@ RUN apt-get update && apt-get install -y \
     ros-${ROS_DISTRO}-mcap-vendor \
     ros-${ROS_DISTRO}-interactive-markers \
     ros-${ROS_DISTRO}-std-msgs \
+    ros-${ROS_DISTRO}-pinocchio \
     && rm -rf /var/lib/apt/lists/*
 
 # Install additional development tools and libraries
