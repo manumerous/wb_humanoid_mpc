@@ -1,7 +1,6 @@
 clang-format
 make
 build-essential
-locales
 libeigen3-dev
 libglpk-dev
 libboost-all-dev
@@ -18,3 +17,4 @@ ros-${ROS_DISTRO}-joint-state-publisher-gui
 ros-${ROS_DISTRO}-xacro
 ros-${ROS_DISTRO}-mcap-vendor
 ros-${ROS_DISTRO}-interactive-markers
+ros-${ROS_DISTRO}-pinocchio
