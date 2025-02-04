@@ -8,12 +8,12 @@
     </inertial>
     <visual>
       <geometry>
-        <mesh filename="package://drake_models/atlas/meshes/r_clav.gltf"/>
+        <mesh filename="package://drc_atlas_description/meshes/r_clav.gltf"/>
       </geometry>
     </visual>
     <collision>
       <geometry>
-        <mesh filename="package://drake_models/atlas/meshes/r_clav_chull.obj"/>
+        <mesh filename="package://drc_atlas_description/meshes/r_clav_chull.obj"/>
       </geometry>
     </collision>
   </link>
@@ -25,12 +25,12 @@
     </inertial>
     <visual>
       <geometry>
-        <mesh filename="package://drake_models/atlas/meshes/l_foot.gltf"/>
+        <mesh filename="package://drc_atlas_description/meshes/l_foot.gltf"/>
       </geometry>
     </visual>
     <collision>
       <geometry>
-        <mesh filename="package://drake_models/atlas/meshes/l_foot_chull.obj"/>
+        <mesh filename="package://drc_atlas_description/meshes/l_foot_chull.obj"/>
       </geometry>
     </collision>
     <collision>
@@ -121,12 +121,12 @@
     </inertial>
     <visual>
       <geometry>
-        <mesh filename="package://drake_models/atlas/meshes/r_larm.gltf"/>
+        <mesh filename="package://drc_atlas_description/meshes/r_larm.gltf"/>
       </geometry>
     </visual>
     <collision>
       <geometry>
-        <mesh filename="package://drake_models/atlas/meshes/r_larm_chull.obj"/>
+        <mesh filename="package://drc_atlas_description/meshes/r_larm_chull.obj"/>
       </geometry>
     </collision>
   </link>
@@ -138,12 +138,12 @@
     </inertial>
     <visual>
       <geometry>
-        <mesh filename="package://drake_models/atlas/meshes/r_hand.gltf"/>
+        <mesh filename="package://drc_atlas_description/meshes/r_hand.gltf"/>
       </geometry>
     </visual>
     <collision>
       <geometry>
-        <mesh filename="package://drake_models/atlas/meshes/r_hand_chull.obj"/>
+        <mesh filename="package://drc_atlas_description/meshes/r_hand_chull.obj"/>
       </geometry>
     </collision>
   </link>
@@ -155,12 +155,12 @@
     </inertial>
     <visual>
       <geometry>
-        <mesh filename="package://drake_models/atlas/meshes/l_lglut.gltf"/>
+        <mesh filename="package://drc_atlas_description/meshes/l_lglut.gltf"/>
       </geometry>
     </visual>
     <collision>
       <geometry>
-        <mesh filename="package://drake_models/atlas/meshes/l_lglut_chull.obj"/>
+        <mesh filename="package://drc_atlas_description/meshes/l_lglut_chull.obj"/>
       </geometry>
     </collision>
   </link>
@@ -172,12 +172,12 @@
     </inertial>
     <visual>
       <geometry>
-        <mesh filename="package://drake_models/atlas/meshes/l_lleg.gltf"/>
+        <mesh filename="package://drc_atlas_description/meshes/l_lleg.gltf"/>
       </geometry>
     </visual>
     <collision>
       <geometry>
-        <mesh filename="package://drake_models/atlas/meshes/l_lleg_chull.obj"/>
+        <mesh filename="package://drc_atlas_description/meshes/l_lleg_chull.obj"/>
       </geometry>
     </collision>
   </link>
@@ -189,12 +189,12 @@
     </inertial>
     <visual>
       <geometry>
-        <mesh filename="package://drake_models/atlas/meshes/r_scap.gltf"/>
+        <mesh filename="package://drc_atlas_description/meshes/r_scap.gltf"/>
       </geometry>
     </visual>
     <collision>
       <geometry>
-        <mesh filename="package://drake_models/atlas/meshes/r_scap_chull.obj"/>
+        <mesh filename="package://drc_atlas_description/meshes/r_scap_chull.obj"/>
       </geometry>
     </collision>
   </link>
@@ -206,7 +206,7 @@
     </inertial>
     <visual>
       <geometry>
-        <mesh filename="package://drake_models/atlas/meshes/l_talus.gltf"/>
+        <mesh filename="package://drc_atlas_description/meshes/l_talus.gltf"/>
       </geometry>
     </visual>
   </link>
@@ -218,12 +218,12 @@
     </inertial>
     <visual>
       <geometry>
-        <mesh filename="package://drake_models/atlas/meshes/r_uarm.gltf"/>
+        <mesh filename="package://drc_atlas_description/meshes/r_uarm.gltf"/>
       </geometry>
     </visual>
     <collision>
       <geometry>
-        <mesh filename="package://drake_models/atlas/meshes/r_uarm_chull.obj"/>
+        <mesh filename="package://drc_atlas_description/meshes/r_uarm_chull.obj"/>
       </geometry>
     </collision>
   </link>
@@ -235,12 +235,12 @@
     </inertial>
     <visual>
       <geometry>
-        <mesh filename="package://drake_models/atlas/meshes/r_farm.gltf"/>
+        <mesh filename="package://drc_atlas_description/meshes/r_farm.gltf"/>
       </geometry>
     </visual>
     <collision>
       <geometry>
-        <mesh filename="package://drake_models/atlas/meshes/r_farm_chull.obj"/>
+        <mesh filename="package://drc_atlas_description/meshes/r_farm_chull.obj"/>
       </geometry>
     </collision>
   </link>
@@ -252,12 +252,12 @@
     </inertial>
     <visual>
       <geometry>
-        <mesh filename="package://drake_models/atlas/meshes/l_uglut.gltf"/>
+        <mesh filename="package://drc_atlas_description/meshes/l_uglut.gltf"/>
       </geometry>
     </visual>
     <collision>
       <geometry>
-        <mesh filename="package://drake_models/atlas/meshes/l_uglut_chull.obj"/>
+        <mesh filename="package://drc_atlas_description/meshes/l_uglut_chull.obj"/>
       </geometry>
     </collision>
   </link>
@@ -269,7 +269,7 @@
     </inertial>
     <visual>
       <geometry>
-        <mesh filename="package://drake_models/atlas/meshes/l_uleg.gltf"/>
+        <mesh filename="package://drc_atlas_description/meshes/l_uleg.gltf"/>
       </geometry>
     </visual>
     <!-- to cover the logo shield -->
@@ -277,7 +277,7 @@
     <!-- outside strut -->
     <collision>
       <geometry>
-        <mesh filename="package://drake_models/atlas/meshes/l_uleg_chull.obj"/>
+        <mesh filename="package://drc_atlas_description/meshes/l_uleg_chull.obj"/>
       </geometry>
     </collision>
   </link>
@@ -289,7 +289,7 @@
     </inertial>
     <visual>
       <geometry>
-        <mesh filename="package://drake_models/atlas/meshes/ltorso.gltf"/>
+        <mesh filename="package://drc_atlas_description/meshes/ltorso.gltf"/>
       </geometry>
     </visual>
   </link>
@@ -301,7 +301,7 @@
     </inertial>
     <visual>
       <geometry>
-        <mesh filename="package://drake_models/atlas/meshes/mtorso.gltf"/>
+        <mesh filename="package://drc_atlas_description/meshes/mtorso.gltf"/>
       </geometry>
     </visual>
   </link>
@@ -313,12 +313,12 @@
     </inertial>
     <visual>
       <geometry>
-        <mesh filename="package://drake_models/atlas/meshes/pelvis.gltf"/>
+        <mesh filename="package://drc_atlas_description/meshes/pelvis.gltf"/>
       </geometry>
     </visual>
     <collision>
       <geometry>
-        <mesh filename="package://drake_models/atlas/meshes/pelvis_chull.obj"/>
+        <mesh filename="package://drc_atlas_description/meshes/pelvis_chull.obj"/>
       </geometry>
     </collision>
   </link>
@@ -330,12 +330,12 @@
     </inertial>
     <visual>
       <geometry>
-        <mesh filename="package://drake_models/atlas/meshes/r_clav.gltf"/>
+        <mesh filename="package://drc_atlas_description/meshes/r_clav.gltf"/>
       </geometry>
     </visual>
     <collision>
       <geometry>
-        <mesh filename="package://drake_models/atlas/meshes/r_clav_chull.obj"/>
+        <mesh filename="package://drc_atlas_description/meshes/r_clav_chull.obj"/>
       </geometry>
     </collision>
   </link>
@@ -347,12 +347,12 @@
     </inertial>
     <visual>
       <geometry>
-        <mesh filename="package://drake_models/atlas/meshes/r_foot.gltf"/>
+        <mesh filename="package://drc_atlas_description/meshes/r_foot.gltf"/>
       </geometry>
     </visual>
     <collision>
       <geometry>
-        <mesh filename="package://drake_models/atlas/meshes/r_foot_chull.obj"/>
+        <mesh filename="package://drc_atlas_description/meshes/r_foot_chull.obj"/>
       </geometry>
     </collision>
     <collision>
@@ -443,12 +443,12 @@
     </inertial>
     <visual>
       <geometry>
-        <mesh filename="package://drake_models/atlas/meshes/r_larm.gltf"/>
+        <mesh filename="package://drc_atlas_description/meshes/r_larm.gltf"/>
       </geometry>
     </visual>
     <collision>
       <geometry>
-        <mesh filename="package://drake_models/atlas/meshes/r_larm_chull.obj"/>
+        <mesh filename="package://drc_atlas_description/meshes/r_larm_chull.obj"/>
       </geometry>
     </collision>
   </link>
@@ -460,12 +460,12 @@
     </inertial>
     <visual>
       <geometry>
-        <mesh filename="package://drake_models/atlas/meshes/r_hand.gltf"/>
+        <mesh filename="package://drc_atlas_description/meshes/r_hand.gltf"/>
       </geometry>
     </visual>
     <collision>
       <geometry>
-        <mesh filename="package://drake_models/atlas/meshes/r_hand_chull.obj"/>
+        <mesh filename="package://drc_atlas_description/meshes/r_hand_chull.obj"/>
       </geometry>
     </collision>
   </link>
@@ -477,12 +477,12 @@
     </inertial>
     <visual>
       <geometry>
-        <mesh filename="package://drake_models/atlas/meshes/r_lglut.gltf"/>
+        <mesh filename="package://drc_atlas_description/meshes/r_lglut.gltf"/>
       </geometry>
     </visual>
     <collision>
       <geometry>
-        <mesh filename="package://drake_models/atlas/meshes/r_lglut_chull.obj"/>
+        <mesh filename="package://drc_atlas_description/meshes/r_lglut_chull.obj"/>
       </geometry>
     </collision>
   </link>
@@ -494,12 +494,12 @@
     </inertial>
     <visual>
       <geometry>
-        <mesh filename="package://drake_models/atlas/meshes/r_lleg.gltf"/>
+        <mesh filename="package://drc_atlas_description/meshes/r_lleg.gltf"/>
       </geometry>
     </visual>
     <collision>
       <geometry>
-        <mesh filename="package://drake_models/atlas/meshes/r_lleg_chull.obj"/>
+        <mesh filename="package://drc_atlas_description/meshes/r_lleg_chull.obj"/>
       </geometry>
     </collision>
   </link>
@@ -511,12 +511,12 @@
     </inertial>
     <visual>
       <geometry>
-        <mesh filename="package://drake_models/atlas/meshes/r_scap.gltf"/>
+        <mesh filename="package://drc_atlas_description/meshes/r_scap.gltf"/>
       </geometry>
     </visual>
     <collision>
       <geometry>
-        <mesh filename="package://drake_models/atlas/meshes/r_scap_chull.obj"/>
+        <mesh filename="package://drc_atlas_description/meshes/r_scap_chull.obj"/>
       </geometry>
     </collision>
   </link>
@@ -528,7 +528,7 @@
     </inertial>
     <visual>
       <geometry>
-        <mesh filename="package://drake_models/atlas/meshes/r_talus.gltf"/>
+        <mesh filename="package://drc_atlas_description/meshes/r_talus.gltf"/>
       </geometry>
     </visual>
   </link>
@@ -540,12 +540,12 @@
     </inertial>
     <visual>
       <geometry>
-        <mesh filename="package://drake_models/atlas/meshes/r_uarm.gltf"/>
+        <mesh filename="package://drc_atlas_description/meshes/r_uarm.gltf"/>
       </geometry>
     </visual>
     <collision>
       <geometry>
-        <mesh filename="package://drake_models/atlas/meshes/r_uarm_chull.obj"/>
+        <mesh filename="package://drc_atlas_description/meshes/r_uarm_chull.obj"/>
       </geometry>
     </collision>
   </link>
@@ -557,12 +557,12 @@
     </inertial>
     <visual>
       <geometry>
-        <mesh filename="package://drake_models/atlas/meshes/r_farm.gltf"/>
+        <mesh filename="package://drc_atlas_description/meshes/r_farm.gltf"/>
       </geometry>
     </visual>
     <collision>
       <geometry>
-        <mesh filename="package://drake_models/atlas/meshes/r_farm_chull.obj"/>
+        <mesh filename="package://drc_atlas_description/meshes/r_farm_chull.obj"/>
       </geometry>
     </collision>
   </link>
@@ -574,12 +574,12 @@
     </inertial>
     <visual>
       <geometry>
-        <mesh filename="package://drake_models/atlas/meshes/r_uglut.gltf"/>
+        <mesh filename="package://drc_atlas_description/meshes/r_uglut.gltf"/>
       </geometry>
     </visual>
     <collision>
       <geometry>
-        <mesh filename="package://drake_models/atlas/meshes/r_uglut_chull.obj"/>
+        <mesh filename="package://drc_atlas_description/meshes/r_uglut_chull.obj"/>
       </geometry>
     </collision>
   </link>
@@ -591,7 +591,7 @@
     </inertial>
     <visual>
       <geometry>
-        <mesh filename="package://drake_models/atlas/meshes/r_uleg.gltf"/>
+        <mesh filename="package://drc_atlas_description/meshes/r_uleg.gltf"/>
       </geometry>
     </visual>
     <!-- to cover the logo shield -->
@@ -599,7 +599,7 @@
     <!-- outside strut -->
     <collision>
       <geometry>
-        <mesh filename="package://drake_models/atlas/meshes/r_uleg_chull.obj"/>
+        <mesh filename="package://drc_atlas_description/meshes/r_uleg_chull.obj"/>
       </geometry>
     </collision>
   </link>
@@ -611,12 +611,12 @@
     </inertial>
     <visual>
       <geometry>
-        <mesh filename="package://drake_models/atlas/meshes/utorso.gltf"/>
+        <mesh filename="package://drc_atlas_description/meshes/utorso.gltf"/>
       </geometry>
     </visual>
     <collision>
       <geometry>
-        <mesh filename="package://drake_models/atlas/meshes/utorso_chull.obj"/>
+        <mesh filename="package://drc_atlas_description/meshes/utorso_chull.obj"/>
       </geometry>
     </collision>
   </link>
@@ -1008,13 +1008,13 @@
     <visual>
       <origin rpy="0 0 0" xyz="0 0 0"/>
       <geometry>
-        <mesh filename="package://drake_models/atlas/meshes/head.gltf"/>
+        <mesh filename="package://drc_atlas_description/meshes/head.gltf"/>
       </geometry>
     </visual>
     <collision>
       <origin rpy="0 0 0" xyz="0 0 0"/>
       <geometry>
-        <mesh filename="package://drake_models/atlas/meshes/head_chull.obj"/>
+        <mesh filename="package://drc_atlas_description/meshes/head_chull.obj"/>
         <drake:declare_convex/>
       </geometry>
     </collision>
@@ -1119,13 +1119,13 @@
     <visual>
       <origin rpy="-0.314 0 0" xyz="0.045 -0.0261018277 -0.08342369"/>
       <geometry>
-        <mesh filename="package://drake_models/atlas/meshes/head_camera.gltf"/>
+        <mesh filename="package://drc_atlas_description/meshes/head_camera.gltf"/>
       </geometry>
     </visual>
     <collision>
       <origin rpy="-0.314 0 0" xyz="0.045 -0.0261018277 -0.08342369"/>
       <geometry>
-        <mesh filename="package://drake_models/atlas/meshes/head_camera_chull.obj"/>
+        <mesh filename="package://drc_atlas_description/meshes/head_camera_chull.obj"/>
       </geometry>
     </collision>
   </link>
@@ -1544,13 +1544,13 @@
     <visual>
       <origin rpy="-1.57079 -1.57079 0" xyz="0 0.1725 0"/>
       <geometry>
-        <mesh filename="package://drake_models/atlas/meshes/GRIPPER_OPEN_chull.gltf" scale="1 1 1"/>
+        <mesh filename="package://drc_atlas_description/meshes/GRIPPER_OPEN_chull.gltf" scale="1 1 1"/>
       </geometry>
     </visual>
     <collision>
       <origin rpy="-1.57079 -1.57079 0" xyz="0 0.1725 0"/>
       <geometry>
-        <mesh filename="package://drake_models/atlas/meshes/GRIPPER_OPEN_chull.obj" scale="1 1 1"/>
+        <mesh filename="package://drc_atlas_description/meshes/GRIPPER_OPEN_chull.obj" scale="1 1 1"/>
       </geometry>
     </collision>
   </link>
@@ -1562,13 +1562,13 @@
     <visual>
       <origin rpy="-1.57079 -1.57079 0" xyz="0 0.1725 0"/>
       <geometry>
-        <mesh filename="package://drake_models/atlas/meshes/GRIPPER_OPEN_chull.gltf" scale="1 1 1"/>
+        <mesh filename="package://drc_atlas_description/meshes/GRIPPER_OPEN_chull.gltf" scale="1 1 1"/>
       </geometry>
     </visual>
     <collision>
       <origin rpy="-1.57079 -1.57079 0" xyz="0 0.1725 0"/>
       <geometry>
-        <mesh filename="package://drake_models/atlas/meshes/GRIPPER_OPEN_chull.obj" scale="1 1 1"/>
+        <mesh filename="package://drc_atlas_description/meshes/GRIPPER_OPEN_chull.obj" scale="1 1 1"/>
       </geometry>
     </collision>
   </link>

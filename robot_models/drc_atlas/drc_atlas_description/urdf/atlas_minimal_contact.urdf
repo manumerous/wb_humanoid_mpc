@@ -8,7 +8,7 @@
     </inertial>
     <visual>
       <geometry>
-        <mesh filename="package://drake_models/atlas/meshes/r_clav.gltf"/>
+        <mesh filename="package://drc_atlas_description/meshes/r_clav.gltf"/>
       </geometry>
     </visual>
   </link>
@@ -20,7 +20,7 @@
     </inertial>
     <visual>
       <geometry>
-        <mesh filename="package://drake_models/atlas/meshes/l_foot.gltf"/>
+        <mesh filename="package://drc_atlas_description/meshes/l_foot.gltf"/>
       </geometry>
     </visual>
     <collision>
@@ -136,7 +136,7 @@
     </inertial>
     <visual>
       <geometry>
-        <mesh filename="package://drake_models/atlas/meshes/r_larm.gltf"/>
+        <mesh filename="package://drc_atlas_description/meshes/r_larm.gltf"/>
       </geometry>
     </visual>
   </link>
@@ -148,7 +148,7 @@
     </inertial>
     <visual>
       <geometry>
-        <mesh filename="package://drake_models/atlas/meshes/r_hand.gltf"/>
+        <mesh filename="package://drc_atlas_description/meshes/r_hand.gltf"/>
       </geometry>
     </visual>
   </link>
@@ -160,7 +160,7 @@
     </inertial>
     <visual>
       <geometry>
-        <mesh filename="package://drake_models/atlas/meshes/l_lglut.gltf"/>
+        <mesh filename="package://drc_atlas_description/meshes/l_lglut.gltf"/>
       </geometry>
     </visual>
   </link>
@@ -172,7 +172,7 @@
     </inertial>
     <visual>
       <geometry>
-        <mesh filename="package://drake_models/atlas/meshes/l_lleg.gltf"/>
+        <mesh filename="package://drc_atlas_description/meshes/l_lleg.gltf"/>
       </geometry>
     </visual>
   </link>
@@ -184,7 +184,7 @@
     </inertial>
     <visual>
       <geometry>
-        <mesh filename="package://drake_models/atlas/meshes/r_scap.gltf"/>
+        <mesh filename="package://drc_atlas_description/meshes/r_scap.gltf"/>
       </geometry>
     </visual>
   </link>
@@ -196,7 +196,7 @@
     </inertial>
     <visual>
       <geometry>
-        <mesh filename="package://drake_models/atlas/meshes/l_talus.gltf"/>
+        <mesh filename="package://drc_atlas_description/meshes/l_talus.gltf"/>
       </geometry>
     </visual>
   </link>
@@ -208,7 +208,7 @@
     </inertial>
     <visual>
       <geometry>
-        <mesh filename="package://drake_models/atlas/meshes/r_uarm.gltf"/>
+        <mesh filename="package://drc_atlas_description/meshes/r_uarm.gltf"/>
       </geometry>
     </visual>
   </link>
@@ -220,7 +220,7 @@
     </inertial>
     <visual>
       <geometry>
-        <mesh filename="package://drake_models/atlas/meshes/r_farm.gltf"/>
+        <mesh filename="package://drc_atlas_description/meshes/r_farm.gltf"/>
       </geometry>
     </visual>
   </link>
@@ -232,7 +232,7 @@
     </inertial>
     <visual>
       <geometry>
-        <mesh filename="package://drake_models/atlas/meshes/l_uglut.gltf"/>
+        <mesh filename="package://drc_atlas_description/meshes/l_uglut.gltf"/>
       </geometry>
     </visual>
   </link>
@@ -244,7 +244,7 @@
     </inertial>
     <visual>
       <geometry>
-        <mesh filename="package://drake_models/atlas/meshes/l_uleg.gltf"/>
+        <mesh filename="package://drc_atlas_description/meshes/l_uleg.gltf"/>
       </geometry>
     </visual>
     <!-- to cover the logo shield -->
@@ -259,7 +259,7 @@
     </inertial>
     <visual>
       <geometry>
-        <mesh filename="package://drake_models/atlas/meshes/ltorso.gltf"/>
+        <mesh filename="package://drc_atlas_description/meshes/ltorso.gltf"/>
       </geometry>
     </visual>
   </link>
@@ -271,7 +271,7 @@
     </inertial>
     <visual>
       <geometry>
-        <mesh filename="package://drake_models/atlas/meshes/mtorso.gltf"/>
+        <mesh filename="package://drc_atlas_description/meshes/mtorso.gltf"/>
       </geometry>
     </visual>
   </link>
@@ -283,7 +283,7 @@
     </inertial>
     <visual>
       <geometry>
-        <mesh filename="package://drake_models/atlas/meshes/pelvis.gltf"/>
+        <mesh filename="package://drc_atlas_description/meshes/pelvis.gltf"/>
       </geometry>
     </visual>
   </link>
@@ -295,7 +295,7 @@
     </inertial>
     <visual>
       <geometry>
-        <mesh filename="package://drake_models/atlas/meshes/r_clav.gltf"/>
+        <mesh filename="package://drc_atlas_description/meshes/r_clav.gltf"/>
       </geometry>
     </visual>
   </link>
@@ -307,7 +307,7 @@
     </inertial>
     <visual>
       <geometry>
-        <mesh filename="package://drake_models/atlas/meshes/r_foot.gltf"/>
+        <mesh filename="package://drc_atlas_description/meshes/r_foot.gltf"/>
       </geometry>
     </visual>
     <collision>
@@ -423,7 +423,7 @@
     </inertial>
     <visual>
       <geometry>
-        <mesh filename="package://drake_models/atlas/meshes/r_larm.gltf"/>
+        <mesh filename="package://drc_atlas_description/meshes/r_larm.gltf"/>
       </geometry>
     </visual>
   </link>
@@ -435,7 +435,7 @@
     </inertial>
     <visual>
       <geometry>
-        <mesh filename="package://drake_models/atlas/meshes/r_hand.gltf"/>
+        <mesh filename="package://drc_atlas_description/meshes/r_hand.gltf"/>
       </geometry>
     </visual>
   </link>
@@ -447,7 +447,7 @@
     </inertial>
     <visual>
       <geometry>
-        <mesh filename="package://drake_models/atlas/meshes/r_lglut.gltf"/>
+        <mesh filename="package://drc_atlas_description/meshes/r_lglut.gltf"/>
       </geometry>
     </visual>
   </link>
@@ -459,7 +459,7 @@
     </inertial>
     <visual>
       <geometry>
-        <mesh filename="package://drake_models/atlas/meshes/r_lleg.gltf"/>
+        <mesh filename="package://drc_atlas_description/meshes/r_lleg.gltf"/>
       </geometry>
     </visual>
   </link>
@@ -471,7 +471,7 @@
     </inertial>
     <visual>
       <geometry>
-        <mesh filename="package://drake_models/atlas/meshes/r_scap.gltf"/>
+        <mesh filename="package://drc_atlas_description/meshes/r_scap.gltf"/>
       </geometry>
     </visual>
   </link>
@@ -483,7 +483,7 @@
     </inertial>
     <visual>
       <geometry>
-        <mesh filename="package://drake_models/atlas/meshes/r_talus.gltf"/>
+        <mesh filename="package://drc_atlas_description/meshes/r_talus.gltf"/>
       </geometry>
     </visual>
   </link>
@@ -495,7 +495,7 @@
     </inertial>
     <visual>
       <geometry>
-        <mesh filename="package://drake_models/atlas/meshes/r_uarm.gltf"/>
+        <mesh filename="package://drc_atlas_description/meshes/r_uarm.gltf"/>
       </geometry>
     </visual>
   </link>
@@ -507,7 +507,7 @@
     </inertial>
     <visual>
       <geometry>
-        <mesh filename="package://drake_models/atlas/meshes/r_farm.gltf"/>
+        <mesh filename="package://drc_atlas_description/meshes/r_farm.gltf"/>
       </geometry>
     </visual>
   </link>
@@ -519,7 +519,7 @@
     </inertial>
     <visual>
       <geometry>
-        <mesh filename="package://drake_models/atlas/meshes/r_uglut.gltf"/>
+        <mesh filename="package://drc_atlas_description/meshes/r_uglut.gltf"/>
       </geometry>
     </visual>
   </link>
@@ -531,7 +531,7 @@
     </inertial>
     <visual>
       <geometry>
-        <mesh filename="package://drake_models/atlas/meshes/r_uleg.gltf"/>
+        <mesh filename="package://drc_atlas_description/meshes/r_uleg.gltf"/>
       </geometry>
     </visual>
     <!-- to cover the logo shield -->
@@ -546,7 +546,7 @@
     </inertial>
     <visual>
       <geometry>
-        <mesh filename="package://drake_models/atlas/meshes/utorso.gltf"/>
+        <mesh filename="package://drc_atlas_description/meshes/utorso.gltf"/>
       </geometry>
     </visual>
   </link>
@@ -883,7 +883,7 @@
     <visual>
       <origin rpy="0 0 0" xyz="0 0 0"/>
       <geometry>
-        <mesh filename="package://drake_models/atlas/meshes/head.gltf"/>
+        <mesh filename="package://drc_atlas_description/meshes/head.gltf"/>
       </geometry>
       <material name="">
         <color rgba="0.9098 0.44314 0.031373 1"/>
@@ -990,7 +990,7 @@
     <visual>
       <origin rpy="-0.314 0 0" xyz="0.045 -0.0261018277 -0.08342369"/>
       <geometry>
-        <mesh filename="package://drake_models/atlas/meshes/head_camera.gltf"/>
+        <mesh filename="package://drc_atlas_description/meshes/head_camera.gltf"/>
       </geometry>
       <material name="">
         <color rgba="0.72941 0.35686 0.023529 1"/>
