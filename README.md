@@ -43,7 +43,7 @@ git submodule update --init --recursive
 The project supports both Dockerized workspaces (recommended) or a local installation for developing and running the humanoid MPC. 
 
 <details>
-<summary> Dockerized Workspace</summary>
+<summary>**Dockerized Workspace**</summary>
 
 We provide a [Dockerfile](https://github.com/manumerous/wb_humanoid_mpc/blob/main/docker/Dockerfile) to enable running and devloping the project from a containerized environment. Check out the [devcontainer.json](https://github.com/manumerous/wb_humanoid_mpc/blob/main/.devcontainer/devcontainer.json) for the arguments that must be supplied to the `docker build` and `docker run` commands. 
 
@@ -52,7 +52,7 @@ For working in **Visual Studio Code**, we recommend to install the [Dev Containe
 </details>
 
 <details>
-<summary>Install Dependencies Locally</summary>
+<summary>**Install Dependencies Locally**</summary>
 
 Make sure you have **ros2** installed on your system as e.g specified for jazzy in
 the [installation guide](https://docs.ros.org/en/jazzy/Installation/Ubuntu-Install-Debs.html).
