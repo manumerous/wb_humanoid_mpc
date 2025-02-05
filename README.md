@@ -40,6 +40,14 @@ cd wb-humanoid-mpc
 git submodule update --init --recursive
 ```
 
+### Dockerized Workspace
+
+If you would prefer to run and to develop the project from a containerized environment, a Dockerfile is made available [here](https://github.com/manumerous/wb_humanoid_mpc/blob/main/docker/Dockerfile). If you choose this workflow, you may skip the following section.
+
+Check out the [devcontainer.json](https://github.com/manumerous/wb_humanoid_mpc/blob/main/.devcontainer/devcontainer.json) for the arguments that must be supplied to the `docker build` and `docker run` commands. If you are comfortable with developing in Visual Studio Code, it is recommended to first have a working [Docker installation](https://docs.docker.com/engine/install/) on your machine and to install the [Dev Containers](https://marketplace.visualstudio.com/items?itemName=ms-vscode-remote.remote-containers) extension.
+
+Then, with the root of this repository as the root of your VS Code workspace, enter `Ctrl + Shift + P` and select `Dev Containers: Rebuild and Reopen in Container` at the top of the screen. VS Code will then automatically handle calling the `docker build` and `docker run` commands for you and will reopen the window at the root of the containerized workspace. Once this step is completed, you are ready to [build and run the code](https://github.com/manumerous/wb_humanoid_mpc/tree/main?tab=readme-ov-file#building-the-mpc).
+
 ### Install Dependencies
 
 Make sure you have **ros2** installed on your system as e.g specified for jazzy in
