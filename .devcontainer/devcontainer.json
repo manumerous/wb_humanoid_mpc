@@ -1,0 +1,68 @@
+{
+  "name": "Whole Body MPC Dev Container",
+  "initializeCommand": "xhost +local:",
+  "build": {
+    "dockerfile": "${localWorkspaceFolder}/docker/Dockerfile",
+    "context": "..",
+    "target": "base",
+    "args": {
+      "WB_HUMANOID_MPC_DIR": "/wb_humanoid_mpc_ws",
+      "PYTHON_VERSION": "3.12",
+      "USER_ID": "${localEnv:USER_ID}",
+      "GROUP_ID": "${localEnv:GROUP_ID}",
+      "GIT_USER_NAME": "${command:git config --global user.name}",
+      "GIT_USER_EMAIL": "${command:git config --global user.email}"
+    }
+  },
+  "runArgs": [
+    "--rm",
+    "-it",
+    "--net=host",
+    "--privileged",
+    "-u", "${localEnv:USER_ID}:${localEnv:GROUP_ID}",
+    "-e", "DISPLAY",
+    "-e", "QT_X11_NO_MITSHM=1",
+    "-e", "XDG_RUNTIME_DIR=${localEnv:XDG_RUNTIME_DIR}",
+    "-e",
+    "GIT_USER_NAME=$(git config --global user.name)",
+    "-e",
+    "GIT_USER_EMAIL=$(git config --global user.email)",
+    "-v", "/tmp/.X11-unix:/tmp/.X11-unix",
+    "-v", "${localEnv:XDG_RUNTIME_DIR}:${localEnv:XDG_RUNTIME_DIR}"
+  ],
+  "overrideCommand": true,
+  "workspaceFolder": "/wb_humanoid_mpc_ws/src/wb_humanoid_mpc",
+  "customizations": {
+    "vscode": {
+      "settings": {
+        "terminal.integrated.defaultProfile.linux": "bash",
+        "editor.formatOnSave": true,
+        "files.trimTrailingWhitespace": true
+      },
+      "extensions": [
+        "ms-vscode.cpptools",
+        "ms-vscode.cmake-tools",
+        "ms-vscode-remote.remote-containers",
+        "ms-azuretools.vscode-docker",
+        "ms-python.python",
+        "ms-python.vscode-pylance",
+        "eamodio.gitlens",
+        "GitHub.copilot",
+        "GitHub.copilot-chat",
+        "twxs.cmake",
+        "cheshirekow.cmake-format",
+        "xaver.clang-format",
+        "ms-toolsai.jupyter-keymap",
+        "ms-vscode-remote.remote-ssh",
+        "ms-vscode-remote.remote-ssh-edit",
+        "ms-vscode.remote-explorer",
+        "sankethdev.vscode-proto"
+      ]
+    }
+  },
+  "mounts": [
+    "source=${localWorkspaceFolder}/../..,target=/wb_humanoid_mpc_ws,type=bind,consistency=cached",
+    "source=${localEnv:HOME}/.gitconfig,target=/home/vscode/.gitconfig,type=bind"
+  ],
+  "postCreateCommand": "git config --global user.name \"$GIT_USER_NAME\" && git config --global user.email \"$GIT_USER_EMAIL\" && git config --global --add safe.directory /wb_humanoid_mpc_ws/src/wb_humanoid_mpc && curl -o .git-completion.bash https://raw.githubusercontent.com/git/git/master/contrib/completion/git-completion.bash && echo 'source /opt/ros/jazzy/setup.bash' >> ~/.bashrc && echo 'source ./.git-completion.bash' >> ~/.bashrc"
+}

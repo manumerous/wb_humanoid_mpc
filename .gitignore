@@ -51,7 +51,7 @@ install/
 
 **/__pycache__/**
 
-# MuJoCo log 
+# MuJoCo log
 */MUJOCO_LOG.TXT
 *mjData.bin
 
@@ -62,3 +62,4 @@ install/
 
 **/.gdb_history
 
+.git-completion.bash
