@@ -3,6 +3,7 @@
   "initializeCommand": "xhost +local:",
   "build": {
     "dockerfile": "${localWorkspaceFolder}/docker/Dockerfile",
+    "context": "..",
     "target": "base",
     "args": {
       "WB_HUMANOID_MPC_DIR": "/wb_humanoid_mpc_ws",

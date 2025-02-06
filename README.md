@@ -1,6 +1,6 @@
 # Whole-Body Humanoid MPC
 
-This repository contains a Whole-Body Nonlinear Model Predictove Controller (NMPC) for humanoid loco-manipulation control. This approach enables to directly optimize through the **full-order torque-level dynamics in realtime** to generate a wide range of humanoid behaviors. 
+This repository contains a Whole-Body Nonlinear Model Predictive Controller (NMPC) for humanoid loco-manipulation control. This approach enables to directly optimize through the **full-order torque-level dynamics in realtime** to generate a wide range of humanoid behaviors. 
 
 **Interactive Velocity and Base Height Control via Joystick:**
 ![Screencast2024-12-16180254-ezgif com-video-to-gif-converter(1)(3)](https://github.com/user-attachments/assets/a032477b-2e70-41b0-90d3-9539e1a4b723)
@@ -24,7 +24,7 @@ The project supports the following robot examples:
 
 ## Get Started
 
-### Setup Workspace
+### Setup Colcon Workspace
 
 Create a colcon workspace and clone the repository into the src folder:
 
@@ -39,8 +39,20 @@ Then initialize all submodules using:
 cd wb-humanoid-mpc
 git submodule update --init --recursive
 ```
-
 ### Install Dependencies
+The project supports both Dockerized workspaces (recommended) or a local installation for developing and running the humanoid MPC. 
+
+<details>
+<summary>Dockerized Workspace</summary>
+
+We provide a [Dockerfile](https://github.com/manumerous/wb_humanoid_mpc/blob/main/docker/Dockerfile) to enable running and devloping the project from a containerized environment. Check out the [devcontainer.json](https://github.com/manumerous/wb_humanoid_mpc/blob/main/.devcontainer/devcontainer.json) for the arguments that must be supplied to the `docker build` and `docker run` commands. 
+
+For working in **Visual Studio Code**, we recommend to install the [Dev Containers](https://marketplace.visualstudio.com/items?itemName=ms-vscode-remote.remote-containers) extension. Then, with the root of this repository as the root of your VS Code workspace, enter `Ctrl + Shift + P` and select `Dev Containers: Rebuild and Reopen in Container` at the top of the screen. VS Code will then automatically handle calling the `docker build` and `docker run` commands for you and will reopen the window at the root of the containerized workspace. Once this step is completed, you are ready to [build and run the code](https://github.com/manumerous/wb_humanoid_mpc/tree/main?tab=readme-ov-file#building-the-mpc).
+
+</details>
+
+<details>
+<summary>Install Dependencies Locally</summary>
 
 Make sure you have **ros2** installed on your system as e.g specified for jazzy in
 the [installation guide](https://docs.ros.org/en/jazzy/Installation/Ubuntu-Install-Debs.html).
@@ -50,7 +62,7 @@ Then install all dependencies using:
 ```bash
 envsubst < dependencies.txt | xargs sudo apt install -y
 ```
-
+</details>
 
 ### Building the MPC 
 
@@ -96,4 +108,4 @@ To cite the Whole-Body Humanoid MPC in your academic research, please consider c
 ## Acknowledgements
 This project was developed at [1X Technologies](https://www.1x.tech/) and is primarily authored and maintained by [Manuel Yves Galliker](https://github.com/manumerous).
 
-Further acknoledgment for their contributions, insights, discussion and support goes to Michael Purcell, Jesper Smith, Simon Zimmermann, Joel Filho, Paal Arthur Schjelderup Thorseth, Varit (Ohm) Vichathorn, Armin Nurkanovic, Charles Khazoom, Farbod Farshidian, Eric Jang, Bernt Børnich and everyone at 1X Technologies.
+Further acknowledgement for their contributions, insights, discussion and support goes to Michael Purcell, Jesper Smith, Simon Zimmermann, Joel Filho, Paal Arthur Schjelderup Thorseth, Varit (Ohm) Vichathorn, Sjur Grønnevik Wroldsen, Armin Nurkanovic, Charles Khazoom, Farbod Farshidian, Eric Jang, Bernt Børnich and everyone at 1X Technologies.
