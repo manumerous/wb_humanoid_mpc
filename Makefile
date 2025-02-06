@@ -1,7 +1,7 @@
 SHELL := /bin/bash
 
 ############################################################
-# Standard Configuration 
+# Standard Configuration
 ############################################################
 mkfile_path := $(abspath $(lastword $(MAKEFILE_LIST)))
 current_path := $(dir $(mkfile_path))
@@ -61,7 +61,7 @@ PARALLEL_JOBS ?= 6
 CPP_VERSION ?= -std=c++17
 
 ############################################################
-# Set flags based on configuration 
+# Set flags based on configuration
 ############################################################
 
 COMMON_CMAKE_ARGS ?= \
@@ -173,7 +173,7 @@ clean-cppad:
 format:
 	lib/halodi-ros2-code-quality/Tools/fix_code_style.sh robot_models humanoid_nmpc
 
-validate-format: 
+validate-format:
 	lib/halodi-ros2-code-quality/Tools/check_code_style.sh robot_models humanoid_nmpc
 
 
@@ -181,25 +181,31 @@ launch-g1-dummy-sim:
 	cd ${build_dir} && \
 	source ${ros_source_file} && \
 	source install/setup.bash && \
-	ros2 launch g1_centroidal_mpc dummy_sim.launch.py 
+	ros2 launch g1_centroidal_mpc dummy_sim.launch.py
 
 launch-wb-g1-dummy-sim:
 	cd ${build_dir} && \
 	source ${ros_source_file} && \
 	source install/setup.bash && \
-	ros2 launch g1_wb_mpc wb_dummy_sim.launch.py 
+	ros2 launch g1_wb_mpc wb_dummy_sim.launch.py
+
+launch-drc-atlas-dummy-sim:
+	cd ${build_dir} && \
+	source ${ros_source_file} && \
+	source install/setup.bash && \
+	ros2 launch drc_atlas_centroidal_mpc dummy_sim.launch.py
 
 launch-neo-dummy-sim:
 	cd ${build_dir} && \
 	source ${ros_source_file} && \
 	source install/setup.bash && \
-	ros2 launch neo_centroidal_mpc dummy_sim.launch.py 
+	ros2 launch neo_centroidal_mpc dummy_sim.launch.py
 
 launch-wb-neo-dummy-sim:
 	cd ${build_dir} && \
 	source ${ros_source_file} && \
 	source install/setup.bash && \
-	ros2 launch neo_wb_mpc wb_dummy_sim.launch.py 
+	ros2 launch neo_wb_mpc wb_dummy_sim.launch.py
 
 test-pinocchio-model:
 	cd ${build_dir} && \

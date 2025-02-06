@@ -1,0 +1,29 @@
+<?xml version="1.0"?>
+<package format="3">
+  <name>drc_atlas_centroidal_mpc</name>
+  <version>0.0.0</version>
+  <description>DRC Atlas motion planner package</description>
+
+  <maintainer email="nicholas.palomo@alumni.ethz.ch">Nicholas Jose Palomo</maintainer>
+
+  <license>BSD</license>
+
+  <buildtool_depend>ament_cmake</buildtool_depend>
+
+  <depend>rclcpp</depend>
+  <depend>humanoid_centroidal_mpc_ros2</depend>
+  <depend>drc_atlas_description</depend>
+  <depend>pinocchio</depend>
+
+  <test_depend>ament_cmake_gtest</test_depend>
+  <test_depend>ament_cmake_clang_format</test_depend>
+  <test_depend>ament_cmake_clang_tidy</test_depend>
+  <test_depend>ament_cmake_cppcheck</test_depend>
+
+
+  <export>
+    <build_type>ament_cmake</build_type>
+  </export>
+
+
+</package>
