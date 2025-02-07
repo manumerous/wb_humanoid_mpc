@@ -42,8 +42,7 @@ jobs:
           mesa-utils \
           gettext-base 
 
-
-    - name: Install Project Dependencies
+      - name: Install Project Dependencies
         run: |
           envsubst < /tmp/dependencies.txt | xargs sudo apt-get install -y --no-install-recommends
 
