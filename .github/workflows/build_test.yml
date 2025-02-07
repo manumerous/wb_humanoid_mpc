@@ -6,7 +6,8 @@ on:
       - master
   pull_request:
     branches:
-      - "*"
+      - '**'  # double asterisk matches any branch
+    types: [opened, synchronize, reopened]
 
 jobs:
   build:
@@ -40,7 +41,7 @@ jobs:
           x11-apps \
           mesa-utils \
           gettext-base 
-          
+
           # Install dependencies listed in dependencies.txt
           # Make sure dependencies.txt is at the root of your repo or update the path accordingly
           envsubst < /tmp/dependencies.txt | xargs apt-get install -y --no-install-recommends
