@@ -46,9 +46,9 @@ OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 #include <humanoid_common_mpc/cost/StateInputQuadraticCost.h>
 #include <humanoid_common_mpc/pinocchio_model/pinocchioUtils.h>
 #include "humanoid_common_mpc/constraint/ContactMomentXYConstraintCppAd.h"
-#include "humanoid_common_mpc/constraint/ContactMomentZConstraint.h"
 #include "humanoid_common_mpc/constraint/FootCollisionConstraint.h"
 #include "humanoid_common_mpc/constraint/JointLimitsSoftConstraint.h"
+#include "humanoid_common_mpc/cost/ExternalTorqueQuadraticCostAD.h"
 
 namespace ocs2::humanoid {
 
@@ -175,16 +175,6 @@ std::unique_ptr<StateInputCost> HumanoidCostConstraintFactory::getContactMomentX
 /******************************************************************************************************/
 /******************************************************************************************************/
 
-std::unique_ptr<StateInputConstraint> HumanoidCostConstraintFactory::getContactMomentZConstraint(size_t contactPointIndex,
-                                                                                                 const std::string& name) const {
-  return std::unique_ptr<StateInputConstraint>(new ContactMomentZConstraint(*referenceManagerPtr_, *pinocchioInterfacePtr_,
-                                                                            *mpcRobotModelADPtr_, contactPointIndex, name, modelSettings_));
-}
-
-/******************************************************************************************************/
-/******************************************************************************************************/
-/******************************************************************************************************/
-
 std::unique_ptr<StateInputConstraint> HumanoidCostConstraintFactory::getZeroWrenchConstraint(size_t contactPointIndex) const {
   return std::unique_ptr<StateInputConstraint>(new ZeroWrenchConstraint(*referenceManagerPtr_, contactPointIndex, *mpcRobotModelPtr_));
 }
@@ -234,6 +224,23 @@ std::unique_ptr<StateCost> HumanoidCostConstraintFactory::getTerminalCost() cons
   Qf *= terminalCostScaling;
   if (verbose_) std::cerr << "Q_final:\n" << Qf << std::endl;
   return std::unique_ptr<StateCost>(new QuadraticStateCost(Qf));
+}
+
+/******************************************************************************************************/
+/******************************************************************************************************/
+/******************************************************************************************************/
+
+std::unique_ptr<StateInputCost> HumanoidCostConstraintFactory::getExternalTorqueQuadraticCost(size_t contactPointIndex) const {
+  std::string fieldName;
+  if (contactPointIndex == 0) {
+    fieldName = "left_leg_torque_cost.";
+  }
+  if (contactPointIndex == 1) {
+    fieldName = "right_leg_torque_cost.";
+  }
+  ExternalTorqueQuadraticCostAD::Config config = ExternalTorqueQuadraticCostAD::loadConfigFromFile(taskFile_, fieldName, verbose_);
+  return std::make_unique<ExternalTorqueQuadraticCostAD>(contactPointIndex, config, *referenceManagerPtr_, *pinocchioInterfacePtr_,
+                                                         *mpcRobotModelADPtr_, modelSettings_);
 }
 
 /******************************************************************************************************/

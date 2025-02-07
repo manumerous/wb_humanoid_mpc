@@ -217,6 +217,7 @@ void CentroidalMpcInterface::setupOptimalControlProblem() {
     problemPtr_->costPtr->add(footTrackingCostName, std::unique_ptr<StateInputCost>(new CentroidalMpcEndEffectorFootCost(
                                                         *referenceManagerPtr_, footTrackingCostWeights, *pinocchioInterfacePtr_,
                                                         *mpcRobotModelADPtr_, i, footTrackingCostName, modelSettings_)));
+    problemPtr_->costPtr->add(footName + "_ExternalTorqueQuadraticCost", factory.getExternalTorqueQuadraticCost(i));
   }
 
   // Pre-computation
