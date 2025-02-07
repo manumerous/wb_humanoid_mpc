@@ -1,4 +1,4 @@
-name: Full Build Tests
+name: Full Install & Build Tests
 
 on:
   push:
