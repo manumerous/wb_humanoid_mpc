@@ -171,8 +171,6 @@ void WBMpcInterface::setupOptimalControlProblem() {
     problemPtr_->softConstraintPtr->add(footName + "_frictionForceCone", factory.getFrictionForceConeConstraint(i));
     problemPtr_->softConstraintPtr->add(footName + "_contactMomentXY",
                                         factory.getContactMomentXYConstraint(i, footName + "_contact_moment_XY_constraint"));
-    problemPtr_->equalityConstraintPtr->add(footName + "_contactMomentZ",
-                                            factory.getContactMomentZConstraint(i, footName + "_contact_moment_Z_constraint"));
     problemPtr_->equalityConstraintPtr->add(footName + "_zeroWrench", factory.getZeroWrenchConstraint(i));
     problemPtr_->equalityConstraintPtr->add(footName + "_zeroVelocity", getStanceFootConstraint(*eeDynamicsPtr, i));
     problemPtr_->equalityConstraintPtr->add(footName + "_normalVelocity", getNormalVelocityConstraint(*eeDynamicsPtr, i));
