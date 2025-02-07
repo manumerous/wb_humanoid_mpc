@@ -31,7 +31,7 @@ jobs:
           restore-keys: |
             ${{ runner.os }}-apt-
 
-      - name: Install Dependencies
+      - name: Install Base Dependencies
         run: |
           sudo apt-get update && sudo apt-get upgrade -y
           sudo apt-get update && apt-get install -y --no-install-recommends \
@@ -42,11 +42,10 @@ jobs:
           mesa-utils \
           gettext-base 
 
-          # Install dependencies listed in dependencies.txt
-          # Make sure dependencies.txt is at the root of your repo or update the path accordingly
-          envsubst < /tmp/dependencies.txt | xargs apt-get install -y --no-install-recommends
 
-
+    - name: Install Project Dependencies
+        run: |
+          envsubst < /tmp/dependencies.txt | xargs sudo apt-get install -y --no-install-recommends
 
       - name: Initialize submodules
         run: |
