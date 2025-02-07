@@ -1,4 +1,4 @@
-name: Build Tests
+name: Full Install & Build Tests
 
 on:
   push:
@@ -6,7 +6,8 @@ on:
       - master
   pull_request:
     branches:
-      - "*"
+      - '**'  # double asterisk matches any branch
+    types: [opened, synchronize, reopened]
 
 jobs:
   build:
@@ -30,15 +31,20 @@ jobs:
           restore-keys: |
             ${{ runner.os }}-apt-
 
-      - name: Install Dependencies
+      - name: Install Base Dependencies
         run: |
           sudo apt-get update && sudo apt-get upgrade -y
-          # Install dependencies listed in dependencies.txt
-          # Make sure dependencies.txt is at the root of your repo or update the path accordingly
-          xargs -a dependencies.txt sudo apt-get install -y
+          sudo apt-get update && apt-get install -y --no-install-recommends \
+          curl gnupg2 lsb-release software-properties-common \
+          locales \
+          git \
+          x11-apps \
+          mesa-utils \
+          gettext-base 
 
-          # Install additional ROS packages
-          sudo apt-get install -y ros-jazzy-ament-cmake-clang-format ros-jazzy-joint-state-publisher-gui ros-jazzy-xacro ros-jazzy-mcap-vendor ros-jazzy-interactive-markers
+      - name: Install Project Dependencies
+        run: |
+          envsubst < dependencies.txt | xargs sudo apt-get install -y --no-install-recommends
 
       - name: Initialize submodules
         run: |
