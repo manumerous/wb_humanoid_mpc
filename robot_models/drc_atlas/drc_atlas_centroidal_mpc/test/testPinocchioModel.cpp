@@ -11,6 +11,8 @@ Copyright (c) 2022, Halodi Robotics AS. All rights reserved.
 #include <pinocchio/fwd.hpp>
 
 #include <iostream>
+#include <filesystem>
+#include <functional>
 
 #include <pinocchio/algorithm/crba.hpp>
 #include <pinocchio/algorithm/frames.hpp>
@@ -34,6 +36,10 @@ Copyright (c) 2022, Halodi Robotics AS. All rights reserved.
 using namespace ocs2;
 using namespace ocs2::humanoid;
 
+constexpr std::string_view robot_model_package_path = "drc_atlas_description";
+constexpr std::string_view urdf_file_name = "urdf/atlas.urdf";
+constexpr std::string_view task_config_path = "/../config/mpc/task.info";
+
 /**
  * @brief This file contains Manu's personal pinocchio playground.
  */
@@ -51,20 +57,20 @@ void testOrientationErrorWrtPlane(const PinocchioInterface* pinocchioInterfacePt
   vector3_t error;
   vector3_t planeNormal(0.0, 0.0, 1.0);
 
-  const size_t frameId = 69;
-  vector3_t z_axis(0.0, 0.0, 1.0);
+  // const size_t frameId = 69;
+  // vector3_t z_axis(0.0, 0.0, 1.0);
 
-  // Rotation matrix local end effector frame to world frame
-  matrix3_t R_w_l = data.oMf[frameId].rotation();
+  // // Rotation matrix local end effector frame to world frame
+  // matrix3_t R_w_l = data.oMf[frameId].rotation();
 
-  // Passive rotation projecting from end effector frame to the closest frame in plane.
-  // Computed through the shortest arc rotation  from the end effector z axis to the plane normal (both expressed in world frame).
-  quaternion_t quaternion_correction = getQuaternionFromUnitVectors<scalar_t>(R_w_l * z_axis, planeNormal);
+  // // Passive rotation projecting from end effector frame to the closest frame in plane.
+  // // Computed through the shortest arc rotation  from the end effector z axis to the plane normal (both expressed in world frame).
+  // quaternion_t quaternion_correction = getQuaternionFromUnitVectors<scalar_t>(R_w_l * z_axis, planeNormal);
 
-  std::cout << "quaternion_correction: " << quaternion_correction.coeffs() << std::endl;
+  // std::cout << "quaternion_correction: " << quaternion_correction.coeffs() << std::endl;
 
-  error = quaternionDistance(quaternion_correction, quaternion_t::Identity());
-  std::cout << "error: " << error << std::endl;
+  // error = quaternionDistance(quaternion_correction, quaternion_t::Identity());
+  // std::cout << "error: " << error << std::endl;
 }
 
 void printModelDimensionality(PinocchioInterface pin_interface) {
@@ -143,12 +149,12 @@ int main(int argc, char** argv) {
 
   std::string urdfFile;
   try {
-    urdfFile = ament_index_cpp::get_package_share_directory("g1_description") + "/urdf/g1_29dof.urdf";
+    urdfFile = ament_index_cpp::get_package_share_directory(std::string(robot_model_package_path)) + std::filesystem::path::preferred_separator + std::string(urdf_file_name);
   } catch (const std::exception& e) {
-    throw std::runtime_error("Failed to get package share directory: g1_description. Error: " + std::string(e.what()));
+    throw std::runtime_error("Failed to get package share directory: drc_atlas_description. Error: " + std::string(e.what()));
   }
 
-  const std::string taskFile = dir + "/../config/mpc/task.info";
+  const std::string taskFile = dir + std::string(task_config_path);
 
   std::cout << "urdf filename: " << urdfFile << std::endl;
 
@@ -180,20 +186,20 @@ int main(int argc, char** argv) {
   printModelDimensionality(pin_interface);
   printJointNames(pin_interface);
 
-  // Initialize states
-  q = Eigen::VectorXd::Zero(29);
-  q[2] = 0.7925;
-  // q[6] = 0.5;
+  // // Initialize states
+  // q = Eigen::VectorXd::Zero(29);
+  // q[2] = 0.7925;
+  // // q[6] = 0.5;
 
-  computeForwardKinematics(pin_interface, q);
-  printFrameRotation(pin_interface, q, rightFootFrameName);
-  printFrameRotation(pin_interface, q, leftFootFrameName);
+  // computeForwardKinematics(pin_interface, q);
+  // printFrameRotation(pin_interface, q, rightFootFrameName);
+  // printFrameRotation(pin_interface, q, leftFootFrameName);
 
-  testOrientationErrorWrtPlane(&pin_interface, q);
+  // testOrientationErrorWrtPlane(&pin_interface, q);
 
-  /// Test custom model with mass scaling
+  // /// Test custom model with mass scaling
 
-  pin_interface = createCustomPinocchioInterface(taskFile, urdfFile, modelSettings, true, 44.44);
+  // pin_interface = createCustomPinocchioInterface(taskFile, urdfFile, modelSettings, true, 44.44);
 
   return 0;
 }
