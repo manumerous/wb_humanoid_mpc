@@ -123,10 +123,10 @@ vector_t SwitchedModelReferenceManager::getDesiredState(const TargetTrajectories
     const ModelSettings& modelSettings = mpcRobotModelPtr_->modelSettings;
 
     scalar_t gaitCycleFactor = std::sin(2 * M_PI * (phaseVariable - 0.15)) * localVelXCommand;
-    desiredJointAngles[modelSettings.j_l_shoulder_y_index] += -0.3 * gaitCycleFactor;
-    desiredJointAngles[modelSettings.j_r_shoulder_y_index] += 0.3 * gaitCycleFactor;
-    desiredJointAngles[modelSettings.j_l_elbow_y_index] += -0.3 * gaitCycleFactor;
-    desiredJointAngles[modelSettings.j_r_elbow_y_index] += 0.3 * gaitCycleFactor;
+    desiredJointAngles[modelSettings.j_l_shoulder_y_index] += -0.15 * gaitCycleFactor;
+    desiredJointAngles[modelSettings.j_r_shoulder_y_index] += 0.15 * gaitCycleFactor;
+    desiredJointAngles[modelSettings.j_l_elbow_y_index] += -0.15 * gaitCycleFactor;
+    desiredJointAngles[modelSettings.j_r_elbow_y_index] += 0.15 * gaitCycleFactor;
 
     mpcRobotModelPtr_->setJointAngles(xNominal, desiredJointAngles);
   }
