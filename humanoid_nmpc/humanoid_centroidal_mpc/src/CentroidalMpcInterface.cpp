@@ -205,8 +205,6 @@ void CentroidalMpcInterface::setupOptimalControlProblem() {
     problemPtr_->softConstraintPtr->add(footName + "_frictionForceCone", factory.getFrictionForceConeConstraint(i));
     problemPtr_->softConstraintPtr->add(footName + "_contactMomentXY",
                                         factory.getContactMomentXYConstraint(i, footName + "_contact_moment_XY_constraint"));
-    problemPtr_->equalityConstraintPtr->add(footName + "_contactMomentZ",
-                                            factory.getContactMomentZConstraint(i, footName + "_contact_moment_Z_constraint"));
     problemPtr_->equalityConstraintPtr->add(footName + "_zeroWrench", factory.getZeroWrenchConstraint(i));
     problemPtr_->equalityConstraintPtr->add(footName + "_zeroVelocity", getStanceFootConstraint(*eeKinematicsPtr, i));
     problemPtr_->equalityConstraintPtr->add(footName + "_normalVelocity", getNormalVelocityConstraint(*eeKinematicsPtr, i));
@@ -219,6 +217,7 @@ void CentroidalMpcInterface::setupOptimalControlProblem() {
     problemPtr_->costPtr->add(footTrackingCostName, std::unique_ptr<StateInputCost>(new CentroidalMpcEndEffectorFootCost(
                                                         *referenceManagerPtr_, footTrackingCostWeights, *pinocchioInterfacePtr_,
                                                         *mpcRobotModelADPtr_, i, footTrackingCostName, modelSettings_)));
+    problemPtr_->costPtr->add(footName + "_ExternalTorqueQuadraticCost", factory.getExternalTorqueQuadraticCost(i));
   }
 
   // Pre-computation

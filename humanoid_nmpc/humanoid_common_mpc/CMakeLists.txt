@@ -82,11 +82,11 @@ add_library(${PROJECT_NAME}
         src/constraint/EndEffectorKinematicsTwistConstraint.cpp
         src/constraint/FrictionForceConeConstraint.cpp
         src/constraint/ContactMomentXYConstraintCppAd.cpp
-        src/constraint/ContactMomentZConstraint.cpp
         src/constraint/EndEffectorKinematicsLinearVelConstraint.cpp
         src/cost/StateInputQuadraticCost.cpp
         src/cost/EndEffectorKinematicCostHelpers.cpp
         src/cost/EndEffectorKinematicsQuadraticCost.cpp
+        src/cost/ExternalTorqueQuadraticCostAD.cpp
         src/command/TargetTrajectoriesCalculatorBase.cpp
         src/gait/Gait.cpp
         src/gait/GaitSchedule.cpp

@@ -68,7 +68,7 @@ class HumanoidPreComputation : public PreComputation {
  protected:
   HumanoidPreComputation(const HumanoidPreComputation& rhs);
 
-  void updatePinocchioFramePlacements(const vector_t& generalizedCoordinates);
+  void updatePinocchioModelKinematics(const vector_t& generalizedCoordinates);
 
   PinocchioInterface pinocchioInterface_;
   const SwingTrajectoryPlanner* swingTrajectoryPlannerPtr_;

@@ -80,12 +80,12 @@ HumanoidPreComputation* HumanoidPreComputation::clone() const {
 /******************************************************************************************************/
 /******************************************************************************************************/
 
-void HumanoidPreComputation::updatePinocchioFramePlacements(const vector_t& generalizedCoordinates) {
+void HumanoidPreComputation::updatePinocchioModelKinematics(const vector_t& q) {
   const pinocchio::Model& model = pinocchioInterface_.getModel();
   pinocchio::Data& data = pinocchioInterface_.getData();
 
   // Perform the forward kinematics over the kinematic tree
-  pinocchio::forwardKinematics(model, data, generalizedCoordinates);
+  pinocchio::forwardKinematics(model, data, q);
   pinocchio::updateFramePlacements(model, data);
 }
 
@@ -96,6 +96,8 @@ void HumanoidPreComputation::request(RequestSet request, scalar_t t, const vecto
   if (!request.containsAny(Request::Cost + Request::Constraint + Request::SoftConstraint)) {
     return;
   }
+
+  updatePinocchioModelKinematics(mpcRobotModelPtr_->getGeneralizedCoordinates(x));
 
   // lambda to set config for normal velocity constraints
   auto eeNormalVelConConfig = [&](size_t footIndex) {
@@ -111,8 +113,6 @@ void HumanoidPreComputation::request(RequestSet request, scalar_t t, const vecto
   };
 
   if (request.contains(Request::Constraint)) {
-    updatePinocchioFramePlacements(mpcRobotModelPtr_->getGeneralizedCoordinates(x));
-
     for (size_t i = 0; i < N_CONTACTS; i++) {
       eeNormalVelConConfigs_[i] = eeNormalVelConConfig(i);
       pinocchio::FrameIndex frameID = pinocchioInterface_.getModel().getFrameId(mpcRobotModelPtr_->modelSettings.contactNames6DoF[i]);

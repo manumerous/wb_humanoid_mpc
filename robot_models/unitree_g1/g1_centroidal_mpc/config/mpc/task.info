@@ -68,7 +68,7 @@ swing_trajectory_config
 {
   liftOffVelocity                         0.05
   touchDownVelocity                      -0.05
-  swingHeight                             0.08
+  swingHeight                             0.06
   touchDownHeightOffset                   0.0
   swingTimeScale                          0.4
   impactProximityFactorLiftOffVelocity    -0.15
@@ -169,17 +169,17 @@ Q
   scaling 1e+0
 
   ;; Normalized Centroidal Momentum: [linear, angular] ;;
-  (0,0)   5.0     ; h_com_x / robotMass
-  (1,1)   5.0     ; h_com_y / robotMass
+  (0,0)   8.0     ; h_com_x / robotMass
+  (1,1)   8.0     ; h_com_y / robotMass
   (2,2)   15.0     ; h_com_z / robotMass
-  (3,3)   5.0      ; L_x / robotMass
-  (4,4)   5.0      ; L_y / robotMass
-  (5,5)   2.0      ; L_z / robotMass
+  (3,3)   15.0      ; L_x / robotMass
+  (4,4)   15.0      ; L_y / robotMass
+  (5,5)   4.0      ; L_z / robotMass
 
   ;; Base Pose: [position, orientation] ;;
   (6,6)   0.0    ; p_base_x
   (7,7)   0.0    ; p_base_y
-  (8,8)   40.0    ; p_base_z
+  (8,8)   20.0    ; p_base_z
   ; euler angles for base to world rotation
   (9,9)   0.0    ; theta_base_z
   (10,10) 5.0    ; theta_base_y
@@ -187,25 +187,25 @@ Q
 
   ;; Joint Positions ;;
   (12,12) 0.02     ;    left_hip_pitch_joint
-  (13,13) 0.02     ;    left_hip_roll_joint
+  (13,13) 0.06     ;    left_hip_roll_joint
   (14,14) 4.0      ;    left_hip_yaw_joint
   (15,15) 0.02     ;    left_knee_joint
-  (16,16) 0.02     ;    left_ankle_pitch_joint
-  (17,17) 0.02     ;    left_ankle_roll_joint
+  (16,16) 0.01     ;    left_ankle_pitch_joint
+  (17,17) 0.01     ;    left_ankle_roll_joint
   (18,18) 0.02     ;    right_hip_pitch_joint
-  (19,19) 0.02     ;    right_hip_roll_joint
+  (19,19) 0.06     ;    right_hip_roll_joint
   (20,20) 4.0      ;    right_hip_yaw_joint
   (21,21) 0.02     ;    right_knee_joint
-  (22,22) 0.02     ;    right_ankle_pitch_joint
-  (23,23) 0.02     ;    right_ankle_roll_joint
+  (22,22) 0.01     ;    right_ankle_pitch_joint
+  (23,23) 0.01     ;    right_ankle_roll_joint
   (24,24) 2.0      ;    waist_yaw_joint
-  (25,25) 0.2      ;    waist_roll_joint
-  (26,26) 0.2      ;    waist_pitch_joint
-  (27,27) 2.0      ;    left_shoulder_pitch_joint
+  (25,25) 0.5      ;    waist_roll_joint
+  (26,26) 0.5      ;    waist_pitch_joint
+  (27,27) 10.0      ;    left_shoulder_pitch_joint
   (28,28) 20.0     ;    left_shoulder_roll_joint
   (29,29) 2.0      ;    left_shoulder_yaw_joint
   (30,30) 2.0      ;    left_elbow_joint
-  (31,31) 2.0      ;    right_shoulder_pitch_joint
+  (31,31) 10.0      ;    right_shoulder_pitch_joint
   (32,32) 20.0     ;    right_shoulder_roll_joint
   (33,33) 2.0      ;    right_shoulder_yaw_joint
   (34,34) 2.0      ;    right_elbow_joint
@@ -233,20 +233,20 @@ R
 
   ;; Joint Velocities ;;
   (12,12) 20.0       ;    left_hip_pitch_joint
-  (13,13) 200.0      ;    left_hip_roll_joint
+  (13,13) 20.0      ;    left_hip_roll_joint
   (14,14) 200.0      ;    left_hip_yaw_joint
   (15,15) 20.0       ;    left_knee_joint
   (16,16) 20.0       ;    left_ankle_pitch_joint
   (17,17) 20.0       ;    left_ankle_roll_joint
   (18,18) 20.0       ;    right_hip_pitch_joint
-  (19,19) 200.0      ;    right_hip_roll_joint
+  (19,19) 20.0      ;    right_hip_roll_joint
   (20,20) 200.0      ;    right_hip_yaw_joint
   (21,21) 20.0       ;    right_knee_joint
   (22,22) 20.0       ;    right_ankle_pitch_joint
   (23,23) 20.0       ;    right_ankle_roll_joint
-  (24,24) 200.0      ;    waist_yaw_joint
-  (25,25) 200.0      ;    waist_roll_joint
-  (26,26) 200.0      ;    waist_pitch_joint
+  (24,24) 2000.0      ;    waist_yaw_joint
+  (25,25) 800.0      ;    waist_roll_joint
+  (26,26) 2000.0      ;    waist_pitch_joint
   (27,27) 200.0      ;    left_shoulder_pitch_joint
   (28,28) 100.0      ;    left_shoulder_roll_joint
   (29,29) 100.0      ;    left_shoulder_yaw_joint
@@ -263,12 +263,12 @@ Q_final
   scaling 1e+0
 
   ;; Normalized Centroidal Momentum: [linear, angular] ;;
-  (0,0)   5.0     ; h_com_x / robotMass
-  (1,1)   5.0     ; h_com_y / robotMass
-  (2,2)   15.0     ; h_com_z / robotMass
-  (3,3)   5.0     ; L_x / robotMass
-  (4,4)   5.0     ; L_y / robotMass
-  (5,5)   2.0      ; L_z / robotMass
+  (0,0)   25.0     ; h_com_x / robotMass
+  (1,1)   25.0     ; h_com_y / robotMass
+  (2,2)   25.0     ; h_com_z / robotMass
+  (3,3)   25.0     ; L_x / robotMass
+  (4,4)   25.0     ; L_y / robotMass
+  (5,5)   25.0      ; L_z / robotMass
 
   ;; Base Pose: [position, orientation] ;;
   (6,6)   0.0    ; p_base_x
@@ -276,30 +276,30 @@ Q_final
   (8,8)   20.0    ; p_base_z
   ; euler angles for base to world rotation
   (9,9)   0.0    ; theta_base_z
-  (10,10) 20.0    ; theta_base_y
-  (11,11) 20.0    ; theta_base_x
+  (10,10) 5.0    ; theta_base_y
+  (11,11) 5.0    ; theta_base_x
 
   ;; Joint Positions ;;
-  (12,12) 0.02     ;    left_hip_pitch_joint
-  (13,13) 0.02     ;    left_hip_roll_joint
-  (14,14) 4.0      ;    left_hip_yaw_joint
-  (15,15) 0.02     ;    left_knee_joint
-  (16,16) 0.02     ;    left_ankle_pitch_joint
-  (17,17) 0.02     ;    left_ankle_roll_joint
-  (18,18) 0.02     ;    right_hip_pitch_joint
-  (19,19) 0.02     ;    right_hip_roll_joint
-  (20,20) 4.0      ;    right_hip_yaw_joint
-  (21,21) 0.02     ;    right_knee_joint
-  (22,22) 0.02     ;    right_ankle_pitch_joint
-  (23,23) 0.02     ;    right_ankle_roll_joint
+  (12,12) 0.2     ;    left_hip_pitch_joint
+  (13,13) 0.2     ;    left_hip_roll_joint
+  (14,14) 1.0      ;    left_hip_yaw_joint
+  (15,15) 0.2     ;    left_knee_joint
+  (16,16) 0.1     ;    left_ankle_pitch_joint
+  (17,17) 0.1     ;    left_ankle_roll_joint
+  (18,18) 0.2     ;    right_hip_pitch_joint
+  (19,19) 0.2     ;    right_hip_roll_joint
+  (20,20) 1.0      ;    right_hip_yaw_joint
+  (21,21) 0.2     ;    right_knee_joint
+  (22,22) 0.1     ;    right_ankle_pitch_joint
+  (23,23) 0.1     ;    right_ankle_roll_joint
   (24,24) 2.0      ;    waist_yaw_joint
-  (25,25) 0.2      ;    waist_roll_joint
-  (26,26) 0.2      ;    waist_pitch_joint
-  (27,27) 2.0      ;    left_shoulder_pitch_joint
+  (25,25) 0.5      ;    waist_roll_joint
+  (26,26) 0.5      ;    waist_pitch_joint
+  (27,27) 10.0      ;    left_shoulder_pitch_joint
   (28,28) 20.0     ;    left_shoulder_roll_joint
   (29,29) 2.0      ;    left_shoulder_yaw_joint
   (30,30) 2.0      ;    left_elbow_joint
-  (31,31) 2.0      ;    right_shoulder_pitch_joint
+  (31,31) 10.0      ;    right_shoulder_pitch_joint
   (32,32) 20.0     ;    right_shoulder_roll_joint
   (33,33) 2.0      ;    right_shoulder_yaw_joint
   (34,34) 2.0      ;    right_elbow_joint
@@ -307,7 +307,7 @@ Q_final
 
 icp_cost_weights
 {
-  icpErrorWeight      500.0
+  icpErrorWeight      0.0
 }
 
 task_space_foot_cost_weights
@@ -359,6 +359,55 @@ task_space_costs
   }
 }
 
+
+left_leg_torque_cost
+{
+  activeJointNames
+  {
+    [0] "left_hip_pitch_joint"
+    [1] "left_hip_roll_joint"
+    [2] "left_hip_yaw_joint"
+    [3] "left_knee_joint"
+    [4] "left_ankle_pitch_joint"
+    [5] "left_ankle_roll_joint"
+  }
+
+  weights {
+    scaling 1e-4
+
+    (0,0)  2.0     ; 
+    (1,0)  2.0     ; 
+    (2,0)  1.0     ; 
+    (3,0)  8.0     ; 
+    (4,0)  0.2     ; 
+    (5,0)  0.2     ; 
+  }
+}
+
+right_leg_torque_cost
+{
+  activeJointNames
+  {
+    [0] "right_hip_pitch_joint"
+    [1] "right_hip_roll_joint"
+    [2] "right_hip_yaw_joint"
+    [3] "right_knee_joint"
+    [4] "right_ankle_pitch_joint"
+    [5] "right_ankle_roll_joint"
+  }
+
+  weights {
+    scaling 1e-4
+
+    (0,0)  2.0     ; 
+    (1,0)  2.0     ; 
+    (2,0)  1.0     ; 
+    (3,0)  8.0     ; 
+    (4,0)  0.2     ; 
+    (5,0)  0.2     ; 
+  }
+}
+
 contacts
 {
   contact_frame_translation
@@ -405,7 +454,7 @@ collision_constraint
       leftAnkleFrame               left_ankle_roll_joint
       rightAnkleFrame               right_ankle_roll_joint
 
-      footCollisionSphereRadius        0.05
+      footCollisionSphereRadius        0.06
     }
     knee {
       leftKneeFrame                left_knee_joint
@@ -414,6 +463,6 @@ collision_constraint
       kneeCollisionSphereRadius        0.07
     }
     ; relaxed log barrier parameters
-    mu                     15000
+    mu                     20000
     delta                  0.04     
   }

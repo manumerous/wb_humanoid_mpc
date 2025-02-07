@@ -47,7 +47,7 @@ void GaitScheduleUpdater::updateGaitSchedule(std::shared_ptr<GaitSchedule>& gait
                                              scalar_t finalTime) {
   std::cerr << updatedGait;
   const scalar_t timeHorizon = finalTime - initTime;
-  const scalar_t earliestSwitchingTime = (0.6 * finalTime + 0.4 * initTime);
+  const scalar_t earliestSwitchingTime = (0.7 * finalTime + 0.3 * initTime);  // This is a heuristic
   std::cerr << "[GaitScheduleUpdater]: Setting new gait after time " << earliestSwitchingTime << "\n";
   // Find the first time that is greater than current_time
   const auto& modeSchedule = gaitSchedulePtr->getModeSchedule(initTime, finalTime + timeHorizon);

@@ -72,11 +72,11 @@ class HumanoidCostConstraintFactory {
 
   std::unique_ptr<StateInputCost> getContactMomentXYConstraint(size_t contactPointIndex, const std::string& name) const;
 
-  std::unique_ptr<StateInputConstraint> getContactMomentZConstraint(size_t contactPointIndex, const std::string& name) const;
-
   std::unique_ptr<StateInputConstraint> getZeroWrenchConstraint(size_t contactPointIndex) const;
 
   std::unique_ptr<StateInputCost> getFrictionForceConeConstraint(size_t contactPointIndex) const;
+
+  std::unique_ptr<StateInputCost> getExternalTorqueQuadraticCost(size_t contactPointIndex) const;
 
  private:
   std::string taskFile_;

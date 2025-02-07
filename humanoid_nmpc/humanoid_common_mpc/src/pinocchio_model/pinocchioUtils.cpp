@@ -29,8 +29,10 @@ OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 
 #include <humanoid_common_mpc/pinocchio_model/pinocchioUtils.h>
 
+#include <fstream>
 #include <pinocchio/algorithm/center-of-mass.hpp>
 #include <pinocchio/multibody/model.hpp>
+#include "pinocchio/parsers/urdf.hpp"
 
 namespace ocs2::humanoid {
 
