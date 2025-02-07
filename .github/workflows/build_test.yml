@@ -3,11 +3,14 @@ name: Full Install & Build Tests
 on:
   push:
     branches:
-      - master
+      - main
   pull_request:
-    branches:
-      - '**'  # double asterisk matches any branch
+    branches: 
+      - '**'
     types: [opened, synchronize, reopened]
+  merge_group:
+    branches:
+      - main
 
 jobs:
   build:
