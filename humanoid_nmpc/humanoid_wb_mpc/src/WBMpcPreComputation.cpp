@@ -70,6 +70,7 @@ void WBMpcPreComputation::request(RequestSet request, scalar_t t, const vector_t
   }
 
   const ModelSettings::FootConstraintConfig& footConstraintCfg = mpcRobotModelPtr_->modelSettings.footConstraintConfig;
+  updatePinocchioModelKinematics(mpcRobotModelPtr_->getGeneralizedCoordinates(x));
 
   // lambda to set config for normal velocity constraints
   auto eeNormalVelConConfig = [&](size_t footIndex) {
@@ -102,8 +103,6 @@ void WBMpcPreComputation::request(RequestSet request, scalar_t t, const vector_t
   };
 
   if (request.contains(Request::Constraint)) {
-    updatePinocchioFramePlacements(mpcRobotModelPtr_->getGeneralizedCoordinates(x));
-
     for (size_t i = 0; i < N_CONTACTS; i++) {
       eeNormalAccConConfigs_[i] = eeNormalAccConConfig(i);
       pinocchio::FrameIndex frameID = pinocchioInterface_.getModel().getFrameId(mpcRobotModelPtr_->modelSettings.contactNames6DoF[i]);
