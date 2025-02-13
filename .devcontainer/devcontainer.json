@@ -47,8 +47,6 @@
         "ms-python.python",
         "ms-python.vscode-pylance",
         "eamodio.gitlens",
-        "GitHub.copilot",
-        "GitHub.copilot-chat",
         "twxs.cmake",
         "cheshirekow.cmake-format",
         "xaver.clang-format",
@@ -56,7 +54,8 @@
         "ms-vscode-remote.remote-ssh",
         "ms-vscode-remote.remote-ssh-edit",
         "ms-vscode.remote-explorer",
-        "sankethdev.vscode-proto"
+        "sankethdev.vscode-proto",
+        "Continue.continue"
       ]
     }
   },
