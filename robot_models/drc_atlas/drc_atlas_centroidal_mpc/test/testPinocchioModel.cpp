@@ -36,9 +36,11 @@ Copyright (c) 2022, Halodi Robotics AS. All rights reserved.
 using namespace ocs2;
 using namespace ocs2::humanoid;
 
-constexpr std::string_view robot_model_package_path = "drc_atlas_description";
-constexpr std::string_view urdf_file_name = "urdf/atlas.urdf";
-constexpr std::string_view task_config_path = "/../config/mpc/task.info";
+constexpr std::string_view kRobotModelPackagePath = "drc_atlas_description";
+constexpr std::string_view kUrdfFileName = "urdf/atlas.urdf";
+constexpr std::string_view kTaskConfigPath = "/../config/mpc/task.info";
+constexpr int kStateDim = 34;
+constexpr int kNominalBaseHeight = 0.8415;
 
 /**
  * @brief This file contains Manu's personal pinocchio playground.
@@ -149,12 +151,12 @@ int main(int argc, char** argv) {
 
   std::string urdfFile;
   try {
-    urdfFile = ament_index_cpp::get_package_share_directory(std::string(robot_model_package_path)) + std::filesystem::path::preferred_separator + std::string(urdf_file_name);
+    urdfFile = ament_index_cpp::get_package_share_directory(std::string(kRobotModelPackagePath)) + std::filesystem::path::preferred_separator + std::string(kUrdfFileName);
   } catch (const std::exception& e) {
     throw std::runtime_error("Failed to get package share directory: drc_atlas_description. Error: " + std::string(e.what()));
   }
 
-  const std::string taskFile = dir + std::string(task_config_path);
+  const std::string taskFile = dir + std::string(kTaskConfigPath);
 
   std::cout << "urdf filename: " << urdfFile << std::endl;
 
@@ -168,8 +170,8 @@ int main(int argc, char** argv) {
   printJointNames(pin_interface);
 
   // Initialize states
-  Eigen::VectorXd q = Eigen::VectorXd::Zero(35);
-  q[2] = 0.8415;
+  Eigen::VectorXd q = Eigen::VectorXd::Zero(kStateDim);
+  q[2] = kNominalBaseHeight;
 
   computeForwardKinematics(pin_interface, q);
   std::string leftFootFrameName("foot_l_contact");

@@ -195,6 +195,12 @@ launch-drc-atlas-dummy-sim:
 	source install/setup.bash && \
 	ros2 launch drc_atlas_centroidal_mpc dummy_sim.launch.py
 
+launch-drc-atlas-sandbox:
+	cd ${build_dir} && \
+	source ${ros_source_file} && \
+	source install/setup.bash && \
+	ros2 launch drc_atlas_description display.launch.py
+
 launch-neo-dummy-sim:
 	cd ${build_dir} && \
 	source ${ros_source_file} && \
@@ -212,6 +218,12 @@ test-pinocchio-model:
 	source ${ros_source_file} && \
 	source install/setup.bash && \
 	ros2 run humanoid_centroidal_mpc test_pinocchio_model
+
+test-pinocchio-model-atlas:
+	cd ${build_dir} && \
+	source ${ros_source_file} && \
+	source install/setup.bash && \
+	ros2 run drc_atlas_centroidal_mpc test_pinocchio_model
 
 run-ocs2-tests:
 	echo "make sure you call 'make build-relwithdebinfo' to build the tests before running them." && \

@@ -30,12 +30,10 @@ model_settings
   ; Exclude these joints from MPC model
   fixedJointNames
   {
-    [0] "left_wrist_roll_joint"
-    [1] "left_wrist_pitch_joint"
-    [2] "left_wrist_yaw_joint"
-    [3] "right_wrist_roll_joint"
-    [4] "right_wrist_pitch_joint"
-    [5] "right_wrist_yaw_joint"
+    [0] "l_arm_wry"
+    [1] "l_arm_wrx"
+    [0] "r_arm_wry"
+    [1] "r_arm_wrx"
   }
 
   ; Pinocchio Frame names for the contact frames
@@ -48,16 +46,16 @@ model_settings
   ; The Parent frames on which the contact frames are added.
   contactParentJointNames
   {
-    [0] "left_ankle_roll_joint"
-    [1] "right_ankle_roll_joint"
+    [0] "l_leg_aky"
+    [1] "r_leg_aky"
   }
 
   ;; Used for arm swing reference
   armJointNames {
-    left_shoulder_y       left_shoulder_pitch_joint
-    right_shoulder_y      right_shoulder_pitch_joint
-    left_elbow_y          left_elbow_joint
-    right_elbow_y         right_elbow_joint
+    l_arm_shz       left_shoulder_pitch_joint
+    r_arm_shz      right_shoulder_pitch_joint
+    l_arm_elx          left_elbow_joint
+    r_arm_ely         right_elbow_joint
   }
 }
 
