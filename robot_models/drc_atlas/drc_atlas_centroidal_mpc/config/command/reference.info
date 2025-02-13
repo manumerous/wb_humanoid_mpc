@@ -10,29 +10,30 @@ defaultBaseHeight                           0.7925
 
 defaultJointState
 {
-  (0,0)  -0.05     ; left_hip_pitch_joint
-  (1,0)   0.0      ; left_hip_roll_joint
-  (2,0)   0.0      ; left_hip_yaw_joint
-  (3,0)   0.1      ; left_knee_joint
-  (4,0)  -0.05     ; left_ankle_pitch_joint
-  (5,0)   0.0      ; left_ankle_roll_joint
-  (6,0)  -0.05     ; right_hip_pitch_joint
-  (7,0)   0.0      ; right_hip_roll_joint
-  (8,0)   0.0      ; right_hip_yaw_joint
-  (9,0)   0.1      ; right_knee_joint
-  (10,0) -0.05     ; right_ankle_pitch_joint
-  (11,0)  0.0      ; right_ankle_roll_joint
-  (12,0)  0.0      ; waist_yaw_joint
-  (13,0)  0.0      ; waist_roll_joint
-  (14,0)  0.0      ; waist_pitch_joint
-  (15,0)  0.0      ; left_shoulder_pitch_joint
-  (16,0)  0.0      ; left_shoulder_roll_joint
-  (17,0)  0.0      ; left_shoulder_yaw_joint
-  (18,0)  0.0      ; left_elbow_joint
-  (19,0)  0.0      ; right_shoulder_pitch_joint
-  (20,0)  0.0      ; right_shoulder_roll_joint
-  (21,0)  0.0      ; right_shoulder_yaw_joint
-  (22,0)  0.0      ; right_elbow
+  (0,0)   0.0       ; back_bkz
+  (1,0)   0.0       ; back_bky
+  (2,0)   0.0       ; back_bkx
+  (3,0)   0.0       ; l_arm_shz
+  (4,0)   0.0       ; l_arm_shx
+  (5,0)   0.0       ; l_arm_ely
+  (6,0)   0.0       ; l_arm_elx
+  (7,0)   0.0       ; neck_ry
+  (8,0)   0.0       ; r_arm_shz
+  (9,0)   0.0       ; r_arm_shx
+  (10,0)  0.0       ; r_arm_ely
+  (11,0)  0.0       ; r_arm_elx
+  (12,0)  0.0       ; l_leg_hpz
+  (13,0)  0.0       ; l_leg_hpx
+  (14,0)  0.0       ; l_leg_hpy
+  (15,0)  0.0       ; l_leg_kny
+  (16,0)  0.0       ; l_leg_aky
+  (17,0)  0.0       ; l_leg_akx
+  (18,0)  0.0       ; r_leg_hpz
+  (19,0)  0.0       ; r_leg_hpx
+  (20,0)  0.0       ; r_leg_hpy
+  (21,0)  0.0       ; r_leg_kny
+  (22,0)  0.0       ; r_leg_aky
+  (23,0)  0.0       ; r_leg_akx
 }
 
 initialModeSchedule

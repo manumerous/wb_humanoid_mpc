@@ -52,10 +52,10 @@ model_settings
 
   ;; Used for arm swing reference
   armJointNames {
-    l_arm_shx        left_shoulder_pitch_joint
-    r_arm_shx        right_shoulder_pitch_joint
-    l_arm_elx        left_elbow_joint
-    r_arm_elx        right_elbow_joint
+    l_arm_shx        ; left_shoulder_pitch_joint
+    r_arm_shx        ; right_shoulder_pitch_joint
+    l_arm_elx        ; left_elbow_joint
+    r_arm_elx        ; right_elbow_joint
   }
 }
 
@@ -116,7 +116,7 @@ mpc
 
 initialState
 {
-;; Base Pose: [position, orientation] ;;
+  ;; Base Pose: [position, orientation] ;;
   (0,0)   0.0       ; p_base_x
   (1,0)   0.0       ; p_base_y
   (2,0)   0.79      ; p_base_z
@@ -124,63 +124,65 @@ initialState
   (4,0)   0.0       ; theta_base_y
   (5,0)   0.0       ; theta_base_x
 
-;; Joint Positions: ;;
-  (6,0)  -0.05      ; left_hip_pitch_joint
-  (7,0)   0.0       ; left_hip_roll_joint
-  (8,0)   0.0       ; left_hip_yaw_joint
-  (9,0)   0.1       ; left_knee_joint
-  (10,0) -0.05      ; left_ankle_pitch_joint
-  (11,0)  0.0       ; left_ankle_roll_joint
-  (12,0) -0.05      ; right_hip_pitch_joint
-  (13,0)  0.0       ; right_hip_roll_joint
-  (14,0)  0.0       ; right_hip_yaw_joint
-  (15,0)  0.1       ; right_knee_joint
-  (16,0) -0.05      ; right_ankle_pitch_joint
-  (17,0)  0.0       ; right_ankle_roll_joint
-  (18,0)  0.0       ; waist_yaw_joint
-  (19,0)  0.0       ; waist_roll_joint
-  (20,0)  0.0       ; waist_pitch_joint
-  (21,0)  0.0       ; left_shoulder_pitch_joint
-  (22,0)  0.0       ; left_shoulder_roll_joint
-  (23,0)  0.0       ; left_shoulder_yaw_joint
-  (24,0)  0.0       ; left_elbow_joint
-  (25,0)  0.0       ; right_shoulder_pitch_joint
-  (26,0)  0.0       ; right_shoulder_roll_joint
-  (27,0)  0.0       ; right_shoulder_yaw_joint
-  (28,0)  0.0       ; right_elbow_joint
+  ;; Joint Positions: ;;
+  (6,0)   0.0       ; back_bkz
+  (7,0)   0.0       ; back_bky
+  (8,0)   0.0       ; back_bkx
+  (9,0)   0.0       ; l_arm_shz
+  (10,0)  0.0       ; l_arm_shx
+  (11,0)  0.0       ; l_arm_ely
+  (12,0)  0.0       ; l_arm_elx
+  (13,0)  0.0       ; neck_ry
+  (14,0)  0.0       ; r_arm_shz
+  (15,0)  0.0       ; r_arm_shx
+  (16,0)  0.0       ; r_arm_ely
+  (17,0)  0.0       ; r_arm_elx
+  (18,0)  0.0       ; l_leg_hpz
+  (19,0)  0.0       ; l_leg_hpx
+  (20,0)  0.0       ; l_leg_hpy
+  (21,0)  0.0       ; l_leg_kny
+  (22,0)  0.0       ; l_leg_aky
+  (23,0)  0.0       ; l_leg_akx
+  (24,0)  0.0       ; r_leg_hpz
+  (25,0)  0.0       ; r_leg_hpx
+  (26,0)  0.0       ; r_leg_hpy
+  (27,0)  0.0       ; r_leg_kny
+  (28,0)  0.0       ; r_leg_aky
+  (29,0)  0.0       ; r_leg_akx
 
-;; Base Velocity: [velocity, angular velocity] ;;
-  (29,0)  0.0       ; v_base_x
-  (30,0)  0.0       ; v_base_y
-  (31,0)  0.0       ; v_base_z
-  (32,0)  0.0       ; omega_base_z
-  (33,0)  0.0       ; omega_base_y
-  (34,0)  0.0       ; omega_base_x
+  ;; Base Velocity: [velocity, angular velocity] ;;
+  (30,0)  0.0       ; v_base_x
+  (31,0)  0.0       ; v_base_y
+  (32,0)  0.0       ; v_base_z
+  (33,0)  0.0       ; omega_base_z
+  (34,0)  0.0       ; omega_base_y
+  (35,0)  0.0       ; omega_base_x
 
-;; Leg Joint Velocities: [LF, LH, RF, RH] ;;
-  (35,0)  0.0       ; left_hip_pitch_joint
-  (36,0)  0.0       ; left_hip_roll_joint
-  (37,0)  0.0       ; left_hip_yaw_joint
-  (38,0)  0.0       ; left_knee_joint
-  (39,0)  0.0       ; left_ankle_pitch_joint
-  (40,0)  0.0       ; left_ankle_roll_joint
-  (41,0)  0.0       ; right_hip_pitch_joint
-  (42,0)  0.0       ; right_hip_roll_joint
-  (43,0)  0.0       ; right_hip_yaw_joint
-  (44,0)  0.0       ; right_knee_joint
-  (45,0)  0.0       ; right_ankle_pitch_joint
-  (46,0)  0.0       ; right_ankle_roll_joint
-  (47,0)  0.0       ; waist_yaw_joint
-  (48,0)  0.0       ; waist_roll_joint
-  (49,0)  0.0       ; waist_pitch_joint
-  (50,0)  0.0       ; left_shoulder_pitch_joint
-  (51,0)  0.0       ; left_shoulder_roll_joint
-  (52,0)  0.0       ; left_shoulder_yaw_joint
-  (53,0)  0.0       ; left_elbow_joint
-  (54,0)  0.0       ; right_shoulder_pitch_joint
-  (55,0)  0.0       ; right_shoulder_roll_joint
-  (56,0)  0.0       ; right_shoulder_yaw_joint
-  (57,0)  0.0       ; right_elbow_joint
+  ;; Leg Joint Velocities: [LF, LH, RF, RH] ;;
+  (36,0)  0.0       ; back_bkz
+  (37,0)  0.0       ; back_bky
+  (38,0)  0.0       ; back_bkx
+  (39,0)  0.0       ; l_arm_shz
+  (40,0)  0.0       ; l_arm_shx
+  (41,0)  0.0       ; l_arm_ely
+  (42,0)  0.0       ; l_arm_elx
+  (43,0)  0.0       ; neck_ry
+  (44,0)  0.0       ; r_arm_shz
+  (45,0)  0.0       ; r_arm_shx
+  (46,0)  0.0       ; r_arm_ely
+  (47,0)  0.0       ; r_arm_elx
+  (48,0)  0.0       ; l_leg_hpz
+  (49,0)  0.0       ; l_leg_hpx
+  (50,0)  0.0       ; l_leg_hpy
+  (51,0)  0.0       ; l_leg_kny
+  (52,0)  0.0       ; l_leg_aky
+  (53,0)  0.0       ; l_leg_akx
+  (54,0)  0.0       ; r_leg_hpz
+  (55,0)  0.0       ; r_leg_hpx
+  (56,0)  0.0       ; r_leg_hpy
+  (57,0)  0.0       ; r_leg_kny
+  (58,0)  0.0       ; r_leg_aky
+  (59,0)  0.0       ; r_leg_akx
 }
 
 ; standard state weight matrix
