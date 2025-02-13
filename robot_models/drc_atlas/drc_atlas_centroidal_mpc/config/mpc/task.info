@@ -52,10 +52,10 @@ model_settings
 
   ;; Used for arm swing reference
   armJointNames {
-    l_arm_shz       left_shoulder_pitch_joint
-    r_arm_shz      right_shoulder_pitch_joint
-    l_arm_elx          left_elbow_joint
-    r_arm_ely         right_elbow_joint
+    l_arm_shx        left_shoulder_pitch_joint
+    r_arm_shx        right_shoulder_pitch_joint
+    l_arm_elx        left_elbow_joint
+    r_arm_elx        right_elbow_joint
   }
 }
 
