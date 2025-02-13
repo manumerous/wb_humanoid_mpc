@@ -29,13 +29,13 @@
       <inertia ixx="0.011" ixy="0" ixz="0" iyy="0.009" iyz="-0.004" izz="0.004"/>
     </inertial>
     <visual>
-      <origin xyz="0 ${-0.048+0.004} ${-0.45+0.11}" rpy="0 -0 0"/>
+      <origin xyz="0 -0.044 -0.34" rpy="0 -0 0"/>
       <geometry>
         <mesh filename="package://drc_atlas_description/meshes/l_clav.dae" scale="1 1 1"/>
       </geometry>
     </visual>
     <collision>
-      <origin xyz="0 ${-0.048+0.004} ${-0.45+0.11}" rpy="0 -0 0"/>
+      <origin xyz="0 -0.044 -0.34" rpy="0 -0 0"/>
       <geometry>
         <mesh filename="package://drc_atlas_description/meshes/l_clav.dae" scale="1 1 1"/>
       </geometry>
@@ -314,13 +314,13 @@
       <inertia ixx="0.011" ixy="0" ixz="0" iyy="0.009" iyz="0.004" izz="0.004"/>
     </inertial>
     <visual>
-      <origin xyz="0 ${0.048-0.004} ${-0.45+0.11}" rpy="0 -0 0"/>
+      <origin xyz="0 0.044 -0.34" rpy="0 -0 0"/>
       <geometry>
         <mesh filename="package://drc_atlas_description/meshes/r_clav.dae" scale="1 1 1"/>
       </geometry>
     </visual>
     <collision>
-      <origin xyz="0 ${0.048-0.004} ${-0.45+0.11}" rpy="0 -0 0"/>
+      <origin xyz="0 0.044 -0.34" rpy="0 -0 0"/>
       <geometry>
         <mesh filename="package://drc_atlas_description/meshes/r_clav.dae" scale="1 1 1"/>
       </geometry>
