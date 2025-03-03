@@ -58,7 +58,7 @@ BUILD_TYPE ?= Release
 BUILD_TESTING ?= ON
 BUILD_WITH_NINJA ?= ON
 PARALLEL_JOBS ?= 6
-CPP_VERSION ?= -std=c++17
+CPP_VERSION ?= -std=c++20
 
 ############################################################
 # Set flags based on configuration 
@@ -69,7 +69,6 @@ COMMON_CMAKE_ARGS ?= \
 	-DCMAKE_BUILD_TYPE=$(BUILD_TYPE) \
 	-DBUILD_TESTING=$(BUILD_TESTING) \
 	-DCMAKE_SHARED_LINKER_FLAGS=$(LINKER_FLAGS) \
-	-DBUILD_HOST_ONEX_OS=$(BUILD_HOST_ONEX_OS) \
 	-DCMAKE_CXX_FLAGS=$(CPP_VERSION)
 
 # Conditionally add flags specific for the Ninja build system
@@ -200,12 +199,6 @@ launch-wb-neo-dummy-sim:
 	source ${ros_source_file} && \
 	source install/setup.bash && \
 	ros2 launch neo_wb_mpc wb_dummy_sim.launch.py 
-
-test-pinocchio-model:
-	cd ${build_dir} && \
-	source ${ros_source_file} && \
-	source install/setup.bash && \
-	ros2 run humanoid_centroidal_mpc test_pinocchio_model
 
 run-ocs2-tests:
 	echo "make sure you call 'make build-relwithdebinfo' to build the tests before running them." && \
