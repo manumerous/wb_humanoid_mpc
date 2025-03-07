@@ -55,7 +55,8 @@
         "ms-vscode-remote.remote-ssh-edit",
         "ms-vscode.remote-explorer",
         "sankethdev.vscode-proto",
-        "Continue.continue"
+        "Continue.continue",
+        "ms-vscode.cpptools-extension-pack"
       ]
     }
   },
