@@ -56,7 +56,8 @@
         "ms-vscode.remote-explorer",
         "sankethdev.vscode-proto",
         "Continue.continue",
-        "ms-vscode.cpptools-extension-pack"
+        "ms-vscode.cpptools-extension-pack",
+        "ms-vscode.makefile-tools"
       ]
     }
   },
