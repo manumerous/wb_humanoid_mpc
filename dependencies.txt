@@ -11,7 +11,6 @@ ninja-build
 ccache
 python3-pygame
 python3-tk
-libabsl-dev
 
 ros-${ROS_DISTRO}-ament-cmake-clang-format
 ros-${ROS_DISTRO}-joint-state-publisher-gui

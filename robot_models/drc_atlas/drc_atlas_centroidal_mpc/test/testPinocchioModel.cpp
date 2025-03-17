@@ -162,12 +162,18 @@ int main(int argc, char** argv) {
 
   /// Test default model
 
+  std::cout << __LINE__ << " Hello world!"  << std::endl;
+
   PinocchioInterface pin_interface = createDefaultPinocchioInterface(urdfFile);
 
   std::cout << "Default PinocchioInterface initialized " << std::endl;
 
+  std::cout << __LINE__ << " Hello world!"  << std::endl;
+
   printModelDimensionality(pin_interface);
   printJointNames(pin_interface);
+
+  std::cout << __LINE__ << " Hello world!"  << std::endl;
 
   // Initialize states
   Eigen::VectorXd q = Eigen::VectorXd::Zero(kStateDim);
@@ -177,16 +183,24 @@ int main(int argc, char** argv) {
   std::string leftFootFrameName("foot_l_contact");
   std::string rightFootFrameName("foot_r_contact");
   printFrameRotation(pin_interface, q, leftFootFrameName);
+  printFrameRotation(pin_interface, q, rightFootFrameName);
+  std::cout << __LINE__ << " Hello world!"  << std::endl;
 
   /// Test custom model
   ModelSettings modelSettings(taskFile, urdfFile, "test_pinocchio", "true");
 
+  std::cout << __LINE__ << " Hello world!"  << std::endl;
+
   pin_interface = createCustomPinocchioInterface(taskFile, urdfFile, modelSettings);
+
+  std::cout << __LINE__ << " Hello world!"  << std::endl;
 
   std::cout << "Custom PinocchioInterface initialized " << std::endl;
 
   printModelDimensionality(pin_interface);
   printJointNames(pin_interface);
+
+  std::cout << __LINE__ << " Hello world!"  << std::endl;
 
   // // Initialize states
   // q = Eigen::VectorXd::Zero(29);

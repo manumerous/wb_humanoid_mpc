@@ -8,6 +8,25 @@ endif ()
 # Generate compile_commands.json for clang tools
 set(CMAKE_EXPORT_COMPILE_COMMANDS ON)
 
+# Help CMake find Abseil
+set(absl_DIR "/usr/local/lib/cmake/absl")
+find_package(absl CONFIG REQUIRED
+    COMPONENTS
+        log_internal_message
+        log_internal_check_op
+        log_internal_conditions
+        log_internal_format
+        log_internal_globals
+        log_internal_log_impl
+        log_severity
+        log
+        flags_parse
+        strings
+        symbolize
+        stacktrace
+        base
+)
+
 find_package(ament_cmake REQUIRED)
 find_package(ament_index_cpp REQUIRED)
 find_package(rclcpp REQUIRED)
@@ -34,7 +53,8 @@ find_package(Eigen3 3.3 REQUIRED NO_MODULE)
 ## Build ##
 ###########
 
-set(CMAKE_CXX_STANDARD 17)
+set(CMAKE_CXX_STANDARD 20)
+set(CMAKE_CXX_STANDARD_REQUIRED ON)
 
 set(FLAGS ${OCS2_CXX_FLAGS} -Wno-invalid-partial-specialization)
 
@@ -46,6 +66,7 @@ include_directories(
         ${Boost_INCLUDE_DIRS}
         ${pinocchio_INCLUDE_DIRS}
         ${GTEST_INCLUDE_DIRS}
+        /usr/local/include
 )
 
 set(dependencies
@@ -107,6 +128,19 @@ ament_target_dependencies(${PROJECT_NAME}
 target_link_libraries(${PROJECT_NAME}
         ${Boost_LIBRARIES}
         ${pinocchio_LIBRARIES}
+        absl::log_internal_message
+        absl::log_internal_check_op
+        absl::log_internal_conditions
+        absl::log_internal_format
+        absl::log_internal_globals
+        absl::log_internal_log_impl
+        absl::log_severity
+        absl::log
+        absl::flags_parse
+        absl::strings
+        absl::symbolize
+        absl::stacktrace
+        absl::base
 )
 target_compile_options(${PROJECT_NAME} PUBLIC ${OCS2_CXX_FLAGS})
 

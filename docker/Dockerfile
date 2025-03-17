@@ -2,6 +2,7 @@ ARG ROS_DISTRO=jazzy
 ARG BASE_IMAGE=ros:${ROS_DISTRO}-ros-base
 FROM ${BASE_IMAGE} AS base
 
+ARG CPP_VERSION=20
 ARG USER_ID=1000
 ARG GROUP_ID=1000
 ARG WB_HUMANOID_MPC_DIR="/wb_humanoid_mpc_ws"
@@ -17,6 +18,20 @@ RUN apt-get update && apt-get install -y --no-install-recommends \
     x11-apps \
     mesa-utils \
     gettext-base \
+    && rm -rf /var/lib/apt/lists/*
+
+RUN git clone --depth 1 https://github.com/abseil/abseil-cpp.git && \
+    cd abseil-cpp && \
+    mkdir build && cd build && \
+    cmake .. -DCMAKE_CXX_STANDARD=${CPP_VERSION} \
+    -DCMAKE_POSITION_INDEPENDENT_CODE=ON \
+    -DCMAKE_BUILD_TYPE=Release \
+    -DABSL_ENABLE_INSTALL=ON \
+    -DABSL_PROPAGATE_CXX_STD=ON && \
+    make -j$(nproc) && \
+    make install && \
+    cd ../.. && \
+    rm -rf abseil-cpp \
     && rm -rf /var/lib/apt/lists/*
 
 COPY dependencies.txt /tmp/dependencies.txt
