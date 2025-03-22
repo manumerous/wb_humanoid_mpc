@@ -63,3 +63,4 @@ install/
 **/.gdb_history
 
 .git-completion.bash
+.env

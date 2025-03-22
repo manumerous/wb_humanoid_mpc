@@ -3,7 +3,7 @@
   "initializeCommand": [
     "bash",
     "-c",
-    "xhost +local: && echo USER_ID=$(id -u) >> \"${localWorkspaceFolder}/.env\" && echo GROUP_ID=$(id -g) >> \"${localWorkspaceFolder}/.env\""
+    "xhost +local: && echo USER_ID=$(id -u) > \"${localWorkspaceFolder}/.env\" && echo GROUP_ID=$(id -g) >> \"${localWorkspaceFolder}/.env\""
   ],
   "build": {
     "dockerfile": "${localWorkspaceFolder}/docker/Dockerfile",
@@ -67,7 +67,9 @@
         "sankethdev.vscode-proto",
         "Continue.continue",
         "ms-vscode.cpptools-extension-pack",
-        "ms-vscode.makefile-tools"
+        "ms-vscode.makefile-tools",
+        "GitHub.copilot",
+        "GitHub.copilot-chat"
       ]
     }
   },

@@ -20,32 +20,29 @@ RUN apt-get update && apt-get install -y --no-install-recommends \
     gettext-base \
     && rm -rf /var/lib/apt/lists/*
 
-RUN git clone --depth 1 https://github.com/abseil/abseil-cpp.git && \
+# Install Abseil
+RUN git clone -b 20240722.0 https://github.com/abseil/abseil-cpp.git && \
     cd abseil-cpp && \
-    mkdir build && cd build && \
-    cmake .. -DCMAKE_CXX_STANDARD=${CPP_VERSION} \
-    -DCMAKE_POSITION_INDEPENDENT_CODE=ON \
-    -DCMAKE_BUILD_TYPE=Release \
-    -DABSL_ENABLE_INSTALL=ON \
-    -DABSL_PROPAGATE_CXX_STD=ON && \
-    make -j$(nproc) && \
-    make install && \
-    cd ../.. && \
-    rm -rf abseil-cpp \
-    && rm -rf /var/lib/apt/lists/*
+    mkdir -p build && \
+    cd build && \
+    cmake -DCMAKE_INSTALL_PREFIX=/usr/local -DCMAKE_POSITION_INDEPENDENT_CODE=ON -DCMAKE_BUILD_TYPE=Release .. && \
+    cmake --build . --target install && \
+    ldconfig
 
+# Copy dependencies file
 COPY dependencies.txt /tmp/dependencies.txt
 
+# Set up environment variables
+ENV CMAKE_PREFIX_PATH="/opt/ros/${ROS_DISTRO}:${CMAKE_PREFIX_PATH}"
+ENV DISPLAY=${DISPLAY:-:0} QT_X11_NO_MITSHM=1
+
+# Install dependencies from dependencies.txt
 RUN apt-get update && \
     envsubst < /tmp/dependencies.txt | xargs apt-get install -y --no-install-recommends && \
     rm -rf /var/lib/apt/lists/*
 
 # Set default shell to bash
 SHELL ["/bin/bash", "-c"]
-
-# Set up environment variables
-ENV CMAKE_PREFIX_PATH="/opt/ros/${ROS_DISTRO}:${CMAKE_PREFIX_PATH}"
-ENV DISPLAY=${DISPLAY} QT_X11_NO_MITSHM=1
 
 # Set up user and workspace
 WORKDIR ${WB_HUMANOID_MPC_DIR}

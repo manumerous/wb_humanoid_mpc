@@ -47,8 +47,6 @@ link_directories(
   ${pinocchio_LIBRARY_DIRS}
 )
 
-set(CMAKE_CXX_STANDARD 17)
-
 set(FLAGS ${OCS2_CXX_FLAGS} -Wno-invalid-partial-specialization)
 
 set(dependencies

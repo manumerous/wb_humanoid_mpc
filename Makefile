@@ -57,7 +57,8 @@ PACKAGES ?= $(NMPC_PACKAGES) $(ROBOT_MODEL_PACKAGES)
 BUILD_TYPE ?= Release
 BUILD_TESTING ?= ON
 BUILD_WITH_NINJA ?= ON
-PARALLEL_JOBS ?= 6
+NPROC = $(shell nproc 2>/dev/null || echo 1)
+PARALLEL_JOBS ?= $(NPROC)
 CPP_VERSION ?= -std=c++17
 
 ############################################################
