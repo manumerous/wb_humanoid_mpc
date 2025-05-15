@@ -109,8 +109,8 @@ To cite the Whole-Body Humanoid MPC in your academic research, please consider c
 ## Acknowledgements
 Created and actively maintained by [Manuel Yves Galliker](https://github.com/manumerous).
 
-Special thanks go to Nicholas Palermo for implementing the dockerization among other great inputs and contributions. 
+Special thanks go to [Nicholas Palermo](https://github.com/nicholaspalomo) for implementing the dockerization among other great inputs and contributions. 
 
-A large part of this work was developed during my time at [1X Technologies](https://www.1x.tech/). I would like to kindly thank Eric Jang and Bernt Børnich for supporting the open sourcing of this project. 
+Part of this work was developed during my time at [1X Technologies](https://www.1x.tech/). I would like to kindly thank Eric Jang and Bernt Børnich for supporting the open sourcing of this project. 
 
 Further I would like to thank Michael Purcell, Jesper Smith, Simon Zimmermann, Joel Filho, Paal Arthur Schjelderup Thorseth, Varit (Ohm) Vichathorn, Sjur Grønnevik Wroldsen, Armin Nurkanovic, Charles Khazoom and Farbod Farshidian for the many fruitful discussion, insights, contributions and support. 
