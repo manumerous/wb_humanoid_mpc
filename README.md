@@ -67,7 +67,7 @@ envsubst < dependencies.txt | xargs sudo apt install -y
 
 ## Build RAM Usage by PARALLEL_JOBS
 
-| PARALLEL_JOBS | Peak RAM Used | Freeze Behavior                                    |
+| PARALLEL_JOBS | Peak RAM Used | System Response                                    |
 |--------------:|--------------:|----------------------------------------------------|
 | 1             | 11 GiB        | Completed cleanly                                  |
 | 2             | 14 GiB        | Hung for ~5–7 min, then resumed                    |
