@@ -74,8 +74,8 @@ envsubst < dependencies.txt | xargs sudo apt install -y
 | 4             | 14 GiB        | Froze completely → needed forced power‑off         |
 | 6             | 14 GiB        | Froze completely → needed forced power‑off         |
 
-> **Note:** All of these builds were attempted inside a VS Code Dev Container but kept crashing.  
-> The image was therefore built and run **from a terminal** Docker session, and all RAM measurements come from that terminal‑based setup.
+> **Note:** All of these builds were attempted inside a VS Code Dev Container but kept crashing. The image was therefore built and run **from a terminal** Docker session, and all RAM measurements come from terminal‑based setup.
+> Tested on: HP Victus (i5‑11400H, RTX 3050, Ubuntu 22.04, 16 GB RAM)
 
 ### Building the MPC 
 
