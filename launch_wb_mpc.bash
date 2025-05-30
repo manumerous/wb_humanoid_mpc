@@ -15,7 +15,7 @@ if [ ! -f "${XAUTH}" ]; then
 fi
 
 # Host workspace root (hard‑coded)
-HOST_WS="./humanoid_mpc_ws"        # your workspace root
+HOST_WS="$(realpath "${PWD}/../..")" # your workspace root
 BUILD_WS="${HOST_WS}/build"
 INSTALL_WS="${HOST_WS}/install"
 
