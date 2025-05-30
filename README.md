@@ -46,7 +46,7 @@ The project supports both Dockerized workspaces (recommended) or a local install
 <details>
 <summary>Dockerized Workspace</summary>
 
-We provide a [Dockerfile](https://github.com/manumerous/wb_humanoid_mpc/blob/main/docker/Dockerfile) to enable running and devloping the project from a containerized environment. Check out the [devcontainer.json](https://github.com/manumerous/wb_humanoid_mpc/blob/main/.devcontainer/devcontainer.json) for the arguments that must be supplied to the `docker build` and `docker run` commands. 
+We provide a [Dockerfile](https://github.com/manumerous/wb_humanoid_mpc/blob/main/docker/Dockerfile) to enable running and devloping the project from a containerized environment. Check out the [devcontainer.json](https://github.com/manumerous/wb_humanoid_mpc/blob/main/.devcontainer/devcontainer.json) for the arguments that must be supplied to the `docker build` and `docker run` commands. This repository includes two helper scripts:`image_build.bash` builds the `wb-humanoid-mpc:dev` Docker image using the arguments defined in `devcontainer.json`. `launch_wb_mpc.bash` starts the Docker container, mounts your workspace, and drops you into a Bash shell ready to build and run the WB Humanoid MPC code.
 
 For working in **Visual Studio Code**, we recommend to install the [Dev Containers](https://marketplace.visualstudio.com/items?itemName=ms-vscode-remote.remote-containers) extension. Then, with the root of this repository as the root of your VS Code workspace, enter `Ctrl + Shift + P` and select `Dev Containers: Rebuild and Reopen in Container` at the top of the screen. VS Code will then automatically handle calling the `docker build` and `docker run` commands for you and will reopen the window at the root of the containerized workspace. Once this step is completed, you are ready to [build and run the code](https://github.com/manumerous/wb_humanoid_mpc/tree/main?tab=readme-ov-file#building-the-mpc).
 
@@ -64,6 +64,18 @@ Then install all dependencies using:
 envsubst < dependencies.txt | xargs sudo apt install -y
 ```
 </details>
+
+## Build RAM Usage by PARALLEL_JOBS
+
+| PARALLEL_JOBS | Peak RAM Used | System Response                                    |
+|--------------:|--------------:|----------------------------------------------------|
+| 1             | 11 GiB        | Completed cleanly                                  |
+| 2             | 14 GiB        | Hung for ~5–7 min, then resumed                    |
+| 4             | 14 GiB        | Froze completely → needed forced power‑off         |
+| 6             | 14 GiB        | Froze completely → needed forced power‑off         |
+
+> **Note:** All of these builds were attempted inside a VS Code Dev Container but kept crashing. The image was therefore built and run **from a terminal** Docker session, and all RAM measurements come from terminal‑based setup.
+> Tested on: HP Victus (i5‑11400H, RTX 3050, Ubuntu 22.04, 16 GB RAM)
 
 ### Building the MPC 
 
