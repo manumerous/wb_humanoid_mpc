@@ -35,13 +35,42 @@ jobs:
     - name: Check Black version
       run: black --version
       
-    - name: Run Black check on Python files
+    - name: Check git status before formatting
+      run: git status --porcelain
+      
+    - name: Run make format
+      run: make format
+      
+    - name: Check for formatting changes
+      id: format-check
       run: |
-          echo "Checking Python files with Black..."
-          black --check --diff .
+        if [ -n "$(git status --porcelain)" ]; then
+          echo "changes=true" >> $GITHUB_OUTPUT
+          echo "❌ Files were modified by 'make format'"
+          echo ""
+          echo "Modified files:"
+          git status --porcelain
+          echo ""
+          echo "Diff:"
+          git diff
+        else
+          echo "changes=false" >> $GITHUB_OUTPUT
+          echo "✅ No formatting changes needed"
+        fi
         
-    - name: Run clang-format check on C/C++ files
+    - name: Display formatting instructions
+      if: steps.format-check.outputs.changes == 'true'
       run: |
-          echo "Checking C/C++ files with clang-format..."
-          find . -name "*.c" -o -name "*.cpp" -o -name "*.cc" -o -name "*.cxx" -o -name "*.h" -o -name "*.hpp" | \
-          xargs clang-format --dry-run --Werror
+        echo "❌ Code formatting check failed!"
+        echo ""
+        echo "To fix all formatting issues, run:"
+        echo ""
+        echo "  make format"
+        echo ""
+        echo "Then commit and push your changes."
+        
+    - name: Fail if formatting issues found
+      if: steps.format-check.outputs.changes == 'true'
+      run: |
+        echo "Code formatting issues detected. Please run 'make format' to fix them."
+        exit 1
