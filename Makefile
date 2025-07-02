@@ -170,7 +170,8 @@ clean-cppad:
 	rm -rf cppad_code_gen
 
 format:
-	find humanoid_nmpc/ -name "*.cpp" -o -name "*.h" -o -name "*.hpp" | xargs clang-format -i
+	find humanoid_nmpc/ -name "*.cpp" -o -name "*.h" -o -name "*.hpp" | xargs clang-format -i && \
+	black humanoid_nmpc/ robot_models/
 
 validate-format: 
 	lib/halodi-ros2-code-quality/Tools/check_code_style.sh robot_models humanoid_nmpc
