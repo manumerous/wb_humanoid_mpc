@@ -1,4 +1,4 @@
-name: clang-format Check
+name: Code Format Check
 
 on:
   push:
@@ -7,13 +7,23 @@ on:
     branches: [ main, develop ]
 
 jobs:
-  clang-format-check:
+  format-check:
     runs-on: ubuntu-latest
     
     steps:
     - name: Checkout code
       uses: actions/checkout@v4
       
+    - name: Set up Python
+      uses: actions/setup-python@v4
+      with:
+        python-version: '3.x'
+        
+    - name: Install Python formatters
+      run: |
+        python -m pip install --upgrade pip
+        pip install black
+        
     - name: Install clang-format
       run: |
         sudo apt-get update
@@ -22,8 +32,16 @@ jobs:
     - name: Check clang-format version
       run: clang-format --version
       
-    - name: Run clang-format check
+    - name: Check Black version
+      run: black --version
+      
+    - name: Run Black check on Python files
       run: |
-        # Find all C/C++ files and check formatting
-        find . -name "*.c" -o -name "*.cpp" -o -name "*.cc" -o -name "*.cxx" -o -name "*.h" -o -name "*.hpp" | \
-        xargs clang-format --dry-run --Werror
+          echo "Checking Python files with Black..."
+          black --check --diff .
+        
+    - name: Run clang-format check on C/C++ files
+      run: |
+          echo "Checking C/C++ files with clang-format..."
+          find . -name "*.c" -o -name "*.cpp" -o -name "*.cc" -o -name "*.cxx" -o -name "*.h" -o -name "*.hpp" | \
+          xargs clang-format --dry-run --Werror
