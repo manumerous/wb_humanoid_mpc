@@ -1,0 +1,9 @@
+  BasedOnStyle: Google
+  ColumnLimit: 140
+  IndentWidth: 2
+  BreakBeforeBraces: Attach
+  DerivePointerAlignment: false
+  PointerAlignment: Left
+  AllowShortFunctionsOnASingleLine: Inline
+  IncludeBlocks: Preserve
+  BinPackParameters: false

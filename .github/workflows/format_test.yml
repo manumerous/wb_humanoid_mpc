@@ -1,0 +1,29 @@
+name: clang-format Check
+
+on:
+  push:
+    branches: [ main, develop ]
+  pull_request:
+    branches: [ main, develop ]
+
+jobs:
+  clang-format-check:
+    runs-on: ubuntu-latest
+    
+    steps:
+    - name: Checkout code
+      uses: actions/checkout@v4
+      
+    - name: Install clang-format
+      run: |
+        sudo apt-get update
+        sudo apt-get install -y clang-format
+        
+    - name: Check clang-format version
+      run: clang-format --version
+      
+    - name: Run clang-format check
+      run: |
+        # Find all C/C++ files and check formatting
+        find . -name "*.c" -o -name "*.cpp" -o -name "*.cc" -o -name "*.cxx" -o -name "*.h" -o -name "*.hpp" | \
+        xargs clang-format --dry-run --Werror
