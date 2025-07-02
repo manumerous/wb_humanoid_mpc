@@ -379,9 +379,8 @@ ad_vector_t PinocchioEndEffectorDynamicsCppAd::getOrientationCppAd(const ad_vect
 /******************************************************************************************************/
 /******************************************************************************************************/
 /******************************************************************************************************/
-auto PinocchioEndEffectorDynamicsCppAd::getOrientationError(const vector_t& state,
-                                                            const std::vector<quaternion_t>& referenceOrientations) const
-    -> std::vector<vector3_t> {
+auto PinocchioEndEffectorDynamicsCppAd::getOrientationError(
+    const vector_t& state, const std::vector<quaternion_t>& referenceOrientations) const -> std::vector<vector3_t> {
   vector_t params(4 * endEffectorIds_.size());
   for (size_t i = 0; i < endEffectorIds_.size(); i++) {
     params.segment<4>(i * 4) = referenceOrientations[i].coeffs();
@@ -662,8 +661,8 @@ ad_vector_t PinocchioEndEffectorDynamicsCppAd::getLinearAccelerationCppAd(const 
 /******************************************************************************************************/
 /******************************************************************************************************/
 /******************************************************************************************************/
-auto PinocchioEndEffectorDynamicsCppAd::getLinearAcceleration(const vector_t& state, const vector_t& input) const
-    -> std::vector<vector3_t> {
+auto PinocchioEndEffectorDynamicsCppAd::getLinearAcceleration(const vector_t& state,
+                                                              const vector_t& input) const -> std::vector<vector3_t> {
   vector_t stateInput(state.rows() + input.rows());
   stateInput << state, input;
   const vector_t accelerationValues = linearAccelerationCppAdInterfacePtr_->getFunctionValue(stateInput);
@@ -721,8 +720,8 @@ ad_vector_t PinocchioEndEffectorDynamicsCppAd::getAngularAccelerationCppAd(const
 /******************************************************************************************************/
 /******************************************************************************************************/
 /******************************************************************************************************/
-auto PinocchioEndEffectorDynamicsCppAd::getAngularAcceleration(const vector_t& state, const vector_t& input) const
-    -> std::vector<vector3_t> {
+auto PinocchioEndEffectorDynamicsCppAd::getAngularAcceleration(const vector_t& state,
+                                                               const vector_t& input) const -> std::vector<vector3_t> {
   vector_t stateInput(state.rows() + input.rows());
   stateInput << state, input;
   const vector_t accelerationValues = angularAccelerationCppAdInterfacePtr_->getFunctionValue(stateInput);

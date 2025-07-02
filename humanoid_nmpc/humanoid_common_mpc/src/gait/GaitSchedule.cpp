@@ -137,7 +137,7 @@ void GaitSchedule::tileModeSequenceTemplate(scalar_t startTime, scalar_t finalTi
       scalar_t deltaTime = templateTimes[i + 1] - templateTimes[i];
       eventTimes.push_back(eventTimes.back() + deltaTime);
     }  // end of i loop
-  }    // end of while loop
+  }  // end of while loop
 
   // default final phase
   modeSequence.push_back(ModeNumber::STANCE);
