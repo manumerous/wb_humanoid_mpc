@@ -46,9 +46,9 @@ class MRTPolicySubscriber : public MRT_BASE {
    */
   ~MRTPolicySubscriber() override;
 
-  void resetMpcNode(const TargetTrajectories& initTargetTrajectories) override{};
+  void resetMpcNode(const TargetTrajectories& initTargetTrajectories) override {};
 
-  void setCurrentObservation(const SystemObservation& currentObservation) override{};
+  void setCurrentObservation(const SystemObservation& currentObservation) override {};
 
   /**
    * Shut down the ROS nodes.

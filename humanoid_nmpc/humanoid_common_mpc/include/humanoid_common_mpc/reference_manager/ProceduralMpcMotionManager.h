@@ -96,7 +96,7 @@ class ProceduralMpcMotionManager : public SolverSynchronizedModule {
    *
    * @param primalSolution : primalSolution
    */
-  void postSolverRun(const PrimalSolution& primalSolution) override{};
+  void postSolverRun(const PrimalSolution& primalSolution) override {};
 
   virtual void setAndScaleVelocityCommand(const WalkingVelocityCommand& rawVelocityCommand);
 

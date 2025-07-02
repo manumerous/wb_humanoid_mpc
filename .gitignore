@@ -1,6 +1,3 @@
-# clang
-.clang-*
-
 # Remove accidental build stuff put in here
 build/
 log/

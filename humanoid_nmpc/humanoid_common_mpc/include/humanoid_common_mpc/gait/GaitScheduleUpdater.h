@@ -53,7 +53,7 @@ class GaitScheduleUpdater : public SolverSynchronizedModule {
                             const vector_t& currentState,
                             const ReferenceManagerInterface& referenceManager) override;
 
-  void postSolverRun(const PrimalSolution&) override{};
+  void postSolverRun(const PrimalSolution&) override {};
 
   // Override this function in case you need to e.g. access the received gait in a mutex protected way.
   virtual ModeSequenceTemplate getReceivedGait() { return receivedGait_; }

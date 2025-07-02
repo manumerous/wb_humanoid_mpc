@@ -170,11 +170,8 @@ clean-cppad:
 	rm -rf cppad_code_gen
 
 format:
-	lib/halodi-ros2-code-quality/Tools/fix_code_style.sh robot_models humanoid_nmpc
-
-validate-format: 
-	lib/halodi-ros2-code-quality/Tools/check_code_style.sh robot_models humanoid_nmpc
-
+	find . -name "lib" -prune -o \( -name "*.cpp" -o -name "*.h" -o -name "*.hpp" \) -print | xargs clang-format -i && \
+	black . --exclude="lib/"
 
 launch-g1-dummy-sim:
 	cd ${build_dir} && \

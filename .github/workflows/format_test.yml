@@ -1,0 +1,76 @@
+name: Code Format Check
+
+on:
+  push:
+    branches: [ main, develop ]
+  pull_request:
+    branches: [ main, develop ]
+
+jobs:
+  format-check:
+    runs-on: ubuntu-latest
+    
+    steps:
+    - name: Checkout code
+      uses: actions/checkout@v4
+      
+    - name: Set up Python
+      uses: actions/setup-python@v4
+      with:
+        python-version: '3.x'
+        
+    - name: Install Python formatters
+      run: |
+        python -m pip install --upgrade pip
+        pip install black
+        
+    - name: Install clang-format
+      run: |
+        sudo apt-get update
+        sudo apt-get install -y clang-format
+        
+    - name: Check clang-format version
+      run: clang-format --version
+      
+    - name: Check Black version
+      run: black --version
+      
+    - name: Check git status before formatting
+      run: git status --porcelain
+      
+    - name: Run make format
+      run: make format
+      
+    - name: Check for formatting changes
+      id: format-check
+      run: |
+        if [ -n "$(git status --porcelain)" ]; then
+          echo "changes=true" >> $GITHUB_OUTPUT
+          echo "❌ Files were modified by 'make format'"
+          echo ""
+          echo "Modified files:"
+          git status --porcelain
+          echo ""
+          echo "Diff:"
+          git diff
+        else
+          echo "changes=false" >> $GITHUB_OUTPUT
+          echo "✅ No formatting changes needed"
+        fi
+        
+    - name: Display formatting instructions
+      if: steps.format-check.outputs.changes == 'true'
+      run: |
+        echo "❌ Code formatting check failed!"
+        echo ""
+        echo "To fix all formatting issues, run:"
+        echo ""
+        echo "  make format"
+        echo ""
+        echo "Then commit and push your changes."
+        
+    - name: Fail if formatting issues found
+      if: steps.format-check.outputs.changes == 'true'
+      run: |
+        echo "Code formatting issues detected. Please run 'make format' to fix them."
+        exit 1
