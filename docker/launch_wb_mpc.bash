@@ -15,12 +15,10 @@ if [ ! -f "${XAUTH}" ]; then
 fi
 
 # Host workspace root (hard‑coded)
-HOST_WS="$(realpath "${PWD}/../..")" # your workspace root
-BUILD_WS="${HOST_WS}/build"
-INSTALL_WS="${HOST_WS}/install"
+HOST_WS="$(realpath "${PWD}/../../..")" # your workspace root
+
 
 # Run the container, mounting the entire workspace
-# Bind mounts: src/, build/, and install/ persist on host
 
 docker run --rm -it \
   --name wb-mpc-dev \
@@ -35,11 +33,9 @@ docker run --rm -it \
   -v /tmp/.X11-unix:/tmp/.X11-unix:rw \
   -v "${XAUTH}:${XAUTH}:rw" \
   -v "${HOST_WS}:/wb_humanoid_mpc_ws:cached" \
-  -v "${BUILD_WS}:/wb_humanoid_mpc_ws/build:cached" \
-  -v "${INSTALL_WS}:/wb_humanoid_mpc_ws/install:cached" \
   --workdir /wb_humanoid_mpc_ws \
   wb-humanoid-mpc:dev \
-  bash -c "chown -R ubuntu:ubuntu /wb_humanoid_mpc_ws/build /wb_humanoid_mpc_ws/install && exec su ubuntu -c bash"
+  bash
 
 echo "Done."
 

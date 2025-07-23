@@ -5,9 +5,9 @@ set -euo pipefail
 
 # Paths (relative to this script)
 SCRIPT_DIR="$(cd "$(dirname "${BASH_SOURCE[0]}")" && pwd)"
-# Assumes this script is in the project root; adjust if needed
-CONTEXT="${SCRIPT_DIR}"
-DOCKERFILE="${SCRIPT_DIR}/docker/Dockerfile"
+# Assumes this script lives in your docker/ folder next to Dockerfile
+DOCKERFILE="${SCRIPT_DIR}/Dockerfile"
+CONTEXT="${SCRIPT_DIR}/.."
 TARGET="base"
 
 # Build arguments (from devcontainer.json)
