@@ -61,7 +61,8 @@ class XBoxWalkingCommandPublisher(Node):
     def timer_callback(self):
         if self.xbox_controller_interface.joystick_connected:
             success, msg = self.xbox_controller_interface.get_walking_command_msg()
-            if success: self.publisher_.publish(msg)
+            if success:
+                self.publisher_.publish(msg)
         else:
             if self.counter >= (2 * self.publisher_rate):
                 self.xbox_controller_interface.get_joystick_connection()
