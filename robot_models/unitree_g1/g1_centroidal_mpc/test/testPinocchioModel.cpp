@@ -10,7 +10,11 @@ Copyright (c) 2022, Halodi Robotics AS. All rights reserved.
 
 #include <pinocchio/fwd.hpp>
 
+#include <chrono>
+#include <iomanip>
 #include <iostream>
+#include <random>
+#include <vector>
 
 #include <pinocchio/algorithm/crba.hpp>
 #include <pinocchio/algorithm/frames.hpp>
@@ -24,6 +28,7 @@ Copyright (c) 2022, Halodi Robotics AS. All rights reserved.
 #include <ocs2_core/Types.h>
 #include "humanoid_centroidal_mpc/common/CentroidalMpcRobotModel.h"
 #include "humanoid_common_mpc/common/ModelSettings.h"
+#include "humanoid_common_mpc/pinocchio_model/DynamicsHelperFunctions.h"
 #include "humanoid_common_mpc/pinocchio_model/createPinocchioModel.h"
 
 #include <ocs2_robotic_tools/common/RotationTransforms.h>
@@ -33,6 +38,160 @@ Copyright (c) 2022, Halodi Robotics AS. All rights reserved.
 
 using namespace ocs2;
 using namespace ocs2::humanoid;
+
+void benchmarkInverseDynamics(PinocchioInterfaceTpl<scalar_t>& pinocchioInterface) {
+  const int NUM_ITERATIONS = 10000;
+
+  // Get dimensions from pinocchio interface
+  const int nq = pinocchioInterface.getModel().nq;
+  const int nv = pinocchioInterface.getModel().nv;
+  const int njoints = nv - 6;  // Assuming floating base (6 DOF base + joint DOFs)
+
+  // Random number generator
+  std::random_device rd;
+  std::mt19937 gen(rd());
+  std::normal_distribution<scalar_t> dis(0.0, 1.0);
+
+  // Generate random test states
+  std::vector<vector_t> q_states, qd_states, qdd_joints_states;
+  std::vector<std::array<VECTOR6_T<scalar_t>, 2>> footWrenches_states;
+
+  for (int i = 0; i < NUM_ITERATIONS; ++i) {
+    // Random generalized coordinates
+    vector_t q(nq);
+    for (int j = 0; j < nq; ++j) {
+      q[j] = dis(gen);
+    }
+    q_states.push_back(q);
+
+    // Random generalized velocities
+    vector_t qd(nv);
+    for (int j = 0; j < nv; ++j) {
+      qd[j] = dis(gen);
+    }
+    qd_states.push_back(qd);
+
+    // Random joint accelerations
+    vector_t qdd_joints(njoints);
+    for (int j = 0; j < njoints; ++j) {
+      qdd_joints[j] = dis(gen);
+    }
+    qdd_joints_states.push_back(qdd_joints);
+
+    // Random foot wrenches
+    std::array<VECTOR6_T<scalar_t>, 2> footWrenches;
+    for (int foot = 0; foot < 2; ++foot) {
+      for (int j = 0; j < 6; ++j) {
+        footWrenches[foot][j] = dis(gen);
+      }
+    }
+    footWrenches_states.push_back(footWrenches);
+  }
+
+  // Benchmark custom inverse dynamics
+  double customAvg = 0.0;
+  double rneaAvg = 0.0;
+
+  for (int i = 0; i < NUM_ITERATIONS; i = i + 10) {
+    auto start = std::chrono::high_resolution_clock::now();
+    for (int j = 0; j < 10; j++) {
+      auto result =
+          computeJointTorques(q_states[i + j], qd_states[i + j], qdd_joints_states[i + j], footWrenches_states[i + j], pinocchioInterface);
+    }
+
+    auto end = std::chrono::high_resolution_clock::now();
+    auto customDuration = std::chrono::duration_cast<std::chrono::microseconds>(end - start);
+    customAvg += static_cast<double>(customDuration.count());
+
+    // Benchmark RNEA inverse dynamics
+    start = std::chrono::high_resolution_clock::now();
+
+    for (int j = 0; j < 10; j++) {
+      auto result = computeJointTorquesRNEA(q_states[i + j], qd_states[i + j], qdd_joints_states[i + j], footWrenches_states[i + j],
+                                            pinocchioInterface);
+    }
+
+    end = std::chrono::high_resolution_clock::now();
+    auto rneaDuration = std::chrono::duration_cast<std::chrono::microseconds>(end - start);
+    rneaAvg += static_cast<double>(rneaDuration.count());
+  }
+
+  customAvg = customAvg / NUM_ITERATIONS;
+  rneaAvg = rneaAvg / NUM_ITERATIONS;
+
+  // Print results
+  std::cout << std::fixed << std::setprecision(2);
+  std::cout << "Inverse Dynamics Benchmark Results (" << NUM_ITERATIONS << " iterations):\n";
+  std::cout << "================================================\n";
+  std::cout << "Custom Implementation:  " << customAvg << " μs average\n";
+  std::cout << "RNEA Implementation:    " << rneaAvg << " μs average\n";
+  std::cout << "Speed ratio (Custom/RNEA): " << customAvg / rneaAvg << "x\n";
+
+  if (customAvg < rneaAvg) {
+    std::cout << "Custom implementation is " << (rneaAvg / customAvg) << "x faster\n";
+  } else {
+    std::cout << "RNEA implementation is " << (customAvg / rneaAvg) << "x faster\n";
+  }
+}
+
+void compareInverseDynamics(PinocchioInterfaceTpl<scalar_t>& pinocchioInterface) {
+  const int NUM_ITERATIONS = 10;
+
+  // Get dimensions from pinocchio interface
+  const int nq = pinocchioInterface.getModel().nq;
+  const int nv = pinocchioInterface.getModel().nv;
+  const int njoints = nv - 6;  // Assuming floating base (6 DOF base + joint DOFs)
+
+  // Random number generator
+  std::random_device rd;
+  std::mt19937 gen(rd());
+  std::normal_distribution<scalar_t> dis(0.0, 1.0);
+
+  // Generate random test states
+  std::vector<vector_t> q_states, qd_states, qdd_joints_states;
+  std::vector<std::array<VECTOR6_T<scalar_t>, 2>> footWrenches_states;
+
+  for (int i = 0; i < NUM_ITERATIONS; ++i) {
+    // Random generalized coordinates
+    vector_t q(nq);
+    for (int j = 0; j < nq; ++j) {
+      q[j] = dis(gen);
+    }
+    q_states.push_back(q);
+
+    // Random generalized velocities
+    vector_t qd(nv);
+    for (int j = 0; j < nv; ++j) {
+      qd[j] = dis(gen);
+    }
+    qd_states.push_back(qd);
+
+    // Random joint accelerations
+    vector_t qdd_joints(njoints);
+    for (int j = 0; j < njoints; ++j) {
+      qdd_joints[j] = dis(gen);
+    }
+    qdd_joints_states.push_back(qdd_joints);
+
+    // Random foot wrenches
+    std::array<VECTOR6_T<scalar_t>, 2> footWrenches;
+    for (int foot = 0; foot < 2; ++foot) {
+      for (int j = 0; j < 6; ++j) {
+        footWrenches[foot][j] = dis(gen);
+      }
+    }
+    footWrenches_states.push_back(footWrenches);
+  }
+
+  for (int i = 0; i < NUM_ITERATIONS; i++) {
+    auto resultCustom = computeJointTorques(q_states[i], qd_states[i], qdd_joints_states[i], footWrenches_states[i], pinocchioInterface);
+
+    auto resultRNEA = computeJointTorquesRNEA(q_states[i], qd_states[i], qdd_joints_states[i], footWrenches_states[i], pinocchioInterface);
+
+    std::cout << "Result custom:" << resultCustom.transpose() << std::endl;
+    std::cout << "Result rnea  :" << resultRNEA.transpose() << std::endl;
+  }
+}
 
 /**
  * @brief This file contains Manu's personal pinocchio playground.
@@ -194,6 +353,10 @@ int main(int argc, char** argv) {
   /// Test custom model with mass scaling
 
   pin_interface = createCustomPinocchioInterface(taskFile, urdfFile, modelSettings, true, 44.44);
+
+  benchmarkInverseDynamics(pin_interface);
+
+  compareInverseDynamics(pin_interface);
 
   return 0;
 }

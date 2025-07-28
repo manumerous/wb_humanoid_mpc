@@ -1,6 +1,6 @@
 interface
 {
-  verbose                               true  // show the loaded parameters
+  verbose                               false  // show the loaded parameters
   useAnalyticalGradientsDynamics        false
   useAnalyticalGradientsConstraints     false
 }
@@ -64,20 +64,20 @@ model_settings
 swing_trajectory_config
 {
   liftOffVelocity                         0.05
-  touchDownVelocity                      -0.02
+  touchDownVelocity                      -0.0
   swingHeight                             0.08
-  touchDownHeightOffset                   0.0
+  touchDownHeightOffset                  -0.001
   swingTimeScale                          0.4
-  impactProximityFactorLiftOffVelocity    -0.25
-  impactProximityFactorTouchDownVelocity  0.005
-  impactProximityFactorMidPointValue      0.01
+  impactProximityFactorLiftOffVelocity    -0.15
+  impactProximityFactorTouchDownVelocity  0.3
+  impactProximityFactorMidPointValue      0.005
 }
 
 ; multiple_shooting settings
 multiple_shooting
 {
   nThreads                              4
-  dt                                    0.025
+  dt                                    0.035
   sqpIteration                          1
   deltaTol                              1e-4
   g_max                                 1e-2
@@ -90,7 +90,7 @@ multiple_shooting
   printLinesearch                       false
   useFeedbackPolicy                     false
   integratorType                        RK4
-  threadPriority                        50
+  threadPriority                        90
 }
 
 ; Rollout settings
@@ -106,13 +106,13 @@ rollout
 
 mpc
 {
-  timeHorizon                     0.9  ; [s]
+  timeHorizon                     1.1  ; [s]
   solutionTimeWindow              -1   ; maximum [s]
   coldStart                       false
 
   debugPrint                      false
 
-  mpcDesiredFrequency             100  ; [Hz]
+  mpcDesiredFrequency             60  ; [Hz]
   mrtDesiredFrequency             500 ; [Hz]
 }
 
@@ -121,7 +121,7 @@ initialState
 ;; Base Pose: [position, orientation] ;;
   (0,0)   0.0       ; p_base_x
   (1,0)   0.0       ; p_base_y
-  (2,0)   0.79      ; p_base_z
+  (2,0)   0.8      ; p_base_z
   (3,0)   0.0       ; theta_base_z
   (4,0)   0.0       ; theta_base_y
   (5,0)   0.0       ; theta_base_x
@@ -264,43 +264,43 @@ R
   scaling 1e-3
 
   ;; Feet Contact Forces: [LF, RF, LH, RH] ;;
-  (0,0)   0.001       ; left_force_x
-  (1,1)   0.001       ; left_force_y
+  (0,0)   0.003       ; left_force_x
+  (1,1)   0.003       ; left_force_y
   (2,2)   0.001       ; left_force_z
   (3,3)   0.01       ; left_moment_x
   (4,4)   0.01       ; left_moment_y
-  (5,5)   0.01       ; left_moment_z
-  (6,6)   0.001       ; right_force_x
-  (7,7)   0.001       ; right_force_y
+  (5,5)   0.1       ; left_moment_z
+  (6,6)   0.003       ; right_force_x
+  (7,7)   0.003       ; right_force_y
   (8,8)   0.001       ; right_force_z
   (9,9)   0.01       ; right_moment_x
   (10,10) 0.01       ; right_moment_y
-  (11,11) 0.01       ; right_moment_z
+  (11,11) 0.1       ; right_moment_z
 
-  ;; Joint Velocities ;;
-  (12,12) 0.02      ;    left_hip_pitch_joint
-  (13,13) 0.02      ;    left_hip_roll_joint
-  (14,14) 0.02      ;    left_hip_yaw_joint
-  (15,15) 0.02      ;    left_knee_joint
-  (16,16) 0.02      ;    left_ankle_pitch_joint
-  (17,17) 0.02      ;    left_ankle_roll_joint
-  (18,18) 0.02      ;    right_hip_pitch_joint
-  (19,19) 0.02      ;    right_hip_roll_joint
-  (20,20) 0.02      ;    right_hip_yaw_joint
-  (21,21) 0.02      ;    right_knee_joint
-  (22,22) 0.02      ;    right_ankle_pitch_joint
-  (23,23) 0.02      ;    right_ankle_roll_joint
-  (24,24) 0.02      ;    waist_yaw_joint
-  (25,25) 0.02      ;    waist_roll_joint
-  (26,26) 0.02      ;    waist_pitch_joint
-  (27,27) 0.02      ;    left_shoulder_pitch_joint
-  (28,28) 0.02      ;    left_shoulder_roll_joint
-  (29,29) 0.02      ;    left_shoulder_yaw_joint
-  (30,30) 0.02      ;    left_elbow_joint
-  (31,31) 0.02      ;    right_shoulder_pitch_joint
-  (32,32) 0.02      ;    right_shoulder_roll_joint
-  (33,33) 0.02      ;    right_shoulder_yaw_joint
-  (34,34) 0.02      ;    right_elbow_joint
+  ;; Joint Accelerations ;;
+  (12,12) 0.005      ;    left_hip_pitch_joint
+  (13,13) 0.005      ;    left_hip_roll_joint
+  (14,14) 0.005      ;    left_hip_yaw_joint
+  (15,15) 0.005      ;    left_knee_joint
+  (16,16) 0.005      ;    left_ankle_pitch_joint
+  (17,17) 0.005      ;    left_ankle_roll_joint
+  (18,18) 0.005      ;    right_hip_pitch_joint
+  (19,19) 0.005      ;    right_hip_roll_joint
+  (20,20) 0.005      ;    right_hip_yaw_joint
+  (21,21) 0.005      ;    right_knee_joint
+  (22,22) 0.005      ;    right_ankle_pitch_joint
+  (23,23) 0.005      ;    right_ankle_roll_joint
+  (24,24) 0.005      ;    waist_yaw_joint
+  (25,25) 0.005      ;    waist_roll_joint
+  (26,26) 0.005      ;    waist_pitch_joint
+  (27,27) 0.005      ;    left_shoulder_pitch_joint
+  (28,28) 0.005      ;    left_shoulder_roll_joint
+  (29,29) 0.005      ;    left_shoulder_yaw_joint
+  (30,30) 0.005      ;    left_elbow_joint
+  (31,31) 0.005      ;    right_shoulder_pitch_joint
+  (32,32) 0.005      ;    right_shoulder_roll_joint
+  (33,33) 0.005      ;    right_shoulder_yaw_joint
+  (34,34) 0.005      ;    right_elbow_joint
 
 }
 
@@ -383,11 +383,11 @@ task_space_foot_cost_weights
   pos_x               0.0
   pos_y               0.0
   pos_z               0.0
-  orientation_x       1000.0
-  orientation_y       1000.0
+  orientation_x       10000.0
+  orientation_y       10000.0
   orientation_z       0.0
-  lin_velocity_x      10000.0
-  lin_velocity_y      10000.0
+  lin_velocity_x      50.0
+  lin_velocity_y      50.0
   lin_velocity_z      0.0
   ang_velocity_x      100.0
   ang_velocity_y      100.0
@@ -452,7 +452,7 @@ collision_constraint
       leftKneeFrame                left_knee_joint
       rightKneeFrame               right_knee_joint
 
-      kneeCollisionSphereRadius        0.07
+      kneeCollisionSphereRadius        0.075
     }
     ; relaxed log barrier parameters
     mu                     1500

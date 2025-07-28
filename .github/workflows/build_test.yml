@@ -64,4 +64,5 @@ jobs:
 
       - name: Build All
         run: |
+          export PARALLEL_JOBS=1
           make build-all

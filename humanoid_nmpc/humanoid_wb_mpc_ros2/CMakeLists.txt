@@ -28,6 +28,8 @@ find_package(ocs2_robotic_tools REQUIRED)
 find_package(humanoid_wb_mpc REQUIRED)
 find_package(ocs2_pinocchio_interface REQUIRED)
 find_package(humanoid_common_mpc_ros2 REQUIRED)
+find_package(mujoco_sim_interface REQUIRED)
+
 
 find_package(Boost REQUIRED COMPONENTS
   system
@@ -43,11 +45,13 @@ find_package(Eigen3 3.3 REQUIRED NO_MODULE)
 
 find_package(glfw3 REQUIRED)
 
+find_package(GLEW REQUIRED)
+
 ###########
 ## Build ##
 ###########
 
-set(CMAKE_CXX_STANDARD 17)
+set(CMAKE_CXX_STANDARD 20)
 
 set(FLAGS ${OCS2_CXX_FLAGS} -Wno-invalid-partial-specialization)
 
@@ -79,6 +83,7 @@ set(dependencies
   humanoid_wb_mpc
   ocs2_pinocchio_interface
   humanoid_common_mpc_ros2
+  mujoco_sim_interface
 )
 
 link_directories(
@@ -117,6 +122,23 @@ ament_target_dependencies(humanoid_wb_mpc_pose_command_node
 )
 target_compile_options(humanoid_wb_mpc_pose_command_node PUBLIC ${FLAGS})
 
+# Sim executable
+add_executable(humanoid_wb_mpc_sim
+  src/WBMpcRobotSim.cpp
+)
+ament_target_dependencies(humanoid_wb_mpc_sim
+  ${dependencies}
+)
+target_link_libraries(humanoid_wb_mpc_sim
+        absl::flat_hash_map
+        glfw
+        GLEW
+)
+target_compile_options(humanoid_wb_mpc_sim PUBLIC ${FLAGS})
+
+
+
+
 #############
 ## Install ##
 #############
@@ -129,6 +151,7 @@ install(TARGETS
   humanoid_wb_mpc_sqp_node
   humanoid_wb_mpc_dummy_sim_node
   humanoid_wb_mpc_pose_command_node
+  humanoid_wb_mpc_sim
   DESTINATION lib/${PROJECT_NAME}
 )
 

@@ -18,6 +18,7 @@ find_package(ocs2_mpc REQUIRED)
 find_package(ocs2_sqp REQUIRED)
 find_package(ocs2_pinocchio_interface REQUIRED)
 find_package(humanoid_common_mpc REQUIRED)
+find_package(robot_model REQUIRED)
 
 find_package(GTest REQUIRED)
 
@@ -37,7 +38,7 @@ find_package(Eigen3 3.3 REQUIRED NO_MODULE)
 ## Build ##
 ###########
 
-set(CMAKE_CXX_STANDARD 17)
+set(CMAKE_CXX_STANDARD 20)
 
 set(FLAGS ${OCS2_CXX_FLAGS} -Wno-invalid-partial-specialization)
 
@@ -62,6 +63,7 @@ set(dependencies
   ocs2_sqp
   ocs2_pinocchio_interface
   humanoid_common_mpc
+  robot_model
 )
 
 link_directories(
@@ -90,6 +92,7 @@ add_library(${PROJECT_NAME}
   src/cost/EndEffectorDynamicsFootCost.cpp
   src/cost/JointTorqueCostCppAd.cpp
   src/command/WBMpcTargetTrajectoriesCalculator.cpp
+  src/mrt/WBMpcMrtJointController.cpp
 )
 ament_target_dependencies(${PROJECT_NAME}
   ${dependencies}
