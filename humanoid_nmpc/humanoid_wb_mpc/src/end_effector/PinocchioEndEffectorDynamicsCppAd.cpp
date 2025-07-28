@@ -495,8 +495,6 @@ std::vector<VectorFunctionLinearApproximation> PinocchioEndEffectorDynamicsCppAd
 /******************************************************************************************************/
 
 ad_vector_t PinocchioEndEffectorDynamicsCppAd::getOrientationErrorWrtPlaneCppAd(const ad_vector_t& state, const ad_vector_t& params) {
-  using ad_quaternion_t = Eigen::Quaternion<ad_scalar_t>;
-
   // std::cout << "params: " << params.size() << std::endl;
 
   const auto& model = pinocchioInterfaceCppAd_.getModel();

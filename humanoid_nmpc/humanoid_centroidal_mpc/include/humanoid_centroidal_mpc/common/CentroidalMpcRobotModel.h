@@ -233,6 +233,8 @@ class CentroidalMpcRobotModel : public MpcRobotModelBase<SCALAR_T> {
     return state.head(6);
   };
 
+  const CentroidalModelInfoTpl<SCALAR_T>& getCentroidalModelInfo() const { return centroidalModelInfo_; }
+
  private:
   CentroidalMpcRobotModel(const CentroidalMpcRobotModel& rhs)
       : MpcRobotModelBase<SCALAR_T>(rhs),

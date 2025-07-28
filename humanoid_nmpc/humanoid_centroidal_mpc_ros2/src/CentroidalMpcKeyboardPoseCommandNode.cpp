@@ -59,7 +59,7 @@ int main(int argc, char* argv[]) {
 
   rclcpp::init(argc, argv);
 
-  CentroidalMpcInterface interface(taskFile, urdfFile, gaitFile, referenceFile);
+  CentroidalMpcInterface interface(taskFile, urdfFile, referenceFile);
 
   CentroidalMpcTargetTrajectoriesCalculator mpcTargetTrajectoriesCalculator(
       referenceFile, interface.getMpcRobotModel(), interface.getPinocchioInterface(), interface.getCentroidalModelInfo(),

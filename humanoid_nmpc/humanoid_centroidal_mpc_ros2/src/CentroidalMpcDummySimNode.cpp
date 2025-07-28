@@ -60,7 +60,7 @@ int main(int argc, char** argv) {
   qos.best_effort();
 
   // Robot interface
-  CentroidalMpcInterface interface(taskFile, urdfFile, referenceFile, gaitFile, true);
+  CentroidalMpcInterface interface(taskFile, urdfFile, referenceFile, true);
 
   // MRT
   rclcpp::Node::SharedPtr nodeHandle = std::make_shared<rclcpp::Node>(robotName + "_mrt");

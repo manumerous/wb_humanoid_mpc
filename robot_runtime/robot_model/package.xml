@@ -1,0 +1,25 @@
+<?xml version="1.0"?>
+<package format="3">
+  <name>robot_model</name>
+  <version>0.0.0</version>
+  <description>Data structures and a general robot model for flexible and consistent realtime robot data access.</description>
+
+  <maintainer email="manuel.galliker@gmx.ch">Manuel Yves Galliker</maintainer>
+
+  <license>BSD</license>
+
+  <buildtool_depend>ament_cmake</buildtool_depend>
+
+  <depend>robot_core</depend>
+  <depend>libabsl-dev</depend>
+
+  <test_depend>ament_cmake_gtest</test_depend>
+  <test_depend>ament_cmake_clang_format</test_depend>
+  <test_depend>ament_cmake_clang_tidy</test_depend>
+  <test_depend>ament_cmake_cppcheck</test_depend>
+
+  <export>
+    <build_type>ament_cmake</build_type>
+  </export>
+
+</package>
