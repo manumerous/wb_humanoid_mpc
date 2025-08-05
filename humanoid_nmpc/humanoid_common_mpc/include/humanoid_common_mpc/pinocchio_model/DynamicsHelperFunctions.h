@@ -1,4 +1,5 @@
 /******************************************************************************
+Copyright (c) 2025, Manuel Yves Galliker. All rights reserved.
 Copyright (c) 2024, 1X Technologies. All rights reserved.
 
 Redistribution and use in source and binary forms, with or without
@@ -278,5 +279,80 @@ inline std::vector<vector3_t> computeContactsCoP(const vector_t input,
   }
   return contactCoPs;
 }
+
+///
+/// @brief Computes euler zyx angles from an eigen quaternion
+///
+/// @param quat Quaternion
+///
+/// @return vector3_t (euler_z, euler_y,euler_x)
+
+static inline vector3_t quaternionToEulerZYX(const quaternion_t& quat) {
+  scalar_t w = quat.w();
+  scalar_t x = quat.x();
+  scalar_t y = quat.y();
+  scalar_t z = quat.z();
+
+  // Yaw (Z axis rotation)
+  scalar_t yaw = std::atan2(2.0 * (w * z + x * y), 1.0 - 2.0 * (y * y + z * z));
+  // Pitch (Y axis rotation)
+  scalar_t pitch = std::asin(2.0 * (w * y - z * x));
+  // Roll (X axis rotation)
+  scalar_t roll = std::atan2(2.0 * (w * x + y * z), 1.0 - 2.0 * (x * x + y * y));
+
+  return vector3_t(yaw, pitch, roll);
+}
+
+///
+/// @brief Computes the base acceleration
+///
+/// @param M Given mass matrix
+/// @param nle nonlinear effects in joint space inlcuding gravity comp, centrifugal, corriolis
+/// @param qdd_joints Generalized accelerations
+/// @param externalForcesInJointSpace Sum of J^T F_ext
+///
+/// @return linear and angular base acceleration.
+
+template <typename SCALAR_T>
+VECTOR6_T<SCALAR_T> computeBaseAcceleration(const MATRIX_T<SCALAR_T>& M,
+                                            const VECTOR_T<SCALAR_T>& nle,
+                                            const VECTOR_T<SCALAR_T>& qdd_joints,
+                                            const VECTOR_T<SCALAR_T>& externalForcesInJointSpace);
+
+///
+///
+/// @param q Generalized coordinates
+/// @param v Generalized velocities
+/// @param a Generalized accelerations
+/// @param footWrenches [W_left, W_right]
+/// @param pinocchioInterface
+///
+/// @return joint torques of same dimension as qdd_joints
+
+template <typename SCALAR_T>
+VECTOR_T<SCALAR_T> computeJointTorques(const VECTOR_T<SCALAR_T>& q,
+                                       const VECTOR_T<SCALAR_T>& qd,
+                                       const VECTOR_T<SCALAR_T>& qdd_joints,
+                                       const std::array<VECTOR6_T<SCALAR_T>, 2>& footWrenches,
+                                       PinocchioInterfaceTpl<SCALAR_T>& pinocchioInterface);
+
+///
+/// @brief WARNING!!!!!! This formualtion currently does not work! Since pinocchio is not aware of the custom 6 dof base joint the results
+/// are wrong. Computes the joint torques via custom inverse dynamics
+///
+/// @param q Generalized coordinates
+/// @param v Generalized velocities
+/// @param a Generalized accelerations
+/// @param footWrenches [W_left, W_right]
+/// @param pinocchioInterface
+///
+/// @return joint torques of same dimension as qdd_joints
+
+template <typename SCALAR_T>
+VECTOR_T<SCALAR_T> computeJointTorquesRNEA(const VECTOR_T<SCALAR_T>& q,
+                                           const VECTOR_T<SCALAR_T>& qd,
+                                           const VECTOR_T<SCALAR_T>& qdd_joints,
+                                           const std::array<VECTOR6_T<SCALAR_T>, 2>& footWrenches,
+                                           PinocchioInterfaceTpl<SCALAR_T>& pinocchioInterface);
 
 }  // namespace ocs2::humanoid

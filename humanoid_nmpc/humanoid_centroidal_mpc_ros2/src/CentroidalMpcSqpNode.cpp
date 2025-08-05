@@ -1,4 +1,5 @@
 /******************************************************************************
+Copyright (c) 2025, Manuel Yves Galliker. All rights reserved.
 Copyright (c) 2024, 1X Technologies. All rights reserved.
 
 Redistribution and use in source and binary forms, with or without
@@ -57,7 +58,7 @@ int main(int argc, char** argv) {
   rclcpp::init(argc, argv);
 
   // Robot interface
-  CentroidalMpcInterface interface(taskFile, urdfFile, referenceFile, gaitFile, true);
+  CentroidalMpcInterface interface(taskFile, urdfFile, referenceFile, true);
 
   // MPC
   SqpMpc mpc(interface.mpcSettings(), interface.sqpSettings(), interface.getOptimalControlProblem(), interface.getInitializer());

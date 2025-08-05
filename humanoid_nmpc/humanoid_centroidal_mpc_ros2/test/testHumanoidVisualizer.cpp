@@ -1,4 +1,5 @@
 /******************************************************************************
+Copyright (c) 2025, Manuel Yves Galliker. All rights reserved.
 Copyright (c) 2024, 1X Technologies. All rights reserved.
 
 Redistribution and use in source and binary forms, with or without
@@ -55,7 +56,7 @@ int main(int argc, char** argv) {
   rclcpp::init(argc, argv);
   auto node = std::make_shared<rclcpp::Node>("humanoid_visualizer");
 
-  CentroidalMpcInterface interface(taskFile, urdfFile, referenceFile, gaitFile);
+  CentroidalMpcInterface interface(taskFile, urdfFile, referenceFile);
 
   HumanoidVisualizer visualization(taskFile, interface.getPinocchioInterface(), interface.getMpcRobotModel(), node);
 

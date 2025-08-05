@@ -1,4 +1,5 @@
 /******************************************************************************
+Copyright (c) 2025, Manuel Yves Galliker. All rights reserved.
 Copyright (c) 2024, 1X Technologies. All rights reserved.
 
 Redistribution and use in source and binary forms, with or without
@@ -494,8 +495,6 @@ std::vector<VectorFunctionLinearApproximation> PinocchioEndEffectorDynamicsCppAd
 /******************************************************************************************************/
 
 ad_vector_t PinocchioEndEffectorDynamicsCppAd::getOrientationErrorWrtPlaneCppAd(const ad_vector_t& state, const ad_vector_t& params) {
-  using ad_quaternion_t = Eigen::Quaternion<ad_scalar_t>;
-
   // std::cout << "params: " << params.size() << std::endl;
 
   const auto& model = pinocchioInterfaceCppAd_.getModel();

@@ -30,6 +30,7 @@ class MPCLaunchConfig:
         mpc_config_pkg: str,
         mpc_model_pkg: str,
         urdf_rel_path: str,
+        xml_rel_path: str,
         robot_name: str,
         enable_debug: bool = False,
         solver: str = "sqp",
@@ -45,6 +46,7 @@ class MPCLaunchConfig:
         self.mpc_ros2_dir = get_package_share_directory(self.mpc_lib_pkg_ros2)
 
         self.urdf_path = get_package_share_directory(mpc_model_pkg) + urdf_rel_path
+        self.xml_path = get_package_share_directory(mpc_model_pkg) + xml_rel_path
 
         ### MPC Config ###
         default_mpc_config_path = os.path.join(
@@ -78,6 +80,22 @@ class MPCLaunchConfig:
         #############
 
         self.ld = launch.LaunchDescription()
+
+        mpc_sim_exec = self.mpc_lib_pkg + "_sim"
+        self.mpc_sim = launch_ros.actions.Node(
+            package=self.mpc_lib_pkg_ros2,
+            executable=mpc_sim_exec,
+            prefix=self.terminal_prefix,
+            name=mpc_sim_exec,
+            arguments=[
+                LaunchConfiguration("robot_name"),
+                LaunchConfiguration("config_name"),
+                LaunchConfiguration("target_command_file"),
+                LaunchConfiguration("description_name"),
+                LaunchConfiguration("target_gait_file"),
+                LaunchConfiguration("xml_path"),
+            ],
+        )
 
         mpc_node_exec = self.mpc_lib_pkg + "_" + self.solver + "_node"
         self.mpc_node = launch_ros.actions.Node(
@@ -259,6 +277,11 @@ class MPCLaunchConfig:
             "target_gait_file",
             default_value=default_gait_command_path,
             description="Path to MPC gait reference file",
+        )
+        self.declare_xml_path = DeclareLaunchArgument(
+            "xml_path",
+            default_value=self.xml_path,
+            description="Path to Mujoco xml file",
         )
         self.declare_rviz_config_path = DeclareLaunchArgument(
             "rvizconfig",

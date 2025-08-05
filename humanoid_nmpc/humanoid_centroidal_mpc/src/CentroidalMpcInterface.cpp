@@ -1,4 +1,5 @@
 /******************************************************************************
+Copyright (c) 2025, Manuel Yves Galliker. All rights reserved.
 Copyright (c) 2024, 1X Technologies. All rights reserved.
 
 Redistribution and use in source and binary forms, with or without
@@ -68,8 +69,10 @@ namespace ocs2::humanoid {
 /******************************************************************************************************/
 /******************************************************************************************************/
 
-CentroidalMpcInterface::CentroidalMpcInterface(
-    const std::string& taskFile, const std::string& urdfFile, const std::string& referenceFile, const std::string& gaitFile, bool setupOCP)
+CentroidalMpcInterface::CentroidalMpcInterface(const std::string& taskFile,
+                                               const std::string& urdfFile,
+                                               const std::string& referenceFile,
+                                               bool setupOCP)
     : taskFile_(taskFile),
       urdfFile_(urdfFile),
       referenceFile_(referenceFile),

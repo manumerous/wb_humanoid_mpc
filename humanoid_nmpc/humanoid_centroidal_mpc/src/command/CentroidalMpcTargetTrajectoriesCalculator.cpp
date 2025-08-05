@@ -1,4 +1,5 @@
 /******************************************************************************
+Copyright (c) 2025, Manuel Yves Galliker. All rights reserved.
 Copyright (c) 2024, 1X Technologies. All rights reserved.
 
 Redistribution and use in source and binary forms, with or without
@@ -105,7 +106,7 @@ TargetTrajectories CentroidalMpcTargetTrajectoriesCalculator::commandedVelocityT
 
   vector6_t targetMomentum;
 
-  const Eigen::Matrix<scalar_t, 6, 6> Ab = A.template leftCols<6>();
+  const Eigen::Matrix<scalar_t, 6, 6> Ab = A.leftCols<6>();
   const Eigen::Matrix<scalar_t, 6, 6> Ab_inv = computeFloatingBaseCentroidalMomentumMatrixInverse(Ab);
 
   // This did not lead to meaningful commands around the z axis. Needs more investigations.

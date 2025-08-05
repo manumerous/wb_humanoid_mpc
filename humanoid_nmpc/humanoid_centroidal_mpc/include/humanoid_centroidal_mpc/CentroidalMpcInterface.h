@@ -1,4 +1,5 @@
 /******************************************************************************
+Copyright (c) 2025, Manuel Yves Galliker. All rights reserved.
 Copyright (c) 2024, 1X Technologies. All rights reserved.
 
 Redistribution and use in source and binary forms, with or without
@@ -59,11 +60,7 @@ class CentroidalMpcInterface final : public RobotInterface {
    * @param [in] urdfFile: The absolute path to the URDF file for the robot.
    * @param [in] referenceFile: The absolute path to the reference configuration file.
    */
-  CentroidalMpcInterface(const std::string& taskFile,
-                         const std::string& urdfFile,
-                         const std::string& referenceFile,
-                         const std::string& gaitFile,
-                         bool setupOCP = true);
+  CentroidalMpcInterface(const std::string& taskFile, const std::string& urdfFile, const std::string& referenceFile, bool setupOCP = true);
 
   ~CentroidalMpcInterface() override = default;
 

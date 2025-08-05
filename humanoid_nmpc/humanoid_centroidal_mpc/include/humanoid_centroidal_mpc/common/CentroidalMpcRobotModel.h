@@ -1,4 +1,5 @@
 /******************************************************************************
+Copyright (c) 2025, Manuel Yves Galliker. All rights reserved.
 Copyright (c) 2024, 1X Technologies. All rights reserved.
 
 Redistribution and use in source and binary forms, with or without
@@ -231,6 +232,8 @@ class CentroidalMpcRobotModel : public MpcRobotModelBase<SCALAR_T> {
     assert(state.size() == this->state_dim);
     return state.head(6);
   };
+
+  const CentroidalModelInfoTpl<SCALAR_T>& getCentroidalModelInfo() const { return centroidalModelInfo_; }
 
  private:
   CentroidalMpcRobotModel(const CentroidalMpcRobotModel& rhs)

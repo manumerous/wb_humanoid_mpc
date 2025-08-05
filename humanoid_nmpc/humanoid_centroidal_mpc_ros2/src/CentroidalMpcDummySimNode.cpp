@@ -1,4 +1,5 @@
 /******************************************************************************
+Copyright (c) 2025, Manuel Yves Galliker. All rights reserved.
 Copyright (c) 2024, 1X Technologies. All rights reserved.
 
 Redistribution and use in source and binary forms, with or without
@@ -59,7 +60,7 @@ int main(int argc, char** argv) {
   qos.best_effort();
 
   // Robot interface
-  CentroidalMpcInterface interface(taskFile, urdfFile, referenceFile, gaitFile, true);
+  CentroidalMpcInterface interface(taskFile, urdfFile, referenceFile, true);
 
   // MRT
   rclcpp::Node::SharedPtr nodeHandle = std::make_shared<rclcpp::Node>(robotName + "_mrt");
