@@ -48,6 +48,28 @@ The project supports both Dockerized workspaces (recommended) or a local install
 
 We provide a [Dockerfile](https://github.com/manumerous/wb_humanoid_mpc/blob/main/docker/Dockerfile) to enable running and devloping the project from a containerized environment. Check out the [devcontainer.json](https://github.com/manumerous/wb_humanoid_mpc/blob/main/.devcontainer/devcontainer.json) for the arguments that must be supplied to the `docker build` and `docker run` commands. 
 
+Examples of `docker build`:
+```
+cd /path/to/humanoid_mpc_ws/src/wb_humanoid_mpc/docker
+docker build   --build-arg WB_HUMANOID_MPC_DIR=/wb_humanoid_mpc_ws   --build-arg PYTHON_VERSION=3.12   --build-arg USER_ID=$(id -u)   --build-arg GROUP_ID=$(id -g)   --build-arg GIT_USER_NAME="$(git config --global user.name)"   --build-arg GIT_USER_EMAIL="$(git config --global user.email)"   --target base   -f Dockerfile ..
+```
+, and `docker run` (edit `/path/to` and `IMAGE_ID`):
+```
+docker run --rm -it \
+  --net=host \
+  --privileged \
+  -u $(id -u):$(id -g) \
+  -e DISPLAY \
+  -e QT_X11_NO_MITSHM=1 \
+  -e XDG_RUNTIME_DIR=$XDG_RUNTIME_DIR \
+  -e GIT_USER_NAME="$(git config --global user.name)" \
+  -e GIT_USER_EMAIL="$(git config --global user.email)" \
+  -v /tmp/.X11-unix:/tmp/.X11-unix \
+  -v $XDG_RUNTIME_DIR:$XDG_RUNTIME_DIR \
+  -v /path/to/humanoid_mpc_ws:/wb_humanoid_mpc_ws
+  IMAGE_ID
+```
+
 For working in **Visual Studio Code**, we recommend to install the [Dev Containers](https://marketplace.visualstudio.com/items?itemName=ms-vscode-remote.remote-containers) extension. Then, with the root of this repository as the root of your VS Code workspace, enter `Ctrl + Shift + P` and select `Dev Containers: Rebuild and Reopen in Container` at the top of the screen. VS Code will then automatically handle calling the `docker build` and `docker run` commands for you and will reopen the window at the root of the containerized workspace. Once this step is completed, you are ready to [build and run the code](https://github.com/manumerous/wb_humanoid_mpc/tree/main?tab=readme-ov-file#building-the-mpc).
 
 </details>
