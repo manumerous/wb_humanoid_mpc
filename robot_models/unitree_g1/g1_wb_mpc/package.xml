@@ -21,11 +21,7 @@
   <depend>ocs2_ros2_interfaces</depend>
   <depend>pinocchio</depend>
   <depend>humanoid_common_mpc</depend>
-  <depend>neo_joint_control</depend>
   <depend>humanoid_wb_mpc_ros2</depend>
-
-  <depend>neo_description</depend>
-  <depend>neo_alpha1_5_description</depend>
 
   <test_depend>ament_cmake_gtest</test_depend>
   <test_depend>ament_cmake_clang_format</test_depend>

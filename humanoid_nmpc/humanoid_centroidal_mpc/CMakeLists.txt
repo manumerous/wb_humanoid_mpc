@@ -19,6 +19,7 @@ find_package(ocs2_mpc REQUIRED)
 find_package(ocs2_sqp REQUIRED)
 find_package(ocs2_pinocchio_interface REQUIRED)
 find_package(humanoid_common_mpc REQUIRED)
+find_package(robot_model REQUIRED)
 
 find_package(GTest REQUIRED)
 
@@ -38,7 +39,7 @@ find_package(Eigen3 3.3 REQUIRED NO_MODULE)
 ## Build ##
 ###########
 
-set(CMAKE_CXX_STANDARD 17)
+set(CMAKE_CXX_STANDARD 20)
 
 set(FLAGS ${OCS2_CXX_FLAGS} -Wno-invalid-partial-specialization)
 
@@ -64,6 +65,7 @@ set(dependencies
   ocs2_sqp
   ocs2_pinocchio_interface
   humanoid_common_mpc
+  robot_model
 )
 
 link_directories(
@@ -86,6 +88,7 @@ add_library(${PROJECT_NAME}
   src/initialization/CentroidalWeightCompInitializer.cpp
   src/CentroidalMpcInterface.cpp
   src/command/CentroidalMpcTargetTrajectoriesCalculator.cpp
+  src/mrt/CentroidalMpcMrtJointController.cpp
 )
 ament_target_dependencies(${PROJECT_NAME}
   ${dependencies}
@@ -110,34 +113,6 @@ target_compile_options(${PROJECT_NAME} PUBLIC ${OCS2_CXX_FLAGS})
 
 if(BUILD_TESTING)
   find_package(ament_cmake_gtest REQUIRED)
-
-# Disable for now until best testing strategy is found. 
-
-  # ament_add_gtest(test_dynamics_helper_functions test/testDynamicsHelperFunctions.cpp)
-  # target_link_libraries(test_dynamics_helper_functions 
-  #   ${rclcpp_LIBRARIES} 
-  #   ${rmw_connext_cpp_LIBRARIES} 
-  #   ${std_interfaces}
-  #   ${PROJECT_NAME}
-  # )
-
-  # ament_add_gtest(test_pinocchio_frame_conversions test/testPinocchioFrameConversions.cpp)
-  # target_link_libraries(test_pinocchio_frame_conversions 
-  #   ${rclcpp_LIBRARIES} 
-  #   ${rmw_connext_cpp_LIBRARIES} 
-  #   ${std_interfaces}
-  #   ${PROJECT_NAME}
-  # )
-
-# This test is diabled for now. A smarter test structure working with different active joints is needed. 
-
-# ament_add_gtest(test_centroidal_model_conversions test/testCentroidalConversions.cpp)
-#   target_link_libraries(test_centroidal_model_conversions
-#     ${rclcpp_LIBRARIES}
-#     ${rmw_connext_cpp_LIBRARIES}
-#     ${std_interfaces}
-#     ${PROJECT_NAME}
-#   )
 
 endif()
 

@@ -59,7 +59,7 @@ VECTOR_T<SCALAR_T> computeStateDerivative(const VECTOR_T<SCALAR_T>& state,
 template <typename SCALAR_T>
 VECTOR_T<SCALAR_T> computeJointTorques(const VECTOR_T<SCALAR_T>& state,
                                        const VECTOR_T<SCALAR_T>& input,
-                                       const PinocchioInterfaceTpl<SCALAR_T>& pinInterface,
+                                       PinocchioInterfaceTpl<SCALAR_T>& pinInterface,
                                        WBAccelMpcRobotModel<SCALAR_T>& mpcRobotModel);
 
 }  // namespace ocs2::humanoid

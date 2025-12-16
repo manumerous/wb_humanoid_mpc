@@ -106,7 +106,7 @@ TargetTrajectories CentroidalMpcTargetTrajectoriesCalculator::commandedVelocityT
 
   vector6_t targetMomentum;
 
-  const Eigen::Matrix<scalar_t, 6, 6> Ab = A.template leftCols<6>();
+  const Eigen::Matrix<scalar_t, 6, 6> Ab = A.leftCols<6>();
   const Eigen::Matrix<scalar_t, 6, 6> Ab_inv = computeFloatingBaseCentroidalMomentumMatrixInverse(Ab);
 
   // This did not lead to meaningful commands around the z axis. Needs more investigations.

@@ -28,6 +28,7 @@ OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 ******************************************************************************/
 
 #include "humanoid_wb_mpc/dynamics/DynamicsHelperFunctions.h"
+#include "humanoid_common_mpc/pinocchio_model/DynamicsHelperFunctions.h"
 
 #include "humanoid_common_mpc/common/ModelSettings.h"
 
@@ -42,36 +43,6 @@ OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 #include <pinocchio/multibody/model.hpp>
 
 namespace ocs2::humanoid {
-
-/******************************************************************************************************/
-/******************************************************************************************************/
-/******************************************************************************************************/
-
-namespace {
-template <typename SCALAR_T>
-VECTOR6_T<SCALAR_T> computeBaseAcceleration(const MATRIX_T<SCALAR_T>& M,
-                                            const VECTOR_T<SCALAR_T>& nle,
-                                            const VECTOR_T<SCALAR_T>& jointAcceleration,
-                                            const VECTOR_T<SCALAR_T>& externalForcesInJointSpace) {
-  // Due to the block diagonal structure of the generalized mass matrix corresponding to the base the base mass matrix can be split into a
-  // linear and angular part. Which are both inverted separately. This does not only exploit part of the sparsity but also prevents a CppAD
-  // branching error when multiplying a 6x6 matrix with a6 dim. vector.
-
-  Eigen::Matrix<SCALAR_T, 3, 3> M_bb_lin = M.topLeftCorner(3, 3);
-  Eigen::Matrix<SCALAR_T, 3, 3> M_bb_ang = M.block(3, 3, 3, 3);
-  auto M_bj = M.block(0, 6, 6, jointAcceleration.size());
-  Eigen::Matrix<SCALAR_T, 3, 3> M_bb_lin_inv = M_bb_lin.inverse();
-  Eigen::Matrix<SCALAR_T, 3, 3> M_bb_ang_inv = M_bb_ang.inverse();
-
-  VECTOR6_T<SCALAR_T> intermediate = -nle.head(6) - M_bj * jointAcceleration + externalForcesInJointSpace.head(6);
-
-  VECTOR6_T<SCALAR_T> baseAccelerations;
-  baseAccelerations.head(3) = M_bb_lin_inv * intermediate.head(3);
-  baseAccelerations.tail(3) = M_bb_ang_inv * intermediate.tail(3);
-
-  return baseAccelerations;
-}
-}  // namespace
 
 /******************************************************************************************************/
 /******************************************************************************************************/
@@ -174,54 +145,76 @@ template vector_t computeStateDerivative(const vector_t& state,
 /******************************************************************************************************/
 /******************************************************************************************************/
 
+// template <typename SCALAR_T>
+// VECTOR_T<SCALAR_T> computeJointTorques(const VECTOR_T<SCALAR_T>& state,
+//                                        const VECTOR_T<SCALAR_T>& input,
+//                                        const PinocchioInterfaceTpl<SCALAR_T>& pinInterface,
+//                                        WBAccelMpcRobotModel<SCALAR_T>& mpcRobotModel) {
+//   const auto& model = pinInterface.getModel();
+//   pinocchio::DataTpl<SCALAR_T>& data = pinInterface.getData();
+//   const VECTOR_T<SCALAR_T> q = mpcRobotModel.getGeneralizedCoordinates(state);
+//   const VECTOR_T<SCALAR_T> qd = mpcRobotModel.getGeneralizedVelocities(state, input);
+//   const VECTOR_T<SCALAR_T> qdd_joints = mpcRobotModel.getJointAccelerations(input);
+
+//   data.M.fill(SCALAR_T(0.0));
+//   pinocchio::crba(model, data, q);
+//   pinocchio::nonLinearEffects(model, data, q, qd);
+
+//   // Compute Jacobians for the foot frames
+//   MATRIX_T<SCALAR_T> J_foot_l = MATRIX_T<SCALAR_T>::Zero(6, mpcRobotModel.getGenCoordinatesDim());
+//   MATRIX_T<SCALAR_T> J_foot_r = MATRIX_T<SCALAR_T>::Zero(6, mpcRobotModel.getGenCoordinatesDim());
+
+//   ////////////////////////////////////////////////////////////////////////////
+
+//   pinocchio::computeFrameJacobian(model, data, q, model.getFrameId("foot_l_contact"), pinocchio::ReferenceFrame::LOCAL_WORLD_ALIGNED,
+//                                   J_foot_l);
+//   pinocchio::computeFrameJacobian(model, data, q, model.getFrameId("foot_r_contact"), pinocchio::ReferenceFrame::LOCAL_WORLD_ALIGNED,
+//                                   J_foot_r);
+
+//   // Project contact wrenches into the joint space
+
+//   VECTOR_T<SCALAR_T> externalForcesInJointSpace =
+//       J_foot_l.transpose() * mpcRobotModel.getContactWrench(input, 0) + J_foot_r.transpose() * mpcRobotModel.getContactWrench(input, 1);
+
+//   VECTOR6_T<SCALAR_T> baseAccelerations = computeBaseAcceleration(data.M, data.nle, qdd_joints, externalForcesInJointSpace);
+
+//   VECTOR_T<SCALAR_T> q_dd(mpcRobotModel.getGenCoordinatesDim());
+//   q_dd << baseAccelerations, qdd_joints;
+
+//   VECTOR_T<SCALAR_T> jointTorques = data.M.bottomRows(mpcRobotModel.getJointDim()) * q_dd + data.nle.tail(mpcRobotModel.getJointDim()) -
+//                                     externalForcesInJointSpace.tail(mpcRobotModel.getJointDim());
+
+//   return jointTorques;
+// }
+// template ad_vector_t computeJointTorques(const ad_vector_t& state,
+//                                          const ad_vector_t& input,
+//                                          const PinocchioInterfaceTpl<ad_scalar_t>& pinInterface,
+//                                          WBAccelMpcRobotModel<ad_scalar_t>& mpcRobotModel);
+// template vector_t computeJointTorques(const vector_t& state,
+//                                       const vector_t& input,
+//                                       const PinocchioInterfaceTpl<scalar_t>& pinInterface,
+//                                       WBAccelMpcRobotModel<scalar_t>& mpcRobotModel);
+
 template <typename SCALAR_T>
 VECTOR_T<SCALAR_T> computeJointTorques(const VECTOR_T<SCALAR_T>& state,
                                        const VECTOR_T<SCALAR_T>& input,
-                                       const PinocchioInterfaceTpl<SCALAR_T>& pinInterface,
+                                       PinocchioInterfaceTpl<SCALAR_T>& pinInterface,
                                        WBAccelMpcRobotModel<SCALAR_T>& mpcRobotModel) {
-  const auto& model = pinInterface.getModel();
-  auto data = pinInterface.getData();
   const VECTOR_T<SCALAR_T> q = mpcRobotModel.getGeneralizedCoordinates(state);
   const VECTOR_T<SCALAR_T> qd = mpcRobotModel.getGeneralizedVelocities(state, input);
   const VECTOR_T<SCALAR_T> qdd_joints = mpcRobotModel.getJointAccelerations(input);
 
-  data.M.fill(SCALAR_T(0.0));
-  pinocchio::crba(model, data, q);
-  pinocchio::nonLinearEffects(model, data, q, qd);
+  const std::array<VECTOR6_T<SCALAR_T>, 2> footWrenches{mpcRobotModel.getContactWrench(input, 0), mpcRobotModel.getContactWrench(input, 1)};
 
-  // Compute Jacobians for the foot frames
-  MATRIX_T<SCALAR_T> J_foot_l = MATRIX_T<SCALAR_T>::Zero(6, mpcRobotModel.getGenCoordinatesDim());
-  MATRIX_T<SCALAR_T> J_foot_r = MATRIX_T<SCALAR_T>::Zero(6, mpcRobotModel.getGenCoordinatesDim());
-
-  ////////////////////////////////////////////////////////////////////////////
-
-  pinocchio::computeFrameJacobian(model, data, q, model.getFrameId("foot_l_contact"), pinocchio::ReferenceFrame::LOCAL_WORLD_ALIGNED,
-                                  J_foot_l);
-  pinocchio::computeFrameJacobian(model, data, q, model.getFrameId("foot_r_contact"), pinocchio::ReferenceFrame::LOCAL_WORLD_ALIGNED,
-                                  J_foot_r);
-
-  // Project contact wrenches into the joint space
-
-  VECTOR_T<SCALAR_T> externalForcesInJointSpace =
-      J_foot_l.transpose() * mpcRobotModel.getContactWrench(input, 0) + J_foot_r.transpose() * mpcRobotModel.getContactWrench(input, 1);
-
-  VECTOR6_T<SCALAR_T> baseAccelerations = computeBaseAcceleration(data.M, data.nle, qdd_joints, externalForcesInJointSpace);
-
-  VECTOR_T<SCALAR_T> q_dd(mpcRobotModel.getGenCoordinatesDim());
-  q_dd << baseAccelerations, qdd_joints;
-
-  VECTOR_T<SCALAR_T> jointTorques = data.M.bottomRows(mpcRobotModel.getJointDim()) * q_dd + data.nle.tail(mpcRobotModel.getJointDim()) -
-                                    externalForcesInJointSpace.tail(mpcRobotModel.getJointDim());
-
-  return jointTorques;
+  return computeJointTorques<SCALAR_T>(q, qd, qdd_joints, footWrenches, pinInterface);
 }
 template ad_vector_t computeJointTorques(const ad_vector_t& state,
                                          const ad_vector_t& input,
-                                         const PinocchioInterfaceTpl<ad_scalar_t>& pinInterface,
+                                         PinocchioInterfaceTpl<ad_scalar_t>& pinInterface,
                                          WBAccelMpcRobotModel<ad_scalar_t>& mpcRobotModel);
 template vector_t computeJointTorques(const vector_t& state,
                                       const vector_t& input,
-                                      const PinocchioInterfaceTpl<scalar_t>& pinInterface,
+                                      PinocchioInterfaceTpl<scalar_t>& pinInterface,
                                       WBAccelMpcRobotModel<scalar_t>& mpcRobotModel);
 
 }  // namespace ocs2::humanoid

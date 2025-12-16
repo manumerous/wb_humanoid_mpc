@@ -193,4 +193,162 @@ scalar_t getGroundHeightEstimate(PinocchioInterfaceTpl<scalar_t>& pinocchioInter
 /******************************************************************************************************/
 /******************************************************************************************************/
 
+template <typename SCALAR_T>
+VECTOR6_T<SCALAR_T> computeBaseAcceleration(const MATRIX_T<SCALAR_T>& M,
+                                            const VECTOR_T<SCALAR_T>& nle,
+                                            const VECTOR_T<SCALAR_T>& qdd_joints,
+                                            const VECTOR_T<SCALAR_T>& externalForcesInJointSpace) {
+  // Due to the block diagonal structure of the generalized mass matrix corresponding to the base the base mass matrix can be split into a
+  // linear and angular part. Which are both inverted separately. This does not only exploit part of the sparsity but also prevents a CppAD
+  // branching error when multiplying a 6x6 matrix with a6 dim. vector.
+
+  Eigen::Matrix<SCALAR_T, 3, 3> M_bb_lin = M.topLeftCorner(3, 3);
+  Eigen::Matrix<SCALAR_T, 3, 3> M_bb_ang = M.block(3, 3, 3, 3);
+  auto M_bj = M.block(0, 6, 6, qdd_joints.size());
+  Eigen::Matrix<SCALAR_T, 3, 3> M_bb_lin_inv = M_bb_lin.inverse();
+  Eigen::Matrix<SCALAR_T, 3, 3> M_bb_ang_inv = M_bb_ang.inverse();
+
+  VECTOR6_T<SCALAR_T> intermediate = -nle.head(6) - M_bj * qdd_joints + externalForcesInJointSpace.head(6);
+
+  VECTOR6_T<SCALAR_T> baseAccelerations;
+  baseAccelerations.head(3) = M_bb_lin_inv * intermediate.head(3);
+  baseAccelerations.tail(3) = M_bb_ang_inv * intermediate.tail(3);
+
+  return baseAccelerations;
+}
+template VECTOR6_T<scalar_t> computeBaseAcceleration(const MATRIX_T<scalar_t>& M,
+                                                     const VECTOR_T<scalar_t>& nle,
+                                                     const VECTOR_T<scalar_t>& qdd_joints,
+                                                     const VECTOR_T<scalar_t>& externalForcesInJointSpace);
+template VECTOR6_T<ad_scalar_t> computeBaseAcceleration(const MATRIX_T<ad_scalar_t>& M,
+                                                        const VECTOR_T<ad_scalar_t>& nle,
+                                                        const VECTOR_T<ad_scalar_t>& qdd_joints,
+                                                        const VECTOR_T<ad_scalar_t>& externalForcesInJointSpace);
+
+/******************************************************************************************************/
+/******************************************************************************************************/
+/******************************************************************************************************/
+
+template <typename SCALAR_T>
+VECTOR_T<SCALAR_T> computeJointTorques(const VECTOR_T<SCALAR_T>& q,
+                                       const VECTOR_T<SCALAR_T>& qd,
+                                       const VECTOR_T<SCALAR_T>& qdd_joints,
+                                       const std::array<VECTOR6_T<SCALAR_T>, 2>& footWrenches,
+                                       PinocchioInterfaceTpl<SCALAR_T>& pinocchioInterface) {
+  const auto& model = pinocchioInterface.getModel();
+  pinocchio::DataTpl<SCALAR_T>& data = pinocchioInterface.getData();
+
+  pinocchio::crba(model, data, q);
+  pinocchio::nonLinearEffects(model, data, q, qd);
+
+  // Compute Jacobians for the foot frames
+  MATRIX_T<SCALAR_T> J_foot_l = MATRIX_T<SCALAR_T>::Zero(6, qd.size());
+  MATRIX_T<SCALAR_T> J_foot_r = MATRIX_T<SCALAR_T>::Zero(6, qd.size());
+
+  ////////////////////////////////////////////////////////////////////////////
+
+  pinocchio::computeFrameJacobian(model, data, q, model.getFrameId("foot_l_contact"), pinocchio::ReferenceFrame::LOCAL_WORLD_ALIGNED,
+                                  J_foot_l);
+  pinocchio::computeFrameJacobian(model, data, q, model.getFrameId("foot_r_contact"), pinocchio::ReferenceFrame::LOCAL_WORLD_ALIGNED,
+                                  J_foot_r);
+
+  // Project contact wrenches into the joint space
+
+  VECTOR_T<SCALAR_T> externalForcesInJointSpace = J_foot_l.transpose() * footWrenches[0] + J_foot_r.transpose() * footWrenches[1];
+
+  VECTOR6_T<SCALAR_T> baseAccelerations = computeBaseAcceleration(data.M, data.nle, qdd_joints, externalForcesInJointSpace);
+
+  VECTOR_T<SCALAR_T> q_dd(qd.size());
+  q_dd << baseAccelerations, qdd_joints;
+  size_t n_joints = qdd_joints.size();
+
+  VECTOR_T<SCALAR_T> jointTorques =
+      data.M.bottomRows(n_joints) * q_dd + data.nle.tail(n_joints) - externalForcesInJointSpace.tail(n_joints);
+
+  // return jointTorques;
+  return jointTorques;
+}
+template VECTOR_T<scalar_t> computeJointTorques(const VECTOR_T<scalar_t>& q,
+                                                const VECTOR_T<scalar_t>& qd,
+                                                const VECTOR_T<scalar_t>& qdd_joints,
+                                                const std::array<VECTOR6_T<scalar_t>, 2>& footWrenches,
+                                                PinocchioInterfaceTpl<scalar_t>& pinocchioInterface);
+template VECTOR_T<ad_scalar_t> computeJointTorques(const VECTOR_T<ad_scalar_t>& q,
+                                                   const VECTOR_T<ad_scalar_t>& qd,
+                                                   const VECTOR_T<ad_scalar_t>& qdd_joints,
+                                                   const std::array<VECTOR6_T<ad_scalar_t>, 2>& footWrenches,
+                                                   PinocchioInterfaceTpl<ad_scalar_t>& pinocchioInterface);
+
+/******************************************************************************************************/
+/******************************************************************************************************/
+/******************************************************************************************************/
+
+template <typename SCALAR_T>
+VECTOR_T<SCALAR_T> computeJointTorquesRNEA(const VECTOR_T<SCALAR_T>& q,
+                                           const VECTOR_T<SCALAR_T>& qd,
+                                           const VECTOR_T<SCALAR_T>& qdd_joints,
+                                           const std::array<VECTOR6_T<SCALAR_T>, 2>& footWrenches,
+                                           PinocchioInterfaceTpl<SCALAR_T>& pinocchioInterface) {
+  const auto& model = pinocchioInterface.getModel();
+  auto& data = pinocchioInterface.getData();
+
+  pinocchio::container::aligned_vector<pinocchio::Force> fextDesired(model.njoints, pinocchio::Force::Zero());
+
+  pinocchio::forwardKinematics(model, data, q, qd);
+  pinocchio::updateFramePlacements(model, data);
+
+  auto setExternalForce = [&](const std::string& frameName, size_t i) {
+    const auto frameIndex = model.getFrameId(frameName);
+    const auto jointIndex = model.frames[frameIndex].parentJoint;
+    const VECTOR3_T<SCALAR_T> translationJointFrameToContactFrame = model.frames[frameIndex].placement.translation();
+    const MATRIX3_T<SCALAR_T> rotationWorldFrameToJointFrame = data.oMi[jointIndex].rotation().transpose();
+    const VECTOR3_T<SCALAR_T> contactForce = rotationWorldFrameToJointFrame * footWrenches[i].head(3);
+    const VECTOR3_T<SCALAR_T> contactTorque = rotationWorldFrameToJointFrame * footWrenches[i].tail(3);
+    fextDesired[jointIndex].linear() = contactForce;
+    fextDesired[jointIndex].angular() = translationJointFrameToContactFrame.cross(contactForce) + contactTorque;
+  };
+
+  setExternalForce("foot_l_contact", 0);
+  setExternalForce("foot_r_contact", 1);
+
+  pinocchio::crba(model, data, q);
+  pinocchio::nonLinearEffects(model, data, q, qd);
+
+  // Compute Jacobians for the foot frames
+  MATRIX_T<SCALAR_T> J_foot_l = MATRIX_T<SCALAR_T>::Zero(6, qd.size());
+  MATRIX_T<SCALAR_T> J_foot_r = MATRIX_T<SCALAR_T>::Zero(6, qd.size());
+
+  ////////////////////////////////////////////////////////////////////////////
+
+  pinocchio::computeFrameJacobian(model, data, q, model.getFrameId("foot_l_contact"), pinocchio::ReferenceFrame::LOCAL_WORLD_ALIGNED,
+                                  J_foot_l);
+  pinocchio::computeFrameJacobian(model, data, q, model.getFrameId("foot_r_contact"), pinocchio::ReferenceFrame::LOCAL_WORLD_ALIGNED,
+                                  J_foot_r);
+
+  // Project contact wrenches into the joint space
+
+  VECTOR_T<SCALAR_T> externalForcesInJointSpace = J_foot_l.transpose() * footWrenches[0] + J_foot_r.transpose() * footWrenches[1];
+
+  // Repalce q with external forces in joint space.
+
+  VECTOR6_T<SCALAR_T> baseAccelerations = computeBaseAcceleration(data.M, data.nle, qdd_joints, externalForcesInJointSpace);
+
+  VECTOR_T<SCALAR_T> q_dd(qd.size());
+  q_dd << baseAccelerations, qdd_joints;
+
+  vector_t torques = pinocchio::rnea(model, data, q, qd, q_dd, fextDesired);
+
+  return torques.tail(qdd_joints.size());
+}
+template VECTOR_T<scalar_t> computeJointTorquesRNEA(const VECTOR_T<scalar_t>& q,
+                                                    const VECTOR_T<scalar_t>& qd,
+                                                    const VECTOR_T<scalar_t>& qdd_joints,
+                                                    const std::array<VECTOR6_T<scalar_t>, 2>& footWrenches,
+                                                    PinocchioInterfaceTpl<scalar_t>& pinocchioInterface);
+// template VECTOR_T<ad_scalar_t> computeJointTorquesRNEA(const VECTOR_T<ad_scalar_t>& q,
+//                                                        const VECTOR_T<ad_scalar_t>& qd,
+//                                                        const VECTOR_T<ad_scalar_t>& qdd_joints,
+//                                                        const std::array<VECTOR6_T<ad_scalar_t>, 2>& footWrenches,
+//                                                        PinocchioInterfaceTpl<ad_scalar_t>& pinocchioInterface);
+
 }  // namespace ocs2::humanoid

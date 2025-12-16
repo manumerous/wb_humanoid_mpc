@@ -32,7 +32,7 @@ find_package(Eigen3 3.3 REQUIRED NO_MODULE)
 ## Build ##
 ###########
 
-set(CMAKE_CXX_STANDARD 17)
+set(CMAKE_CXX_STANDARD 20)
 
 set(FLAGS ${OCS2_CXX_FLAGS} -Wno-invalid-partial-specialization)
 
@@ -47,7 +47,7 @@ link_directories(
   ${pinocchio_LIBRARY_DIRS}
 )
 
-set(CMAKE_CXX_STANDARD 17)
+set(CMAKE_CXX_STANDARD 20)
 
 set(FLAGS ${OCS2_CXX_FLAGS} -Wno-invalid-partial-specialization)
 

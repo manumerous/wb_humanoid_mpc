@@ -56,7 +56,7 @@ int main(int argc, char** argv) {
   rclcpp::init(argc, argv);
   auto node = std::make_shared<rclcpp::Node>("humanoid_visualizer");
 
-  CentroidalMpcInterface interface(taskFile, urdfFile, referenceFile, gaitFile);
+  CentroidalMpcInterface interface(taskFile, urdfFile, referenceFile);
 
   HumanoidVisualizer visualization(taskFile, interface.getPinocchioInterface(), interface.getMpcRobotModel(), node);
 

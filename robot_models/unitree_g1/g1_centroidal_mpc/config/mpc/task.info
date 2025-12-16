@@ -14,10 +14,10 @@ model_settings
   foot_constraint
   {
     positionErrorGain_z             5.0
-    orientationErrorGain            3.0
+    orientationErrorGain            20.0
     linearVelocityErrorGain_z       1.0
     linearVelocityErrorGain_xy      1.0
-    angularVelocityErrorGain        0.2
+    angularVelocityErrorGain        1.0
     linearAccelerationErrorGain_z   0.0
     linearAccelerationErrorGain_xy  0.0
     angularAccelerationErrorGain    0.0
@@ -67,9 +67,9 @@ model_settings
 swing_trajectory_config
 {
   liftOffVelocity                         0.05
-  touchDownVelocity                      -0.05
-  swingHeight                             0.06
-  touchDownHeightOffset                   0.0
+  touchDownVelocity                      -0.0
+  swingHeight                             0.08
+  touchDownHeightOffset                  -0.001
   swingTimeScale                          0.4
   impactProximityFactorLiftOffVelocity    -0.15
   impactProximityFactorTouchDownVelocity  0.3
@@ -179,7 +179,7 @@ Q
   ;; Base Pose: [position, orientation] ;;
   (6,6)   0.0    ; p_base_x
   (7,7)   0.0    ; p_base_y
-  (8,8)   20.0    ; p_base_z
+  (8,8)   15.0    ; p_base_z
   ; euler angles for base to world rotation
   (9,9)   0.0    ; theta_base_z
   (10,10) 5.0    ; theta_base_y
@@ -218,18 +218,18 @@ R
   scaling 1e-3
 
   ;; Feet Contact Forces: [LF, RF, LH, RH] ;;
-  (0,0)   0.01       ; left_force_x
-  (1,1)   0.01       ; left_force_y
+  (0,0)   0.05       ; left_force_x
+  (1,1)   0.05       ; left_force_y
   (2,2)   0.01       ; left_force_z
-  (3,3)   0.01       ; left_moment_x
-  (4,4)   0.01       ; left_moment_y
-  (5,5)   0.1        ; left_moment_z
-  (6,6)   0.01       ; right_force_x
-  (7,7)   0.01       ; right_force_y
+  (3,3)   0.05       ; left_moment_x
+  (4,4)   0.05       ; left_moment_y
+  (5,5)   0.2        ; left_moment_z
+  (6,6)   0.05       ; right_force_x
+  (7,7)   0.05       ; right_force_y
   (8,8)   0.01       ; right_force_z
-  (9,9)   0.01       ; right_moment_x
-  (10,10) 0.01       ; right_moment_y
-  (11,11) 0.1        ; right_moment_z
+  (9,9)   0.05       ; right_moment_x
+  (10,10) 0.05       ; right_moment_y
+  (11,11) 0.2        ; right_moment_z
 
   ;; Joint Velocities ;;
   (12,12) 20.0       ;    left_hip_pitch_joint
@@ -280,18 +280,18 @@ Q_final
   (11,11) 5.0    ; theta_base_x
 
   ;; Joint Positions ;;
-  (12,12) 0.2     ;    left_hip_pitch_joint
-  (13,13) 0.2     ;    left_hip_roll_joint
-  (14,14) 1.0      ;    left_hip_yaw_joint
-  (15,15) 0.2     ;    left_knee_joint
-  (16,16) 0.1     ;    left_ankle_pitch_joint
-  (17,17) 0.1     ;    left_ankle_roll_joint
-  (18,18) 0.2     ;    right_hip_pitch_joint
-  (19,19) 0.2     ;    right_hip_roll_joint
-  (20,20) 1.0      ;    right_hip_yaw_joint
-  (21,21) 0.2     ;    right_knee_joint
-  (22,22) 0.1     ;    right_ankle_pitch_joint
-  (23,23) 0.1     ;    right_ankle_roll_joint
+  (12,12) 0.02     ;    left_hip_pitch_joint
+  (13,13) 0.06     ;    left_hip_roll_joint
+  (14,14) 8.0      ;    left_hip_yaw_joint
+  (15,15) 0.02     ;    left_knee_joint
+  (16,16) 0.01     ;    left_ankle_pitch_joint
+  (17,17) 0.01     ;    left_ankle_roll_joint
+  (18,18) 0.02     ;    right_hip_pitch_joint
+  (19,19) 0.06     ;    right_hip_roll_joint
+  (20,20) 8.0      ;    right_hip_yaw_joint
+  (21,21) 0.02     ;    right_knee_joint
+  (22,22) 0.01     ;    right_ankle_pitch_joint
+  (23,23) 0.01     ;    right_ankle_roll_joint
   (24,24) 2.0      ;    waist_yaw_joint
   (25,25) 0.5      ;    waist_roll_joint
   (26,26) 0.5      ;    waist_pitch_joint
@@ -335,19 +335,19 @@ task_space_foot_cost_weights
 task_space_costs
 {
   torso {
-    link_name     torso_link
+    link_name     mid360_link
     weights {
       pos_x               0.0
       pos_y               0.0
       pos_z               0.0
-      orientation_x       1.0
-      orientation_y       1.0
+      orientation_x       100.0
+      orientation_y       100.0
       orientation_z       0.0
       lin_velocity_x      0.1
       lin_velocity_y      0.1
       lin_velocity_z      0.005
-      ang_velocity_x      50.0
-      ang_velocity_y      50.0
+      ang_velocity_x      5.0
+      ang_velocity_y      5.0
       ang_velocity_z      2.0
       lin_acceleration_x  0.0
       lin_acceleration_y  0.0
@@ -454,7 +454,7 @@ collision_constraint
       leftAnkleFrame               left_ankle_roll_joint
       rightAnkleFrame               right_ankle_roll_joint
 
-      footCollisionSphereRadius        0.06
+      footCollisionSphereRadius        0.065
     }
     knee {
       leftKneeFrame                left_knee_joint
@@ -463,6 +463,6 @@ collision_constraint
       kneeCollisionSphereRadius        0.07
     }
     ; relaxed log barrier parameters
-    mu                     20000
-    delta                  0.04     
+    mu                     30000
+    delta                  0.05     
   }

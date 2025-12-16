@@ -29,6 +29,8 @@ find_package(humanoid_centroidal_mpc REQUIRED)
 find_package(ocs2_centroidal_model REQUIRED)
 find_package(ocs2_pinocchio_interface REQUIRED)
 find_package(humanoid_common_mpc_ros2 REQUIRED)
+find_package(mujoco_sim_interface REQUIRED)
+
 
 
 find_package(Boost REQUIRED COMPONENTS
@@ -43,12 +45,16 @@ pkg_check_modules(pinocchio REQUIRED pinocchio)
 
 find_package(Eigen3 3.3 REQUIRED NO_MODULE)
 
+find_package(glfw3 REQUIRED)
+find_package(GLEW REQUIRED)
+find_package(absl REQUIRED)
+
 
 ###########
 ## Build ##
 ###########
 
-set(CMAKE_CXX_STANDARD 17)
+set(CMAKE_CXX_STANDARD 20)
 
 set(FLAGS ${OCS2_CXX_FLAGS} -Wno-invalid-partial-specialization)
 
@@ -80,6 +86,7 @@ set(dependencies
   ocs2_centroidal_model
   ocs2_pinocchio_interface
   humanoid_common_mpc_ros2
+  mujoco_sim_interface
 )
 
 link_directories(
@@ -124,6 +131,20 @@ ament_target_dependencies(humanoid_centroidal_mpc_sqp_node
 #   ${PROJECT_NAME}
 # )
 target_compile_options(humanoid_centroidal_mpc_sqp_node PUBLIC ${FLAGS})
+
+# MPC Sim Executable
+add_executable(humanoid_centroidal_mpc_sim
+  src/CentroidalMpcRobotSim.cpp
+)
+ament_target_dependencies(humanoid_centroidal_mpc_sim
+  ${dependencies}
+)
+target_link_libraries(humanoid_centroidal_mpc_sim
+        absl::flat_hash_map
+        glfw
+        GLEW
+)
+target_compile_options(humanoid_centroidal_mpc_sim PUBLIC ${FLAGS})
 
 # Pose Command Node
 add_executable(humanoid_centroidal_mpc_pose_command_node
@@ -171,6 +192,7 @@ install(DIRECTORY include/${PROJECT_NAME}
 
 install(TARGETS
   test_visualizer
+  humanoid_centroidal_mpc_sim
   humanoid_centroidal_mpc_sqp_node
   humanoid_centroidal_mpc_dummy_sim_node
   humanoid_centroidal_mpc_pose_command_node

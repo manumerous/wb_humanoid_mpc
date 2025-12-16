@@ -48,8 +48,10 @@ NMPC_PACKAGES := $(call find_ros2_packages,$(current_path)/humanoid_nmpc)
 
 ROBOT_MODEL_PACKAGES := $(call find_ros2_packages,$(current_path)/robot_models)
 
+RUNTIME_PACKAGES := $(call find_ros2_packages,$(current_path)/robot_runtime)
+
 # Unified package list
-PACKAGES ?= $(NMPC_PACKAGES) $(ROBOT_MODEL_PACKAGES)
+PACKAGES ?= $(NMPC_PACKAGES) $(ROBOT_MODEL_PACKAGES) $(RUNTIME_PACKAGES)
 
 ############################################################
 # Customizable Configuration - User can override these
@@ -179,23 +181,24 @@ launch-g1-dummy-sim:
 	source install/setup.bash && \
 	ros2 launch g1_centroidal_mpc dummy_sim.launch.py 
 
+launch-g1-sim:
+	cd ${build_dir} && \
+	source ${ros_source_file} && \
+	source install/setup.bash && \
+	ros2 launch g1_centroidal_mpc mujoco_sim.launch.py 
+
+
 launch-wb-g1-dummy-sim:
 	cd ${build_dir} && \
 	source ${ros_source_file} && \
 	source install/setup.bash && \
-	ros2 launch g1_wb_mpc wb_dummy_sim.launch.py 
+	ros2 launch g1_wb_mpc dummy_sim.launch.py 
 
-launch-neo-dummy-sim:
+launch-wb-g1-sim:
 	cd ${build_dir} && \
 	source ${ros_source_file} && \
 	source install/setup.bash && \
-	ros2 launch neo_centroidal_mpc dummy_sim.launch.py 
-
-launch-wb-neo-dummy-sim:
-	cd ${build_dir} && \
-	source ${ros_source_file} && \
-	source install/setup.bash && \
-	ros2 launch neo_wb_mpc wb_dummy_sim.launch.py 
+	ros2 launch g1_wb_mpc mujoco_sim.launch.py 
 
 run-ocs2-tests:
 	echo "make sure you call 'make build-relwithdebinfo' to build the tests before running them." && \

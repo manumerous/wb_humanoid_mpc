@@ -3,9 +3,9 @@
 <package format="3">
     <name>mujoco_vendor</name>
     <version>1.0.0</version>
-    <description>Implot vendor package</description>
+    <description>Mujoco vendor package</description>
     <maintainer email="manuel.galliker@1x.tech">Manuel Yves Galliker</maintainer>
-    <license>1X INTERNAL</license>
+    <license>BSD</license>
 
     <buildtool_depend>ament_cmake</buildtool_depend>
 

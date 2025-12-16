@@ -69,8 +69,10 @@ namespace ocs2::humanoid {
 /******************************************************************************************************/
 /******************************************************************************************************/
 
-CentroidalMpcInterface::CentroidalMpcInterface(
-    const std::string& taskFile, const std::string& urdfFile, const std::string& referenceFile, const std::string& gaitFile, bool setupOCP)
+CentroidalMpcInterface::CentroidalMpcInterface(const std::string& taskFile,
+                                               const std::string& urdfFile,
+                                               const std::string& referenceFile,
+                                               bool setupOCP)
     : taskFile_(taskFile),
       urdfFile_(urdfFile),
       referenceFile_(referenceFile),

@@ -58,7 +58,7 @@ int main(int argc, char** argv) {
   rclcpp::init(argc, argv);
 
   // Robot interface
-  CentroidalMpcInterface interface(taskFile, urdfFile, referenceFile, gaitFile, true);
+  CentroidalMpcInterface interface(taskFile, urdfFile, referenceFile, true);
 
   // MPC
   SqpMpc mpc(interface.mpcSettings(), interface.sqpSettings(), interface.getOptimalControlProblem(), interface.getInitializer());

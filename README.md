@@ -44,11 +44,27 @@ git submodule update --init --recursive
 The project supports both Dockerized workspaces (recommended) or a local installation for developing and running the humanoid MPC. 
 
 <details>
-<summary>Dockerized Workspace</summary>
+<summary>Build & run Dockerized workspace in VS Code</summary>
 
-We provide a [Dockerfile](https://github.com/manumerous/wb_humanoid_mpc/blob/main/docker/Dockerfile) to enable running and devloping the project from a containerized environment. Check out the [devcontainer.json](https://github.com/manumerous/wb_humanoid_mpc/blob/main/.devcontainer/devcontainer.json) for the arguments that must be supplied to the `docker build` and `docker run` commands. 
+We provide a [Dockerfile](https://github.com/manumerous/wb_humanoid_mpc/blob/main/docker/Dockerfile) to enable running and devloping the project from a containerized environment. Check out the [devcontainer.json](https://github.com/manumerous/wb_humanoid_mpc/blob/main/.devcontainer/devcontainer.json) for the arguments that must be supplied to the `docker build` and `docker run` commands.
 
 For working in **Visual Studio Code**, we recommend to install the [Dev Containers](https://marketplace.visualstudio.com/items?itemName=ms-vscode-remote.remote-containers) extension. Then, with the root of this repository as the root of your VS Code workspace, enter `Ctrl + Shift + P` and select `Dev Containers: Rebuild and Reopen in Container` at the top of the screen. VS Code will then automatically handle calling the `docker build` and `docker run` commands for you and will reopen the window at the root of the containerized workspace. Once this step is completed, you are ready to [build and run the code](https://github.com/manumerous/wb_humanoid_mpc/tree/main?tab=readme-ov-file#building-the-mpc).
+
+</details>
+
+<details>
+<summary> Build & run Dockerized workspace with bash scripts</summary>
+
+This repository includes two helper scripts: `image_build.bash` builds the `wb-humanoid-mpc:dev` Docker image using the arguments defined in `devcontainer.json`. `launch_wb_mpc.bash` starts the Docker container, mounts your workspace, and drops you into a bash shell ready to build and run the WB Humanoid MPC code. Example of building docker image:
+```
+cd /path/to/humanoid_mpc_ws/src/wb_humanoid_mpc/docker
+./image_build.bash
+```
+and launching the docker container:
+```
+cd /path/to/humanoid_mpc_ws/src/wb_humanoid_mpc/docker
+./launch_wb_mpc.bash
+```
 
 </details>
 
@@ -65,7 +81,17 @@ envsubst < dependencies.txt | xargs sudo apt install -y
 ```
 </details>
 
+
 ### Building the MPC 
+
+Building the WB MPC consumes a significant amount of RAM. We recommend saving all open work before starting the first build. The RAM usage can be adjusted by setting the PARALLEL_JOBS environment variable. Our recommendation is:
+
+| PARALLEL_JOBS | Required System RAM |
+|--------------:|--------------------:|
+| 2 (default)   |  16 GiB             | 
+| 4             |  32 GiB              |
+| 6             |  64 GiB              | 
+
 
 ```bash
 make build-all

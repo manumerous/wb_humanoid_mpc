@@ -45,7 +45,7 @@ find_package(Eigen3 3.3 REQUIRED NO_MODULE)
 ## Build ##
 ###########
 
-set(CMAKE_CXX_STANDARD 17)
+set(CMAKE_CXX_STANDARD 20)
 
 set(FLAGS ${OCS2_CXX_FLAGS} -Wno-invalid-partial-specialization)
 
@@ -91,7 +91,6 @@ add_library(${PROJECT_NAME}
     src/ros_comm/VelocityCommandKeyboardPublisher.cpp
     src/benchmarks/SqpBenchmarksPublisher.cpp
     src/benchmarks/DdpBenchmarksPublisher.cpp
-    src/visualization/COMVisualizer.cpp
 )
 ament_target_dependencies(${PROJECT_NAME}
     ${dependencies}
@@ -126,22 +125,6 @@ target_link_libraries(velocity_keyboard_command_node
 )
 target_compile_options(velocity_keyboard_command_node PUBLIC ${FLAGS})
 
-
-
-# COM Visualizer Node
-add_executable(COMVisualizer
-    src/visualization/COMVisualizer.cpp
-)
-
-ament_target_dependencies(COMVisualizer
-    ${dependencies}
-    urdf
-    kdl_parser
-    pinocchio
-    humanoid_common_mpc
-)
-
-
 #############
 ## Testing ##
 #############
@@ -161,7 +144,6 @@ ament_python_install_package(${PROJECT_NAME})
 install(TARGETS
     gait_keyboard_command_node
     velocity_keyboard_command_node
-    COMVisualizer
     DESTINATION lib/${PROJECT_NAME}
 )
 

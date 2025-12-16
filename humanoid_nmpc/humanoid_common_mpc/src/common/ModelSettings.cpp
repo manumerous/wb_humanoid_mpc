@@ -60,10 +60,11 @@ static std::unordered_map<std::string, size_t> createJointIndexMap(const std::ve
 }
 
 static std::vector<std::string> initializeJointNames(const std::vector<std::string>& fullJointNames,
-                                                     const std::vector<std::string>& fixedJointNames) {
-  std::cout << "Initialize the following active MPC joints: " << std::endl;
+                                                     const std::vector<std::string>& fixedJointNames,
+                                                     bool verbose) {
+  if (verbose) std::cout << "Initialize the following active MPC joints: " << std::endl;
   size_t n_joints = fullJointNames.size() - fixedJointNames.size();
-  std::cout << "Num active joints: " << n_joints << std::endl;
+  if (verbose) std::cout << "Num active joints: " << n_joints << std::endl;
   std::vector<std::string> mpcModelJointNames;
   if (n_joints > 0) {
     mpcModelJointNames.reserve(n_joints);
@@ -73,7 +74,7 @@ static std::vector<std::string> initializeJointNames(const std::vector<std::stri
   for (const auto& joint : fullJointNames) {
     if (std::find(fixedJointNames.begin(), fixedJointNames.end(), joint) == fixedJointNames.end()) {
       // If the joint is not found in fixedJointNames, add it to mpcModelJointNames
-      std::cout << joint << std::endl;
+      if (verbose) std::cout << joint << std::endl;
       mpcModelJointNames.emplace_back(joint);
     }
   }
@@ -125,20 +126,22 @@ ModelSettings::ModelSettings(const std::string& configFile, const std::string& u
   loadData::loadStdVector(configFile, prefix + "contactNames6DoF", contactNames6DoF, verbose);
   loadData::loadStdVector(configFile, prefix + "contactParentJointNames", contactParentJointNames, verbose);
 
-  std::cout << "Initializing MPC by fixing joints: " << std::endl;
-  for (std::string fixedJoint : fixedJointNames) std::cout << fixedJoint << std::endl;
+  if (verbose) {
+    std::cout << "Initializing MPC by fixing joints: " << std::endl;
+    for (std::string fixedJoint : fixedJointNames) std::cout << fixedJoint << std::endl;
+  }
 
   // Get full joint order from a full pinocchio interface, this removes any joints marked as fix in the urdf.
   PinocchioInterface fullPinocchioInterface = createDefaultPinocchioInterface(urdfFile);
   const pinocchio::Model& model = fullPinocchioInterface.getModel();
-  std::cout << "Full URDF joints: " << std::endl;
+  if (verbose) std::cout << "Full URDF joints: " << std::endl;
   fullJointNames.reserve(model.njoints - 2);  // Substract universe and root joint
   for (pinocchio::JointIndex joint_id = 2; joint_id < (pinocchio::JointIndex)model.njoints; ++joint_id) {
-    std::cout << model.names[joint_id] << std::endl;
+    if (verbose) std::cout << model.names[joint_id] << std::endl;
     fullJointNames.emplace_back(model.names[joint_id]);
   }
 
-  this->mpcModelJointNames = initializeJointNames(this->fullJointNames, this->fixedJointNames);
+  this->mpcModelJointNames = initializeJointNames(this->fullJointNames, this->fixedJointNames, verbose);
   this->mpcModelToFullJointsIndices = initializeMpcToFullJointIndices(this->fullJointNames, this->mpcModelJointNames);
   this->jointIndexMap = createJointIndexMap(this->mpcModelJointNames);
   this->contactNames = concatenateStringVectors(this->contactNames3DoF, this->contactNames6DoF);
