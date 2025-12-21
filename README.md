@@ -3,7 +3,8 @@
 This repository contains a Whole-Body Nonlinear Model Predictive Controller (NMPC) for humanoid loco-manipulation control. This approach enables to directly optimize through the **full-order torque-level dynamics in realtime** to generate a wide range of humanoid behaviors building up on an [extended & updated version of ocs2](https://github.com/manumerous/ocs2_ros2)
 
 **Interactive Velocity and Base Height Control via Joystick:**
-![Screencast2024-12-16180254-ezgif com-optimize(3)](https://github.com/user-attachments/assets/d4b1f0da-39ca-4ce1-b53c-e1d040abe1be)
+
+![vokoscreenNG-2025-12-21_20-35-31-ezgif com-optimize](https://github.com/user-attachments/assets/daf374ba-fe82-469d-9270-63d18a51bb53)
 
 
 It contains the following hardware platform agnostic MPC fromulations:
@@ -22,6 +23,8 @@ The project supports the following robot examples:
 
 - Unitree G1
 - 1X Neo (Comming soon)
+
+![Screencast2024-12-16180254-ezgif com-optimize(3)](https://github.com/user-attachments/assets/d4b1f0da-39ca-4ce1-b53c-e1d040abe1be)
 
 ## Get Started
 
