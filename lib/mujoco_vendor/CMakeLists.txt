@@ -1,13 +1,6 @@
 cmake_minimum_required(VERSION 3.16)
 project(mujoco_vendor)
 
-if(BUILD_HOST_YOCTO)
-    message("Building for ONEX OS, skipping mujoco_vendor")
-    find_package(ament_cmake REQUIRED)
-    ament_package()
-    return()
-endif()
-
 find_package(ament_cmake REQUIRED)
 
 include(ExternalProject)
