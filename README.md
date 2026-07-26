@@ -130,7 +130,7 @@ To cite the Whole-Body Humanoid MPC in your academic research, please consider c
 @misc{wholebodyhumanoidmpcweb,
    author = {Manuel Yves Galliker},
    title = {Whole-body Humanoid MPC: Realtime Physics-Based Procedural Loco-Manipulation Planning and Control},
-   howpublished = {https://github.com/1x-technologies/wb_humanoid_mpc},
+   howpublished = {https://github.com/manumerous/wb_humanoid_mpc},
    year = {2024}
 }
 ```
