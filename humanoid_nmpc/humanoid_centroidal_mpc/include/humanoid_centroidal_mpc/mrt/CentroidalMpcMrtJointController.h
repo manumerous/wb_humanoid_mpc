@@ -32,13 +32,13 @@ OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 #include "humanoid_centroidal_mpc/CentroidalMpcInterface.h"
 
 #include <ocs2_ros2_interfaces/mrt/DummyObserver.h>
-#include <robot_model/ControllerBase.h>
+#include <motorium_control/ControllerBase.h>
 #include "humanoid_common_mpc/reference_manager/ProceduralMpcMotionManager.h"
-#include "robot_model/RobotDescription.h"
+#include "motorium_model/RobotDescription.h"
 
 namespace ocs2::humanoid {
 
-class CentroidalMpcMrtJointController final : public ::robot::model::ControlBase {
+class CentroidalMpcMrtJointController final : public ::motorium::control::ControllerBase {
  public:
   /**
    * Constructor.
@@ -47,7 +47,7 @@ class CentroidalMpcMrtJointController final : public ::robot::model::ControlBase
    * @param [in] topicPrefix: The robot's name.
    * @param [in] mpcDesiredFrequency: The max frequency to run the mpc at.
    */
-  CentroidalMpcMrtJointController(const ::robot::model::RobotDescription& robotDescription,
+  CentroidalMpcMrtJointController(const ::motorium::model::RobotDescription& robotDescription,
                                   const ModelSettings& modelSettings,
                                   const CentroidalMpcRobotModel<scalar_t>& mpcRobotModel,
                                   MPC_BASE& mpc,
@@ -67,10 +67,11 @@ class CentroidalMpcMrtJointController final : public ::robot::model::ControlBase
    */
 
   void computeJointControlAction(scalar_t time,
-                                 const ::robot::model::RobotState& robotState,
-                                 ::robot::model::RobotJointAction& robotJointAction) override;
+                                 const ::motorium::model::RobotState& robotState,
+                                 const ::motorium::model::RobotState& desiredRobotState,
+                                 ::motorium::model::RobotJointFeedbackAction& robotJointAction) override;
 
-  void startMpcThread(const ::robot::model::RobotState& initRobotState);
+  void startMpcThread(const ::motorium::model::RobotState& initRobotState);
 
  private:
   /**
@@ -86,8 +87,8 @@ class CentroidalMpcMrtJointController final : public ::robot::model::ControlBase
    */
   TargetTrajectories currentObservationToResetTrajectory(const SystemObservation& currentMpcObservation);
 
-  void updateMpcState(vector_t& mpcState, const ::robot::model::RobotState& robotState);
-  void updateMpcObservation(ocs2::SystemObservation& mpcObservation, const ::robot::model::RobotState& robotState);
+  void updateMpcState(vector_t& mpcState, const ::motorium::model::RobotState& robotState);
+  void updateMpcObservation(ocs2::SystemObservation& mpcObservation, const ::motorium::model::RobotState& robotState);
 
   MPC_MRT_Interface mcpMrtInterface_;
 

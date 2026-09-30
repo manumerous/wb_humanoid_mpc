@@ -28,7 +28,7 @@ find_package(ocs2_robotic_tools REQUIRED)
 find_package(humanoid_wb_mpc REQUIRED)
 find_package(ocs2_pinocchio_interface REQUIRED)
 find_package(humanoid_common_mpc_ros2 REQUIRED)
-find_package(mujoco_sim_interface REQUIRED)
+find_package(motorium_mujoco REQUIRED)
 
 
 find_package(Boost REQUIRED COMPONENTS
@@ -82,7 +82,7 @@ set(dependencies
   humanoid_wb_mpc
   ocs2_pinocchio_interface
   humanoid_common_mpc_ros2
-  mujoco_sim_interface
+  motorium_mujoco
 )
 
 link_directories(
