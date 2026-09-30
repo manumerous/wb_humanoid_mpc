@@ -60,7 +60,7 @@ BUILD_TYPE ?= Release
 BUILD_TESTING ?= ON
 BUILD_WITH_NINJA ?= ON
 PARALLEL_JOBS ?= 6
-CPP_VERSION ?= -std=c++20
+CPP_VERSION ?= 20
 
 ############################################################
 # Set flags based on configuration 
@@ -71,7 +71,8 @@ COMMON_CMAKE_ARGS ?= \
 	-DCMAKE_BUILD_TYPE=$(BUILD_TYPE) \
 	-DBUILD_TESTING=$(BUILD_TESTING) \
 	-DCMAKE_SHARED_LINKER_FLAGS=$(LINKER_FLAGS) \
-	-DCMAKE_CXX_FLAGS=$(CPP_VERSION)
+	-DCMAKE_CXX_STANDARD=$(CPP_VERSION) \
+	-DCMAKE_CXX_STANDARD_REQUIRED=ON
 
 # Conditionally add flags specific for the Ninja build system
 ifeq ($(BUILD_WITH_NINJA), ON)
