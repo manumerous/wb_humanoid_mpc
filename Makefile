@@ -24,6 +24,12 @@ endif
 
 LINKER_FLAGS = "$(shell python3-config --ldflags --embed)"
 
+# ros-jazzy-pinocchio 4.x moved the classic pinocchio/multibody/{model,data}.hpp
+# (etc.) headers into a "deprecated" compatibility tree. Add it to the include
+# path so packages still using the old include paths keep resolving them; it is
+# a no-op -I if the directory does not exist (e.g. on distros with pinocchio 3.x).
+PINOCCHIO_DEPRECATED_INCLUDE := $(dir $(ros_source_file))include/pinocchio/deprecated
+
 # Find ROS2 packages in a given directory, two levels deep, and return only the package name
 define find_ros2_packages
 $(shell \
@@ -60,7 +66,7 @@ BUILD_TYPE ?= Release
 BUILD_TESTING ?= ON
 BUILD_WITH_NINJA ?= ON
 PARALLEL_JOBS ?= 6
-CPP_VERSION ?= -std=c++20
+CPP_VERSION ?= 20
 
 ############################################################
 # Set flags based on configuration 
@@ -71,7 +77,9 @@ COMMON_CMAKE_ARGS ?= \
 	-DCMAKE_BUILD_TYPE=$(BUILD_TYPE) \
 	-DBUILD_TESTING=$(BUILD_TESTING) \
 	-DCMAKE_SHARED_LINKER_FLAGS=$(LINKER_FLAGS) \
-	-DCMAKE_CXX_FLAGS=$(CPP_VERSION)
+	-DCMAKE_CXX_STANDARD=$(CPP_VERSION) \
+	-DCMAKE_CXX_STANDARD_REQUIRED=ON \
+	-DCMAKE_CXX_FLAGS="-DBOOST_MPL_LIMIT_LIST_SIZE=30 -DBOOST_MPL_LIMIT_VECTOR_SIZE=30 -DBOOST_MPL_CFG_NO_PREPROCESSED_HEADERS -DBOOST_FUSION_INVOKE_MAX_ARITY=10 -DBOOST_FUSION_INVOKE_PROCEDURE_MAX_ARITY=10 -DBOOST_FUSION_INVOKE_FUNCTION_OBJECT_MAX_ARITY=10 -isystem $(PINOCCHIO_DEPRECATED_INCLUDE)"
 
 # Conditionally add flags specific for the Ninja build system
 ifeq ($(BUILD_WITH_NINJA), ON)
