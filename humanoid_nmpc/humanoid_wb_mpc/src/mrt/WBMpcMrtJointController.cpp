@@ -108,7 +108,8 @@ void WBMpcMrtJointController::updateMpcState(vector_t& mpcState, const ::motoriu
 /******************************************************************************************************/
 /******************************************************************************************************/
 
-void WBMpcMrtJointController::updateMpcObservation(ocs2::SystemObservation& mpcObservation, const ::motorium::model::RobotState& robotState) {
+void WBMpcMrtJointController::updateMpcObservation(ocs2::SystemObservation& mpcObservation,
+                                                   const ::motorium::model::RobotState& robotState) {
   updateMpcState(mpcObservation.state, robotState);
   mpcObservation.time = robotState.getTime();
   mpcObservation.input = vector_t::Zero(mpcRobotModel_.getInputDim());  // Add contact forces later.

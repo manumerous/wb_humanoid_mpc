@@ -31,8 +31,8 @@ OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 
 #include "humanoid_centroidal_mpc/CentroidalMpcInterface.h"
 
-#include <ocs2_ros2_interfaces/mrt/DummyObserver.h>
 #include <motorium_control/ControllerBase.h>
+#include <ocs2_ros2_interfaces/mrt/DummyObserver.h>
 #include "humanoid_common_mpc/reference_manager/ProceduralMpcMotionManager.h"
 #include "motorium_model/RobotDescription.h"
 

@@ -58,7 +58,7 @@ class WBMpcPreComputation : public HumanoidPreComputation {
  private:
   WBMpcPreComputation(const WBMpcPreComputation& rhs);
 
-  std::vector<EndEffectorDynamicsLinearAccConstraint ::Config> eeNormalAccConConfigs_;
+  std::vector<EndEffectorDynamicsLinearAccConstraint::Config> eeNormalAccConConfigs_;
 };
 
 }  // namespace ocs2::humanoid
