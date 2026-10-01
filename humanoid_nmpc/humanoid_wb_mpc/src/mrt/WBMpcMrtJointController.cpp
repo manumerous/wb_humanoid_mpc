@@ -39,13 +39,14 @@ OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 
 namespace ocs2::humanoid {
 
-WBMpcMrtJointController::WBMpcMrtJointController(const ::robot::model::RobotDescription& robotDescription,
+WBMpcMrtJointController::WBMpcMrtJointController(const ::motorium::model::RobotDescription& robotDescription,
                                                  const ModelSettings& modelSettings,
                                                  MPC_BASE& mpc,
                                                  PinocchioInterface pinocchioInterface,
                                                  scalar_t mpcDesiredFrequency,
                                                  std::shared_ptr<DummyObserver> rVizVisualizerPtr)
-    : mcpMrtInterface_(mpc),
+    : ::motorium::control::ControllerBase(robotDescription),
+      mcpMrtInterface_(mpc),
       pinocchioInterface_(pinocchioInterface),
       mpcRobotModel_(modelSettings),
       mpcDeltaTMicroSeconds_(1000000 / mpcDesiredFrequency),
@@ -75,7 +76,7 @@ WBMpcMrtJointController::~WBMpcMrtJointController() {
 /******************************************************************************************************/
 /******************************************************************************************************/
 
-void WBMpcMrtJointController::startMpcThread(const ::robot::model::RobotState& initRobotState) {
+void WBMpcMrtJointController::startMpcThread(const ::motorium::model::RobotState& initRobotState) {
   updateMpcObservation(currentMpcObservation_, initRobotState);
   // Set observation to MPC
   mcpMrtInterface_.setCurrentObservation(currentMpcObservation_);
@@ -86,7 +87,7 @@ void WBMpcMrtJointController::startMpcThread(const ::robot::model::RobotState& i
 /******************************************************************************************************/
 /******************************************************************************************************/
 
-void WBMpcMrtJointController::updateMpcState(vector_t& mpcState, const ::robot::model::RobotState& robotState) {
+void WBMpcMrtJointController::updateMpcState(vector_t& mpcState, const ::motorium::model::RobotState& robotState) {
   mpcRobotModel_.setBasePosition(mpcState, robotState.getRootPositionInWorldFrame());
   mpcRobotModel_.setBaseOrientationEulerZYX(mpcState, quaternionToEulerZYX(robotState.getRootRotationLocalToWorldFrame()));
 
@@ -107,7 +108,8 @@ void WBMpcMrtJointController::updateMpcState(vector_t& mpcState, const ::robot::
 /******************************************************************************************************/
 /******************************************************************************************************/
 
-void WBMpcMrtJointController::updateMpcObservation(ocs2::SystemObservation& mpcObservation, const ::robot::model::RobotState& robotState) {
+void WBMpcMrtJointController::updateMpcObservation(ocs2::SystemObservation& mpcObservation,
+                                                   const ::motorium::model::RobotState& robotState) {
   updateMpcState(mpcObservation.state, robotState);
   mpcObservation.time = robotState.getTime();
   mpcObservation.input = vector_t::Zero(mpcRobotModel_.getInputDim());  // Add contact forces later.
@@ -123,8 +125,9 @@ void WBMpcMrtJointController::updateMpcObservation(ocs2::SystemObservation& mpcO
 /******************************************************************************************************/
 
 void WBMpcMrtJointController::computeJointControlAction(scalar_t time,
-                                                        const ::robot::model::RobotState& robotState,
-                                                        ::robot::model::RobotJointAction& robotJointAction) {
+                                                        const ::motorium::model::RobotState& robotState,
+                                                        const ::motorium::model::RobotState& /*desiredRobotState*/,
+                                                        ::motorium::model::RobotJointFeedbackAction& robotJointAction) {
   updateMpcObservation(currentMpcObservation_, robotState);
   // Set observation to MPC
   mcpMrtInterface_.setCurrentObservation(currentMpcObservation_);
@@ -146,10 +149,10 @@ void WBMpcMrtJointController::computeJointControlAction(scalar_t time,
 
     for (size_t i = 0; i < mpcJointIndices_.size(); i++) {
       size_t index = mpcJointIndices_[i];
-      robot::model::JointAction& action = robotJointAction.at(index).value();
+      motorium::model::JointFeedbackAction& action = robotJointAction.at(index);
 
       action.q_des = mpc_q_desired[i];
-      action.qd_des = mpc_qd_desired[i];
+      action.v_des = mpc_qd_desired[i];
       action.kp = 1200.0;
       action.kd = 10.0;
       action.feed_forward_effort = mpcJointTorques[i];
@@ -171,10 +174,10 @@ void WBMpcMrtJointController::computeJointControlAction(scalar_t time,
 
     for (size_t i = 0; i < mpcJointIndices_.size(); i++) {
       size_t index = mpcJointIndices_[i];
-      robot::model::JointAction& action = robotJointAction.at(index).value();
+      motorium::model::JointFeedbackAction& action = robotJointAction.at(index);
 
       action.q_des = 0;
-      action.qd_des = 0;
+      action.v_des = 0;
       action.kp = 0;
       action.kd = 0;
       action.feed_forward_effort = weightCompensatingTorques[i];
@@ -183,10 +186,10 @@ void WBMpcMrtJointController::computeJointControlAction(scalar_t time,
 
   for (size_t i = 0; i < otherJointIndices_.size(); i++) {
     size_t index = otherJointIndices_[i];
-    robot::model::JointAction& action = robotJointAction.at(index).value();
+    motorium::model::JointFeedbackAction& action = robotJointAction.at(index);
 
     action.q_des = 0;
-    action.qd_des = 0;
+    action.v_des = 0;
     action.kp = 100;
     action.kd = 1.0;
     action.feed_forward_effort = 0.0;

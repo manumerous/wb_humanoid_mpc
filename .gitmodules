@@ -10,3 +10,6 @@
 [submodule "lib/ocs2_ros2"]
 	path = lib/ocs2_ros2
 	url = https://github.com/manumerous/ocs2_ros2.git
+[submodule "lib/motorium"]
+	path = lib/motorium
+	url = https://github.com/manumerous/motorium.git

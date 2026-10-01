@@ -54,7 +54,7 @@ NMPC_PACKAGES := $(call find_ros2_packages,$(current_path)/humanoid_nmpc)
 
 ROBOT_MODEL_PACKAGES := $(call find_ros2_packages,$(current_path)/robot_models)
 
-RUNTIME_PACKAGES := $(call find_ros2_packages,$(current_path)/robot_runtime)
+RUNTIME_PACKAGES := $(call find_ros2_packages,$(current_path)/lib/motorium/motorium)
 
 # Unified package list
 PACKAGES ?= $(NMPC_PACKAGES) $(ROBOT_MODEL_PACKAGES) $(RUNTIME_PACKAGES)

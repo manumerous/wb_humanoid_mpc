@@ -30,15 +30,15 @@ OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 #include <ocs2_mpc/MPC_MRT_Interface.h>
 
 #include <humanoid_wb_mpc/common/WBAccelMpcRobotModel.h>
+#include <motorium_control/ControllerBase.h>
 #include <ocs2_pinocchio_interface/PinocchioInterface.h>
 #include <ocs2_ros2_interfaces/mrt/DummyObserver.h>
-#include <robot_model/ControllerBase.h>
 #include "humanoid_common_mpc/reference_manager/ProceduralMpcMotionManager.h"
-#include "robot_model/RobotDescription.h"
+#include "motorium_model/RobotDescription.h"
 
 namespace ocs2::humanoid {
 
-class WBMpcMrtJointController final : public ::robot::model::ControlBase {
+class WBMpcMrtJointController final : public ::motorium::control::ControllerBase {
  public:
   /**
    * Constructor.
@@ -47,7 +47,7 @@ class WBMpcMrtJointController final : public ::robot::model::ControlBase {
    * @param [in] topicPrefix: The robot's name.
    * @param [in] mpcDesiredFrequency: The max frequency to run the mpc at.
    */
-  WBMpcMrtJointController(const ::robot::model::RobotDescription& robotDescription,
+  WBMpcMrtJointController(const ::motorium::model::RobotDescription& robotDescription,
                           const ModelSettings& modelSettings,
                           MPC_BASE& mpc,
                           PinocchioInterface pinocchioInterface,
@@ -66,10 +66,11 @@ class WBMpcMrtJointController final : public ::robot::model::ControlBase {
    */
 
   void computeJointControlAction(scalar_t time,
-                                 const ::robot::model::RobotState& robotState,
-                                 ::robot::model::RobotJointAction& robotJointAction) override;
+                                 const ::motorium::model::RobotState& robotState,
+                                 const ::motorium::model::RobotState& desiredRobotState,
+                                 ::motorium::model::RobotJointFeedbackAction& robotJointAction) override;
 
-  void startMpcThread(const ::robot::model::RobotState& initRobotState);
+  void startMpcThread(const ::motorium::model::RobotState& initRobotState);
 
  private:
   /**
@@ -85,8 +86,8 @@ class WBMpcMrtJointController final : public ::robot::model::ControlBase {
    */
   TargetTrajectories currentObservationToResetTrajectory(const SystemObservation& currentMpcObservation);
 
-  void updateMpcState(vector_t& mpcState, const ::robot::model::RobotState& robotState);
-  void updateMpcObservation(ocs2::SystemObservation& mpcObservation, const ::robot::model::RobotState& robotState);
+  void updateMpcState(vector_t& mpcState, const ::motorium::model::RobotState& robotState);
+  void updateMpcObservation(ocs2::SystemObservation& mpcObservation, const ::motorium::model::RobotState& robotState);
 
   MPC_MRT_Interface mcpMrtInterface_;
 

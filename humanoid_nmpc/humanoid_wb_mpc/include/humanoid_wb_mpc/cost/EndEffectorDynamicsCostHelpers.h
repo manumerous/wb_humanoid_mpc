@@ -56,8 +56,8 @@ struct EndEffectorDynamicsWeights {
 
 template <typename SCALAR_T>
 struct EndEffectorDynamicsCostElement {
-  EndEffectorDynamicsCostElement(const VECTOR19_T<SCALAR_T>& vector) : costElementVector(vector){};
-  EndEffectorDynamicsCostElement() : costElementVector(VECTOR19_T<SCALAR_T>::Zero()){};
+  EndEffectorDynamicsCostElement(const VECTOR19_T<SCALAR_T>& vector) : costElementVector(vector) {};
+  EndEffectorDynamicsCostElement() : costElementVector(VECTOR19_T<SCALAR_T>::Zero()) {};
   VECTOR19_T<SCALAR_T> costElementVector;
 
   VECTOR19_T<SCALAR_T> getValues() { return costElementVector; };
@@ -84,8 +84,8 @@ VECTOR18_T<SCALAR_T> computeTaskSpaceErrors(const EndEffectorDynamicsCostElement
 
 template <typename SCALAR_T>
 struct PlanarEndEffectorDynamicsReference {
-  PlanarEndEffectorDynamicsReference(const VECTOR18_T<SCALAR_T>& vector) : costElementVector(vector){};
-  PlanarEndEffectorDynamicsReference() : costElementVector(VECTOR18_T<SCALAR_T>::Zero()){};
+  PlanarEndEffectorDynamicsReference(const VECTOR18_T<SCALAR_T>& vector) : costElementVector(vector) {};
+  PlanarEndEffectorDynamicsReference() : costElementVector(VECTOR18_T<SCALAR_T>::Zero()) {};
   VECTOR18_T<SCALAR_T> costElementVector;
 
   VECTOR18_T<SCALAR_T> getValues() { return costElementVector; };

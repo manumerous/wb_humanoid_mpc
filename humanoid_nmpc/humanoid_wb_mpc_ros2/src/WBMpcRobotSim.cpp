@@ -32,7 +32,8 @@ OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 #include <rclcpp/rclcpp.hpp>
 
 #include <humanoid_wb_mpc/WBMpcInterface.h>
-#include <mujoco_sim_interface/MujocoSimInterface.h>
+#include <motorium_hal/RobotHAL.h>
+#include <motorium_mujoco/MujocoDriver.h>
 
 #include <humanoid_wb_mpc/command/WBMpcTargetTrajectoriesCalculator.h>
 #include <humanoid_wb_mpc/mrt/WBMpcMrtJointController.h>
@@ -90,40 +91,42 @@ int main(int argc, char** argv) {
   mpc.getSolverPtr()->addSynchronizedModule(ros2ProceduralMpcMotionManager);
 
   // Init Sim state
-  robot::model::RobotDescription robotDescription(urdfFile);
-  robot::model::RobotState initState(robotDescription, 2);
-  initState.setConfigurationToZero();
+  motorium::model::RobotDescription robotDescription(urdfFile);
+  auto initStatePtr = std::make_shared<motorium::model::RobotState>(robotDescription, 2);
+  initStatePtr->setConfigurationToZero();
 
   const vector_t& initMpcState = interface.getInitialState();
   const auto& mpcModel = interface.getMpcRobotModel();
-  initState.setRootPositionInWorldFrame(mpcModel.getBasePosition(initMpcState));
+  initStatePtr->setRootPositionInWorldFrame(mpcModel.getBasePosition(initMpcState));
 
   vector_t mpcJointAngles = mpcModel.getJointAngles(initMpcState);
   // Todo set non zero orientation;
-  std::vector<robot::joint_index_t> mpcJointIndices = robotDescription.getJointIndices(interface.modelSettings().mpcModelJointNames);
+  std::vector<motorium::joint_index_t> mpcJointIndices = robotDescription.getJointIndices(interface.modelSettings().mpcModelJointNames);
   for (size_t i = 0; i < mpcJointIndices.size(); i++) {
-    initState.setJointPosition(mpcJointIndices[i], mpcJointAngles[i]);
+    initStatePtr->setJointPosition(mpcJointIndices[i], mpcJointAngles[i]);
   }
 
-  std::cerr << "initState: " << initState.getRootPositionInWorldFrame().transpose() << std::endl;
+  std::cerr << "initState: " << initStatePtr->getRootPositionInWorldFrame().transpose() << std::endl;
 
-  robot::mujoco_sim_interface::MujocoSimConfig config;
+  motorium::mujoco::MujocoSimConfig config;
 
   config.scenePath = mjxFile;
   config.verbose = true;
-  config.initStatePtr_ = std::make_shared<robot::model::RobotState>(std::move(initState));
+  config.initStatePtr_ = initStatePtr;
 
-  robot::mujoco_sim_interface::MujocoSimInterface robotInterface(config, urdfFile);
+  motorium::hal::RobotHAL robotHal(urdfFile);
+  motorium::mujoco::MujocoDriver& mujocoDriver = robotHal.addDriver<motorium::mujoco::MujocoDriver>(config);
 
-  WBMpcMrtJointController mpcJointController(robotInterface.getRobotDescription(), interface.modelSettings(), mpc,
+  WBMpcMrtJointController mpcJointController(robotHal.getRobotDescription(), interface.modelSettings(), mpc,
                                              interface.getPinocchioInterface(), interface.mpcSettings().mpcDesiredFrequency_,
                                              humanoidVisualizer);
 
   // size_t mrtDeltaTMicroSeconds_ = 1000000 / (interface.mpcSettings().mrtDesiredFrequency_);
   size_t mrtDeltaTMicroSeconds_ = 1000000 / (500);
-  robotInterface.initSim();
-  robotInterface.updateInterfaceStateFromRobot();
-  mpcJointController.startMpcThread(robotInterface.getRobotState());
+  motorium::model::RobotState state(robotHal.getRobotDescription());
+  motorium::model::RobotJointFeedbackAction action(robotHal.getRobotDescription());
+
+  mpcJointController.startMpcThread(*initStatePtr);
 
   while (!mpcJointController.ready()) {
     std::this_thread::sleep_for(std::chrono::milliseconds(100));
@@ -132,16 +135,15 @@ int main(int argc, char** argv) {
 
   // Wait to allow MPC policy to initialize
   std::this_thread::sleep_for(std::chrono::milliseconds(200));
-  robotInterface.startSim();
+  robotHal.startDrivers();
 
   rclcpp::spin_some(nodeHandle);
 
   while (true) {
     auto targetTimeForNextIteration = std::chrono::steady_clock::now() + std::chrono::microseconds(mrtDeltaTMicroSeconds_);
 
-    robotInterface.updateInterfaceStateFromRobot();
-    mpcJointController.computeJointControlAction(0.0, robotInterface.getRobotState(), robotInterface.getRobotJointAction());
-    robotInterface.applyJointAction();
+    robotHal.update(action, state);
+    mpcJointController.computeJointControlAction(0.0, state, state, action);
 
     rclcpp::spin_some(nodeHandle);
 

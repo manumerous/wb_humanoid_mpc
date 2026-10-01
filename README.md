@@ -53,6 +53,20 @@ We provide a [Dockerfile](https://github.com/manumerous/wb_humanoid_mpc/blob/mai
 
 For working in **Visual Studio Code**, we recommend to install the [Dev Containers](https://marketplace.visualstudio.com/items?itemName=ms-vscode-remote.remote-containers) extension. Then, with the root of this repository as the root of your VS Code workspace, enter `Ctrl + Shift + P` and select `Dev Containers: Rebuild and Reopen in Container` at the top of the screen. VS Code will then automatically handle calling the `docker build` and `docker run` commands for you and will reopen the window at the root of the containerized workspace. Once this step is completed, you are ready to [build and run the code](https://github.com/manumerous/wb_humanoid_mpc/tree/main?tab=readme-ov-file#building-the-mpc).
 
+#### macOS
+
+The default devcontainer config forwards X11 (for RViz, the robot control GUI, etc.) the Linux way, via a shared `/tmp/.X11-unix` socket and `xhost +local:`. macOS has neither, so that config fails to start on a Mac host.
+
+Use the `mac-xquartz` config instead:
+
+1. Install [XQuartz](https://www.xquartz.org/): `brew install --cask xquartz`, then log out/in (or reboot) once so its X11 integration takes effect.
+2. Open this repo in VS Code and run `Dev Containers: Reopen in Container`. When prompted to pick a configuration, choose **Whole Body MPC Dev Container (macOS + XQuartz)**.
+3. Its `initializeCommand` ([.devcontainer/scripts/macos-x11-setup.sh](.devcontainer/scripts/macos-x11-setup.sh)) enables TCP connections in XQuartz, launches it, and points the container's `DISPLAY` at your Mac's LAN IP over TCP instead of a Unix socket.
+
+This also needs `USER_ID`/`GROUP_ID` exported in your shell (e.g. in `~/.zshrc`: `export USER_ID=$(id -u)` and `export GROUP_ID=$(id -g)`) before launching VS Code, since macOS doesn't set these by default the way the container build args expect.
+
+If `--net=host` in `runArgs` doesn't give the container network access to the host, enable **Host networking** under Docker Desktop's Settings → Resources → Network.
+
 </details>
 
 <details>
