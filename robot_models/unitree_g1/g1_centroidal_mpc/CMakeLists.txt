@@ -65,7 +65,7 @@ ament_target_dependencies(test_pinocchio_model
 )
 target_link_libraries(test_pinocchio_model
   ${Boost_LIBRARIES}
-  ${pinocchio_LIBRARIES}
+  pinocchio::pinocchio
 )
 target_compile_options(test_pinocchio_model PUBLIC ${FLAGS})
 
