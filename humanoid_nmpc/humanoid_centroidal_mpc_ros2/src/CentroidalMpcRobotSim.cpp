@@ -113,6 +113,7 @@ int main(int argc, char** argv) {
 
   config.scenePath = mjxFile;
   config.verbose = true;
+  config.defaultJointDamping = 10.0;
   config.initStatePtr_ = initStatePtr;
 
   motorium::hal::RobotHAL robotHal(urdfFile);
@@ -126,7 +127,7 @@ int main(int argc, char** argv) {
 
   // size_t mrtDeltaTMicroSeconds_ = 1000000 / (interface.mpcSettings().mrtDesiredFrequency_);
   size_t mrtDeltaTMicroSeconds_ = 1000000 / (500);
-  motorium::model::RobotState state(robotHal.getRobotDescription());
+  motorium::model::RobotState state(robotHal.getRobotDescription(), 2);
   motorium::model::RobotJointFeedbackAction action(robotHal.getRobotDescription());
 
   mpcJointController.startMpcThread(*initStatePtr);
