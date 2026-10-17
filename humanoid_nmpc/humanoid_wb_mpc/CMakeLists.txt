@@ -18,7 +18,8 @@ find_package(ocs2_mpc REQUIRED)
 find_package(ocs2_sqp REQUIRED)
 find_package(ocs2_pinocchio_interface REQUIRED)
 find_package(humanoid_common_mpc REQUIRED)
-find_package(robot_model REQUIRED)
+find_package(motorium_model REQUIRED)
+find_package(motorium_control REQUIRED)
 
 find_package(GTest REQUIRED)
 
@@ -62,7 +63,8 @@ set(dependencies
   ocs2_sqp
   ocs2_pinocchio_interface
   humanoid_common_mpc
-  robot_model
+  motorium_model
+  motorium_control
 )
 
 link_directories(

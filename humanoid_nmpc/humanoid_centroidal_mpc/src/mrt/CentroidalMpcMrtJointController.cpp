@@ -42,14 +42,15 @@ OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 
 namespace ocs2::humanoid {
 
-CentroidalMpcMrtJointController::CentroidalMpcMrtJointController(const ::robot::model::RobotDescription& robotDescription,
+CentroidalMpcMrtJointController::CentroidalMpcMrtJointController(const ::motorium::model::RobotDescription& robotDescription,
                                                                  const ModelSettings& modelSettings,
                                                                  const CentroidalMpcRobotModel<scalar_t>& mpcRobotModel,
                                                                  MPC_BASE& mpc,
                                                                  PinocchioInterface pinocchioInterface,
                                                                  scalar_t mpcDesiredFrequency,
                                                                  std::shared_ptr<DummyObserver> rVizVisualizerPtr)
-    : mcpMrtInterface_(mpc),
+    : ::motorium::control::ControllerBase(robotDescription),
+      mcpMrtInterface_(mpc),
       pinocchioInterface_(pinocchioInterface),
       mpcRobotModelPtr_(mpcRobotModel.clone()),
       mpcDeltaTMicroSeconds_(1000000 / mpcDesiredFrequency),
@@ -85,7 +86,7 @@ CentroidalMpcMrtJointController::~CentroidalMpcMrtJointController() {
 /******************************************************************************************************/
 /******************************************************************************************************/
 
-void CentroidalMpcMrtJointController::startMpcThread(const ::robot::model::RobotState& initRobotState) {
+void CentroidalMpcMrtJointController::startMpcThread(const ::motorium::model::RobotState& initRobotState) {
   updateMpcObservation(currentMpcObservation_, initRobotState);
   // Set observation to MPC
   mcpMrtInterface_.setCurrentObservation(currentMpcObservation_);
@@ -96,7 +97,7 @@ void CentroidalMpcMrtJointController::startMpcThread(const ::robot::model::Robot
 /******************************************************************************************************/
 /******************************************************************************************************/
 
-void CentroidalMpcMrtJointController::updateMpcState(vector_t& mpcState, const ::robot::model::RobotState& robotState) {
+void CentroidalMpcMrtJointController::updateMpcState(vector_t& mpcState, const ::motorium::model::RobotState& robotState) {
   const auto& info = mpcRobotModelPtr_->getCentroidalModelInfo();
 
   const vector3_t euler_zyx = quaternionToEulerZYX(robotState.getRootRotationLocalToWorldFrame());
@@ -124,7 +125,7 @@ void CentroidalMpcMrtJointController::updateMpcState(vector_t& mpcState, const :
 /******************************************************************************************************/
 
 void CentroidalMpcMrtJointController::updateMpcObservation(ocs2::SystemObservation& mpcObservation,
-                                                           const ::robot::model::RobotState& robotState) {
+                                                           const ::motorium::model::RobotState& robotState) {
   updateMpcState(mpcObservation.state, robotState);
   mpcObservation.time = robotState.getTime();
   mpcObservation.input = vector_t::Zero(mpcRobotModelPtr_->getInputDim());  // Add contact forces later.
@@ -140,8 +141,9 @@ void CentroidalMpcMrtJointController::updateMpcObservation(ocs2::SystemObservati
 /******************************************************************************************************/
 
 void CentroidalMpcMrtJointController::computeJointControlAction(scalar_t time,
-                                                                const ::robot::model::RobotState& robotState,
-                                                                ::robot::model::RobotJointAction& robotJointAction) {
+                                                                const ::motorium::model::RobotState& robotState,
+                                                                const ::motorium::model::RobotState& /*desiredRobotState*/,
+                                                                ::motorium::model::RobotJointFeedbackAction& robotJointAction) {
   updateMpcObservation(currentMpcObservation_, robotState);
   // Set observation to MPC
   mcpMrtInterface_.setCurrentObservation(currentMpcObservation_);
@@ -178,10 +180,10 @@ void CentroidalMpcMrtJointController::computeJointControlAction(scalar_t time,
 
     for (size_t i = 0; i < mpcJointIndices_.size(); i++) {
       size_t index = mpcJointIndices_[i];
-      robot::model::JointAction& action = robotJointAction.at(index).value();
+      motorium::model::JointFeedbackAction& action = robotJointAction.at(index);
 
       action.q_des = mpc_q_j_des[i];
-      action.qd_des = mpc_qd_j_des[i];
+      action.v_des = mpc_qd_j_des[i];
       action.kp = 1200.0;
       action.kd = 10.0;
       action.feed_forward_effort = mpcJointTorques[i];
@@ -208,10 +210,10 @@ void CentroidalMpcMrtJointController::computeJointControlAction(scalar_t time,
 
     for (size_t i = 0; i < mpcJointIndices_.size(); i++) {
       size_t index = mpcJointIndices_[i];
-      robot::model::JointAction& action = robotJointAction.at(index).value();
+      motorium::model::JointFeedbackAction& action = robotJointAction.at(index);
 
       action.q_des = 0;
-      action.qd_des = 0;
+      action.v_des = 0;
       action.kp = 1200;
       action.kd = 10;
       action.feed_forward_effort = weightCompensatingTorques[i];
@@ -220,10 +222,10 @@ void CentroidalMpcMrtJointController::computeJointControlAction(scalar_t time,
 
   for (size_t i = 0; i < otherJointIndices_.size(); i++) {
     size_t index = otherJointIndices_[i];
-    robot::model::JointAction& action = robotJointAction.at(index).value();
+    motorium::model::JointFeedbackAction& action = robotJointAction.at(index);
 
     action.q_des = 0;
-    action.qd_des = 0;
+    action.v_des = 0;
     action.kp = 100;
     action.kd = 1.0;
     action.feed_forward_effort = 0.0;
