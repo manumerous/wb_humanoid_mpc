@@ -93,21 +93,25 @@ int main(int argc, char** argv) {
 
   // Init Sim state
   motorium::model::RobotDescription robotDescription(urdfFile);
-  auto initStatePtr = std::make_shared<motorium::model::RobotState>(robotDescription, 2);
-  initStatePtr->setConfigurationToZero();
+  auto mutableInitStatePtr = std::make_shared<motorium::model::RobotState>(robotDescription, 2);
+  mutableInitStatePtr->setConfigurationToZero();
 
   const vector_t& initMpcState = interface.getInitialState();
   const auto& mpcModel = interface.getMpcRobotModel();
-  initStatePtr->setRootPositionInWorldFrame(mpcModel.getBasePosition(initMpcState));
+  mutableInitStatePtr->setRootPositionInWorldFrame(mpcModel.getBasePosition(initMpcState));
 
   vector_t mpcJointAngles = mpcModel.getJointAngles(initMpcState);
   // Todo set non zero orientation;
   std::vector<motorium::joint_index_t> mpcJointIndices = robotDescription.getJointIndices(interface.modelSettings().mpcModelJointNames);
   for (size_t i = 0; i < mpcJointIndices.size(); i++) {
-    initStatePtr->setJointPosition(mpcJointIndices[i], mpcJointAngles[i]);
+    mutableInitStatePtr->setJointPosition(mpcJointIndices[i], mpcJointAngles[i]);
   }
 
-  std::cerr << "initState: " << initStatePtr->getRootPositionInWorldFrame().transpose() << std::endl;
+  std::cerr << "initState: " << mutableInitStatePtr->getRootPositionInWorldFrame().transpose() << std::endl;
+
+  // Freeze the initial state so it can be shared safely between the sim driver and the MPC.
+  // Moving out of the mutable pointer leaves it null, so only const access remains.
+  const std::shared_ptr<const motorium::model::RobotState> initStatePtr = std::move(mutableInitStatePtr);
 
   motorium::mujoco::MujocoSimConfig config;
 

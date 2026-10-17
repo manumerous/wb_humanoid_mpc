@@ -59,6 +59,8 @@ CentroidalMpcMrtJointController::CentroidalMpcMrtJointController(const ::motoriu
       inverse_dynamics_kp_(mpcRobotModel.getJointDim()),
       inverse_dynamics_kd_(mpcRobotModel.getJointDim()) {
   mpcJointIndices_ = robotDescription.getJointIndices(modelSettings.mpcModelJointNames);
+  mpcJointPositions_.resize(mpcJointIndices_.size());
+  mpcJointVelocities_.resize(mpcJointIndices_.size());
   otherJointIndices_ = robotDescription.getJointIndices(modelSettings.fixedJointNames);
   currentMpcObservation_.state = vector_t::Zero(mpcRobotModelPtr_->getStateDim());
   currentMpcObservation_.input = vector_t::Zero(mpcRobotModelPtr_->getInputDim());
@@ -105,13 +107,15 @@ void CentroidalMpcMrtJointController::updateMpcState(vector_t& mpcState, const :
   vector_t qPinocchio(info.generalizedCoordinatesNum);
   qPinocchio.head<3>() = robotState.getRootPositionInWorldFrame();
   qPinocchio.segment<3>(3) = euler_zyx;
-  qPinocchio.tail(mpcRobotModelPtr_->getJointDim()) = robotState.getJointPositions(mpcJointIndices_);
+  robotState.fillJointPositions(mpcJointIndices_, mpcJointPositions_);
+  qPinocchio.tail(mpcRobotModelPtr_->getJointDim()) = mpcJointPositions_;
 
   vector_t vPinocchio(info.generalizedCoordinatesNum);
   vPinocchio.head<3>() = robotState.getRootRotationLocalToWorldFrame() * robotState.getRootLinearVelocityInLocalFrame();
   vPinocchio.segment<3>(3) =
       getEulerAnglesZyxDerivativesFromLocalAngularVelocity<scalar_t>(euler_zyx, robotState.getRootAngularVelocityInLocalFrame());
-  vPinocchio.tail(mpcRobotModelPtr_->getJointDim()) = robotState.getJointVelocities(mpcJointIndices_);
+  robotState.fillJointVelocities(mpcJointIndices_, mpcJointVelocities_);
+  vPinocchio.tail(mpcRobotModelPtr_->getJointDim()) = mpcJointVelocities_;
 
   updateCentroidalDynamics(pinocchioInterface_, info, qPinocchio);
   const auto& A = getCentroidalMomentumMatrix(pinocchioInterface_);

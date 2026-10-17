@@ -53,6 +53,8 @@ WBMpcMrtJointController::WBMpcMrtJointController(const ::motorium::model::RobotD
       realtime_(mpcDesiredFrequency <= 0),
       visualizerPtr_(rVizVisualizerPtr) {
   mpcJointIndices_ = robotDescription.getJointIndices(modelSettings.mpcModelJointNames);
+  mpcJointPositions_.resize(mpcJointIndices_.size());
+  mpcJointVelocities_.resize(mpcJointIndices_.size());
   otherJointIndices_ = robotDescription.getJointIndices(modelSettings.fixedJointNames);
   currentMpcObservation_.state = vector_t::Zero(mpcRobotModel_.getStateDim());
   currentMpcObservation_.input = vector_t::Zero(mpcRobotModel_.getInputDim());
@@ -91,7 +93,8 @@ void WBMpcMrtJointController::updateMpcState(vector_t& mpcState, const ::motoriu
   mpcRobotModel_.setBasePosition(mpcState, robotState.getRootPositionInWorldFrame());
   mpcRobotModel_.setBaseOrientationEulerZYX(mpcState, quaternionToEulerZYX(robotState.getRootRotationLocalToWorldFrame()));
 
-  mpcRobotModel_.setJointAngles(mpcState, robotState.getJointPositions(mpcJointIndices_));
+  robotState.fillJointPositions(mpcJointIndices_, mpcJointPositions_);
+  mpcRobotModel_.setJointAngles(mpcState, mpcJointPositions_);
 
   // currently we send local angular and linear velocity
   mpcRobotModel_.setBaseLinearVelocity(mpcState,
@@ -101,7 +104,8 @@ void WBMpcMrtJointController::updateMpcState(vector_t& mpcState, const ::motoriu
                                                                                robotState.getRootAngularVelocityInLocalFrame()));
 
   vector_t dummyInput = vector_t::Zero(mpcRobotModel_.getInputDim());
-  mpcRobotModel_.setJointVelocities(mpcState, dummyInput, robotState.getJointVelocities(mpcJointIndices_));
+  robotState.fillJointVelocities(mpcJointIndices_, mpcJointVelocities_);
+  mpcRobotModel_.setJointVelocities(mpcState, dummyInput, mpcJointVelocities_);
 }
 
 /******************************************************************************************************/

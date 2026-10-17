@@ -97,6 +97,10 @@ class WBMpcMrtJointController final : public ::motorium::control::ControllerBase
   std::vector<size_t> mpcJointIndices_;
   std::vector<size_t> otherJointIndices_;
 
+  // Preallocated buffers so the control loop does not allocate.
+  vector_t mpcJointPositions_;
+  vector_t mpcJointVelocities_;
+
   size_t mpcDeltaTMicroSeconds_;
   bool realtime_;  // True if MPC is to be run as fast as possible
 
