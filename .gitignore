@@ -3,6 +3,9 @@ build/
 log/
 install/
 
+# Generated at devcontainer startup by macos-x11-setup.sh
+.devcontainer/mac-xquartz/x11.env
+
 # Prerequisites
 *.d
 
