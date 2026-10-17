@@ -44,7 +44,7 @@ struct ContactCenterPoint {
   const vector3_t translationFromParent;
 
   ContactCenterPoint(const std::string& frameName, const std::string& parentJointName, const vector3_t& translationFromParent)
-      : frameName(frameName), parentJointName(parentJointName), translationFromParent(translationFromParent) {};
+      : frameName(frameName), parentJointName(parentJointName), translationFromParent(translationFromParent){};
 
   static ContactCenterPoint loadContactCenterPoint(const std::string& taskFile,
                                                    const ModelSettings& modelSettings,

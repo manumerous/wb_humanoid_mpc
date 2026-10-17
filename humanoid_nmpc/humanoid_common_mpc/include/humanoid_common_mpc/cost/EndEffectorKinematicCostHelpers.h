@@ -52,8 +52,8 @@ struct EndEffectorKinematicsWeights {
 
 template <typename SCALAR_T>
 struct EndEffectorKinematicsCostElement {
-  EndEffectorKinematicsCostElement(const Eigen::Matrix<SCALAR_T, 13, 1>& vector) : costElementVector(vector) {};
-  EndEffectorKinematicsCostElement() : costElementVector(Eigen::Matrix<SCALAR_T, 13, 1>::Zero()) {};
+  EndEffectorKinematicsCostElement(const Eigen::Matrix<SCALAR_T, 13, 1>& vector) : costElementVector(vector){};
+  EndEffectorKinematicsCostElement() : costElementVector(Eigen::Matrix<SCALAR_T, 13, 1>::Zero()){};
   Eigen::Matrix<SCALAR_T, 13, 1> costElementVector;
 
   Eigen::Matrix<SCALAR_T, 13, 1> getValues() { return costElementVector; };
@@ -76,8 +76,8 @@ VECTOR12_T<SCALAR_T> computeTaskSpaceErrors(const EndEffectorKinematicsCostEleme
 
 template <typename SCALAR_T>
 struct PlanarEndEffectorKinematicsPlanarReference {
-  PlanarEndEffectorKinematicsPlanarReference(const VECTOR12_T<SCALAR_T>& vector) : costElementVector(vector) {};
-  PlanarEndEffectorKinematicsPlanarReference() : costElementVector(VECTOR12_T<SCALAR_T>::Zero()) {};
+  PlanarEndEffectorKinematicsPlanarReference(const VECTOR12_T<SCALAR_T>& vector) : costElementVector(vector){};
+  PlanarEndEffectorKinematicsPlanarReference() : costElementVector(VECTOR12_T<SCALAR_T>::Zero()){};
   VECTOR12_T<SCALAR_T> costElementVector;
 
   VECTOR12_T<SCALAR_T> getValues() { return costElementVector; };

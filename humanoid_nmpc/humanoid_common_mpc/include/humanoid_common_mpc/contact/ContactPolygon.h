@@ -39,7 +39,7 @@ namespace ocs2::humanoid {
 struct PolygonBounds {
   PolygonBounds(
       const scalar_t& x_min, const scalar_t& x_max, const scalar_t& y_min, const scalar_t& y_max, const scalar_t& scaleFactor = 1.0)
-      : x_min(x_min * scaleFactor), x_max(x_max * scaleFactor), y_min(y_min * scaleFactor), y_max(y_max * scaleFactor) {};
+      : x_min(x_min * scaleFactor), x_max(x_max * scaleFactor), y_min(y_min * scaleFactor), y_max(y_max * scaleFactor){};
 
   scalar_t x_min;
   scalar_t x_max;

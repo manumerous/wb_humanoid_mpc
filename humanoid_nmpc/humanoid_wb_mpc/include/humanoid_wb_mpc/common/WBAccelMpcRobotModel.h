@@ -241,7 +241,7 @@ class WBAccelMpcRobotModel : public MpcRobotModelBase<SCALAR_T> {
   };
 
  private:
-  WBAccelMpcRobotModel(const WBAccelMpcRobotModel& rhs) : MpcRobotModelBase<SCALAR_T>(rhs) {};
+  WBAccelMpcRobotModel(const WBAccelMpcRobotModel& rhs) : MpcRobotModelBase<SCALAR_T>(rhs){};
 };
 
 }  // namespace ocs2::humanoid

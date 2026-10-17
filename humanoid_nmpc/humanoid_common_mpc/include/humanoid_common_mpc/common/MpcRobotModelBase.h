@@ -57,7 +57,7 @@ class MpcRobotModelBase {
         state_dim(state_dim),
         input_dim(input_dim),
         base_dim(6),
-        gen_coordinates_dim(base_dim + modelSettings.mpc_joint_dim) {};
+        gen_coordinates_dim(base_dim + modelSettings.mpc_joint_dim){};
 
   virtual ~MpcRobotModelBase() = default;
   virtual MpcRobotModelBase* clone() const = 0;
@@ -184,7 +184,7 @@ class MpcRobotModelBase {
         state_dim(rhs.state_dim),
         input_dim(rhs.input_dim),
         base_dim(6),
-        gen_coordinates_dim(rhs.gen_coordinates_dim) {};
+        gen_coordinates_dim(rhs.gen_coordinates_dim){};
 
  public:
   const ModelSettings& modelSettings;
