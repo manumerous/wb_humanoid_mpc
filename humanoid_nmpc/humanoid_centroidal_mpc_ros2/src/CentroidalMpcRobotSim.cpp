@@ -150,8 +150,10 @@ int main(int argc, char** argv) {
   while (true) {
     auto targetTimeForNextIteration = std::chrono::steady_clock::now() + std::chrono::microseconds(mrtDeltaTMicroSeconds_);
 
-    robotHal.update(action, state);
+    // Read the latest state, compute and send the action right away to keep the state-to-action latency minimal.
+    robotHal.updateState(state);
     mpcJointController.computeJointControlAction(0.0, state, state, action);
+    robotHal.setAction(action);
 
     rclcpp::spin_some(nodeHandle);
 
