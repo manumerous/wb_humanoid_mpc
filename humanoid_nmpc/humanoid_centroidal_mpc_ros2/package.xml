@@ -32,6 +32,7 @@
   <depend>ocs2_pinocchio_interface</depend>
   <depend>remote_control</depend>
   <depend>motorium_mujoco</depend>
+  <depend>motorium_drake</depend>
 
   <test_depend>ament_cmake_clang_format</test_depend>
   <test_depend>ament_cmake_clang_tidy</test_depend>

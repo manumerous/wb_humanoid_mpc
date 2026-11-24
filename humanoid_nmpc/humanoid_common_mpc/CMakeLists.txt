@@ -75,6 +75,7 @@ add_library(${PROJECT_NAME}
         src/pinocchio_model/createPinocchioModel.cpp
         src/pinocchio_model/DynamicsHelperFunctions.cpp
         src/common/ModelSettings.cpp
+        src/common/JointGains.cpp
         src/constraint/JointLimitsSoftConstraint.cpp
         src/constraint/FootCollisionConstraint.cpp
         src/constraint/ZeroWrenchConstraint.cpp

@@ -27,12 +27,16 @@ OR TORT (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE
 OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 ******************************************************************************/
 
+#include <atomic>
+#include <limits>
+
 #include <ocs2_mpc/MPC_MRT_Interface.h>
 
 #include "humanoid_centroidal_mpc/CentroidalMpcInterface.h"
 
 #include <motorium_control/ControllerBase.h>
 #include <ocs2_ros2_interfaces/mrt/DummyObserver.h>
+#include "humanoid_common_mpc/common/JointGains.h"
 #include "humanoid_common_mpc/reference_manager/ProceduralMpcMotionManager.h"
 #include "motorium_model/RobotDescription.h"
 
@@ -63,6 +67,12 @@ class CentroidalMpcMrtJointController final : public ::motorium::control::Contro
   bool ready() const { return mcpMrtInterface_.initialPolicyReceived(); }
 
   /**
+   * Lower of the base heights at the start and at the end of the latest MPC policy; NaN until the
+   * first policy. Used to check that the policy has settled before the robot is released.
+   */
+  scalar_t policyMinBaseHeight() const { return policyMinBaseHeight_.load(); }
+
+  /**
    * Handles the low level controller loop that updates the mpc observation, reads out the latest policy and sets the joint control action.
    */
 
@@ -72,6 +82,12 @@ class CentroidalMpcMrtJointController final : public ::motorium::control::Contro
                                  ::motorium::model::RobotJointFeedbackAction& robotJointAction) override;
 
   void startMpcThread(const ::motorium::model::RobotState& initRobotState);
+
+  /**
+   * Replaces the PD gains of all joints, indexed like the robot description's joints. Call before the
+   * control loop starts. Defaults: kp 1200 / kd 10 for MPC joints, kp 100 / kd 1 for fixed joints.
+   */
+  void setJointGains(std::vector<JointGains> jointGains);
 
  private:
   /**
@@ -97,6 +113,7 @@ class CentroidalMpcMrtJointController final : public ::motorium::control::Contro
   std::unique_ptr<CentroidalMpcRobotModel<scalar_t>> mpcRobotModelPtr_;
   std::vector<size_t> mpcJointIndices_;
   std::vector<size_t> otherJointIndices_;
+  std::vector<JointGains> jointGains_;  // indexed by robot joint index
 
   // Preallocated buffers so the control loop does not allocate.
   vector_t mpcJointPositions_;
@@ -106,6 +123,7 @@ class CentroidalMpcMrtJointController final : public ::motorium::control::Contro
   bool realtime_;  // True if MPC is to be run as fast as possible
 
   std::atomic_bool terminateThread_{false};
+  std::atomic<scalar_t> policyMinBaseHeight_{std::numeric_limits<scalar_t>::quiet_NaN()};  // written by the solver thread
   std::jthread solver_worker_;
 
   std::shared_ptr<DummyObserver> visualizerPtr_;
