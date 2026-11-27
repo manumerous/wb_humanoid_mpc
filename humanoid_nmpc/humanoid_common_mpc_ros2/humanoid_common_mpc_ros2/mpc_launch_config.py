@@ -98,7 +98,9 @@ class MPCLaunchConfig:
         if sim_cpus:
             mpc_sim_params["sim_cpus"] = sim_cpus
         if joint_gains_file:
-            mpc_sim_params["joint_gains_file"] = os.path.join(self.mpc_config_pkg_dir, joint_gains_file)
+            mpc_sim_params["joint_gains_file"] = os.path.join(
+                self.mpc_config_pkg_dir, joint_gains_file
+            )
         self.mpc_sim = launch_ros.actions.Node(
             package=self.mpc_lib_pkg_ros2,
             executable=mpc_sim_exec,
