@@ -62,6 +62,10 @@ CentroidalMpcMrtJointController::CentroidalMpcMrtJointController(const ::motoriu
   mpcJointPositions_.resize(mpcJointIndices_.size());
   mpcJointVelocities_.resize(mpcJointIndices_.size());
   otherJointIndices_ = robotDescription.getJointIndices(modelSettings.fixedJointNames);
+  jointGains_.assign(robotDescription.getNumJoints(), JointGains{100.0, 1.0});
+  for (const size_t index : mpcJointIndices_) {
+    jointGains_[index] = JointGains{1200.0, 10.0};
+  }
   currentMpcObservation_.state = vector_t::Zero(mpcRobotModelPtr_->getStateDim());
   currentMpcObservation_.input = vector_t::Zero(mpcRobotModelPtr_->getInputDim());
 
@@ -93,6 +97,18 @@ void CentroidalMpcMrtJointController::startMpcThread(const ::motorium::model::Ro
   // Set observation to MPC
   mcpMrtInterface_.setCurrentObservation(currentMpcObservation_);
   solver_worker_ = std::jthread(&CentroidalMpcMrtJointController::solverWorker, this);
+}
+
+/******************************************************************************************************/
+/******************************************************************************************************/
+/******************************************************************************************************/
+
+void CentroidalMpcMrtJointController::setJointGains(std::vector<JointGains> jointGains) {
+  if (jointGains.size() != jointGains_.size()) {
+    throw std::invalid_argument("setJointGains: expected gains for " + std::to_string(jointGains_.size()) + " joints, got " +
+                                std::to_string(jointGains.size()) + ".");
+  }
+  jointGains_ = std::move(jointGains);
 }
 
 /******************************************************************************************************/
@@ -188,9 +204,9 @@ void CentroidalMpcMrtJointController::computeJointControlAction(scalar_t time,
 
       action.q_des = mpc_q_j_des[i];
       action.v_des = mpc_qd_j_des[i];
-      action.kp = 1200.0;
-      action.kd = 10.0;
-      action.feed_forward_effort = mpcJointTorques[i];
+      action.kp = jointGains_[index].kp;
+      action.kd = jointGains_[index].kd;
+      action.feed_forward_effort = mpcJointTorques[i] + jointGains_[index].dampingCompensation * mpc_qd_j_des[i];
 
       // std::cerr << "MPCtorque!: " << mpcJointTorques[i] << std::endl;
     };
@@ -218,8 +234,8 @@ void CentroidalMpcMrtJointController::computeJointControlAction(scalar_t time,
 
       action.q_des = 0;
       action.v_des = 0;
-      action.kp = 1200;
-      action.kd = 10;
+      action.kp = jointGains_[index].kp;
+      action.kd = jointGains_[index].kd;
       action.feed_forward_effort = weightCompensatingTorques[i];
     };
   }
@@ -230,8 +246,8 @@ void CentroidalMpcMrtJointController::computeJointControlAction(scalar_t time,
 
     action.q_des = 0;
     action.v_des = 0;
-    action.kp = 100;
-    action.kd = 1.0;
+    action.kp = jointGains_[index].kp;
+    action.kd = jointGains_[index].kd;
     action.feed_forward_effort = 0.0;
   };
 }
@@ -256,6 +272,11 @@ void CentroidalMpcMrtJointController::solverWorker() {
     if (!mcpMrtInterface_.updatePolicy()) {
       std::cerr << "The solver has failed to update!!" << std::endl;
       return;
+    }
+    const auto& policyStates = mcpMrtInterface_.getPolicy().stateTrajectory_;
+    if (!policyStates.empty()) {
+      policyMinBaseHeight_.store(std::min(mpcRobotModelPtr_->getBasePosition(policyStates.front()).z(),
+                                          mpcRobotModelPtr_->getBasePosition(policyStates.back()).z()));
     }
 
     // std::cerr << "MPC policy computed!" << std::endl;

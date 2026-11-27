@@ -14,6 +14,11 @@ libxinerama-dev
 libxcursor-dev
 libxi-dev
 libpugixml-dev
+libspdlog-dev
+libblas-dev
+liblapack-dev
+libgfortran5
+libegl1
 pkg-config
 ninja-build
 ccache

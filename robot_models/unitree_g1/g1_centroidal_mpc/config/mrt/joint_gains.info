@@ -1,0 +1,46 @@
+; PD gains of the G1 low-level joint controller (CentroidalMpcMrtJointController).
+; Each entry applies to every joint whose name contains the key; the first match wins, "default"
+; covers the rest. Selected through the "joint_gains_file" parameter of humanoid_centroidal_mpc_sim.
+;
+; Values from the legacy drake_mrt_sim_node: stiff enough for single-support stance, swing-leg
+; placement and turning without knee sag or leg crossing.
+
+jointGains
+{
+  kp
+  {
+    hip_pitch     400.0
+    hip_roll      350.0
+    hip_yaw       180.0
+    knee          450.0
+    ankle_pitch   150.0
+    ankle_roll     80.0
+    waist_pitch   200.0
+    waist_roll    200.0
+    waist_yaw     120.0
+    shoulder       40.0
+    elbow          30.0
+    default        25.0   ; wrists
+  }
+  kd
+  {
+    hip_pitch      25.0
+    hip_roll       22.0
+    hip_yaw        10.0
+    knee           25.0
+    ankle_pitch    10.0
+    ankle_roll      5.0
+    waist_pitch    15.0
+    waist_roll     15.0
+    waist_yaw      10.0
+    shoulder        4.0
+    elbow           3.0
+    default         2.0   ; wrists
+  }
+  ; Feed-forward that cancels the simulator's passive joint damping along the desired velocity.
+  ; Must equal the simulator's joint damping (10 Nm s/rad in humanoid_centroidal_mpc_sim).
+  dampingCompensation
+  {
+    default        10.0
+  }
+}

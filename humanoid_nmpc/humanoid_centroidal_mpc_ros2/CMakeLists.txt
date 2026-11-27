@@ -30,6 +30,7 @@ find_package(ocs2_centroidal_model REQUIRED)
 find_package(ocs2_pinocchio_interface REQUIRED)
 find_package(humanoid_common_mpc_ros2 REQUIRED)
 find_package(motorium_mujoco REQUIRED)
+find_package(motorium_drake REQUIRED)
 
 
 
@@ -142,6 +143,7 @@ target_link_libraries(humanoid_centroidal_mpc_sim
         absl::flat_hash_map
         glfw
         GLEW
+        motorium_drake::motorium_drake
 )
 target_compile_options(humanoid_centroidal_mpc_sim PUBLIC ${FLAGS})
 

@@ -34,7 +34,16 @@ class MPCLaunchConfig:
         robot_name: str,
         enable_debug: bool = False,
         solver: str = "sqp",
+        simulator: str = "mujoco",
+        mpc_cpus: list = None,
+        sim_cpus: list = None,
+        joint_gains_file: str = None,
     ):
+        """simulator: physics backend of the *_sim executable, "mujoco" or "drake".
+        mpc_cpus / sim_cpus: optional CPU ids for the *_sim executable's MPC threads and its
+        physics + MRT threads, keeping them off each other's cores. None leaves them unpinned.
+        joint_gains_file: optional .info file with per-joint PD gains (path relative to the
+        mpc_config_pkg share directory). None keeps the controller's default gains."""
 
         self.solver = solver
         self.mpc_lib_pkg: str = mpc_lib_pkg
@@ -82,6 +91,16 @@ class MPCLaunchConfig:
         self.ld = launch.LaunchDescription()
 
         mpc_sim_exec = self.mpc_lib_pkg + "_sim"
+        # model_package resolves package:// mesh URIs in the URDF for Drake.
+        mpc_sim_params = {"simulator": simulator, "model_package": mpc_model_pkg}
+        if mpc_cpus:
+            mpc_sim_params["mpc_cpus"] = mpc_cpus
+        if sim_cpus:
+            mpc_sim_params["sim_cpus"] = sim_cpus
+        if joint_gains_file:
+            mpc_sim_params["joint_gains_file"] = os.path.join(
+                self.mpc_config_pkg_dir, joint_gains_file
+            )
         self.mpc_sim = launch_ros.actions.Node(
             package=self.mpc_lib_pkg_ros2,
             executable=mpc_sim_exec,
@@ -95,6 +114,7 @@ class MPCLaunchConfig:
                 LaunchConfiguration("target_gait_file"),
                 LaunchConfiguration("xml_path"),
             ],
+            parameters=[mpc_sim_params],
         )
 
         mpc_node_exec = self.mpc_lib_pkg + "_" + self.solver + "_node"
